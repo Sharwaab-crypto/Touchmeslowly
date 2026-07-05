@@ -762,6 +762,7 @@
   </section>
 
   <!-- BRANDS -->
+  <sc-if value="{{ hasBrands }}" hint-placeholder-val="{{ true }}">
   <section id="brands" style="max-width:1320px;margin:0 auto;padding:32px 40px 0">
     <div style="margin-bottom:32px">
       <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);font-weight:600;margin:0 0 10px">Хамтрагчид</p>
@@ -776,8 +777,10 @@
       </sc-for>
     </div>
   </section>
+  </sc-if>
 
   <!-- JOURNAL -->
+  <sc-if value="{{ hasArticles }}" hint-placeholder-val="{{ true }}">
   <section id="journal" style="max-width:1320px;margin:0 auto;padding:72px 40px 0">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px">
       <div>
@@ -797,6 +800,7 @@
       </sc-for>
     </div>
   </section>
+  </sc-if>
 
   <!-- NEWSLETTER -->
   <section style="max-width:1320px;margin:0 auto;padding:72px 40px 0">
@@ -1111,8 +1115,10 @@
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
                   <sc-for list="{{ adminCategories }}" as="c" hint-placeholder-count="6">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:14px 16px">
-                      <div style="min-width:0"><p style="margin:0;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</p><p style="margin:3px 0 0;font-size:12px;color:#A8A29E">{{ c.count }} бүтээгдэхүүн</p></div>
+                    <div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:12px 14px">
+                      <div style="width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#F1ECE3;border:1px solid #E7E2DA"><img src="{{ c.image }}" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+                      <div style="min-width:0;flex:1"><p style="margin:0;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</p><p style="margin:3px 0 0;font-size:12px;color:#A8A29E">{{ c.count }} бүтээгдэхүүн</p></div>
+                      <label title="Зураг солих" style="flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #E7E2DA;background:#F7F2EA;border-radius:8px;cursor:pointer;font-size:14px">📷<input type="file" accept="image/*" onchange="{{ c.onImage }}" style="display:none"></label>
                       <button onclick="{{ c.onDelete }}" title="Устгах" style="flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #F0D5D0;background:#FFFFFF;border-radius:8px;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C61F2B" stroke-width="1.7"><polyline points="3 6 5 6 21 6"></polyline><path d="M8 6V4h8v2m1 0v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6"></path></svg></button>
                     </div>
                   </sc-for>
@@ -1414,7 +1420,7 @@ class Component extends DCLogic {
       ],
       brands: this.BRANDS.map((b) => ({ ...b })),
       articles: this.ARTICLES.map((a) => ({ ...a })),
-      categories: [...this.CATEGORIES], newCategory: "",
+      categories: [...this.CATEGORIES], newCategory: "", categoryImages: {},
       saleEndsAt: Date.now() + 2 * 86400000 + 8 * 3600000 + 45 * 60000, now: Date.now(), saleExpanded: false,
       content: {
         heroImage: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1400&h=900&fit=crop&q=80",
@@ -1462,10 +1468,11 @@ class Component extends DCLogic {
       const user = sess && sess.session ? sess.session.user : null;
       const all = await DB.loadAll();
       const patch = { dbLoading: false };
-      if (all.products.length) patch.products = all.products;
-      if (all.brands.length) patch.brands = all.brands;
-      if (all.articles.length) patch.articles = all.articles;
-      if (all.categories.length) patch.categories = all.categories;
+      patch.products = all.products;
+      patch.brands = all.brands;
+      patch.articles = all.articles;
+      patch.categories = all.categories;
+      patch.categoryImages = all.categoryImages || {};
       if (all.content) {
         const { saleEndsAt, ...rest } = all.content;
         patch.content = { ...this.state.content, ...rest };
@@ -1528,6 +1535,14 @@ class Component extends DCLogic {
     const reader = new FileReader();
     reader.onload = () => apply(reader.result);
     reader.readAsDataURL(file);
+  }
+  async setCategoryImage(name, url) {
+    if (DB.enabled) {
+      if (!this.state.adminUser) { alert("Эхлээд нэвтэрнэ үү."); return; }
+      try { await DB.setCategoryImage(name, url); }
+      catch (err) { console.error("[db] cat image:", err); alert("Зураг хадгалахад алдаа гарлаа. Supabase дээр migration ажиллуулсан эсэхээ шалгана уу."); return; }
+    }
+    this.setState((s) => ({ categoryImages: { ...s.categoryImages, [name]: url } }));
   }
   _dtLocal(ts) { const d = new Date(ts); const p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; }
   onSlide(dir) { const el = this._saleRef && this._saleRef.current; if (el) el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.9, 580), behavior: "smooth" }); }
@@ -1670,7 +1685,11 @@ class Component extends DCLogic {
       try { await DB.deleteCategory(name); }
       catch (err) { console.error("[db] category:", err); alert("Ангилал устгахад алдаа гарлаа."); return; }
     }
-    this.setState((s) => ({ categories: s.categories.filter((c) => c !== name), activeCategory: s.activeCategory === name ? "Бүгд" : s.activeCategory }));
+    this.setState((s) => {
+      const categoryImages = { ...s.categoryImages };
+      delete categoryImages[name];
+      return { categories: s.categories.filter((c) => c !== name), categoryImages, activeCategory: s.activeCategory === name ? "Бүгд" : s.activeCategory };
+    });
   }
   setContent(k, v) { this.setState((s) => ({ content: { ...s.content, [k]: v }, contentSaved: false })); }
   onUploadHero(e) { this._handleImage(e, (v) => this.setContent("heroImage", v)); }
@@ -1747,9 +1766,10 @@ class Component extends DCLogic {
       };
     });
 
+    const catImg = (c) => s.categoryImages[c] || (this.CAT_IMAGES[c] ? `https://images.unsplash.com/photo-${this.CAT_IMAGES[c]}?w=300&h=300&fit=crop&q=80` : ((s.products.find((p) => p.category === c) || {}).image || "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=300&h=300&fit=crop&q=80"));
     const categoryCircles = s.categories.map((c) => ({
       label: c,
-      image: this.CAT_IMAGES[c] ? `https://images.unsplash.com/photo-${this.CAT_IMAGES[c]}?w=300&h=300&fit=crop&q=80` : ((s.products.find((p) => p.category === c) || {}).image || "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=300&h=300&fit=crop&q=80"),
+      image: catImg(c),
       count: this.state.products.filter((p) => p.category === c).length,
       onClick: () => { this.setState({ activeCategory: c }); },
     }));
@@ -1831,6 +1851,8 @@ class Component extends DCLogic {
     }));
     const adminCategories = s.categories.map((c) => ({
       name: c, count: String(s.products.filter((p) => p.category === c).length),
+      image: catImg(c),
+      onImage: (e) => this._handleImage(e, (v) => this.setCategoryImage(c, v)),
       onDelete: () => this.deleteCategory(c),
     }));
     const adminOrders = s.orders.map((o) => ({
@@ -1858,7 +1880,7 @@ class Component extends DCLogic {
       categoryCircles, brandAvatars,
       featured: { name: featured.name, image: featured.image, onBuy: () => this.openProduct(featured) },
 
-      brands,
+      brands, hasBrands: s.brands.length > 0, hasArticles: s.articles.length > 0,
       bestSellers, hasBestSellers: bestSellers.length > 0,
       saleItems, hasSale: saleItems.length > 0, saleCount: this.state.products.filter((p) => p.discount > 0).length,
       countdown, saleEnded: countdown.ended, saleActive: !countdown.ended,
