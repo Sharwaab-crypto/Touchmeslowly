@@ -499,7 +499,7 @@
       </nav>
       <div class="tms-search" style="flex:1;max-width:420px;margin-left:auto;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:0 14px">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.6" y2="16.6"></line></svg>
-        <input value="{{ query }}" onchange="{{ onQuery }}" placeholder="Тавилга, гэрэл, гоёл хайх…" style="flex:1;padding:11px 0;border:none;background:transparent;color:#FFFFFF;font-size:13px;outline:none">
+        <input value="{{ query }}" onchange="{{ onQuery }}" placeholder="{{ searchPlaceholder }}" style="flex:1;padding:11px 0;border:none;background:transparent;color:#FFFFFF;font-size:13px;outline:none">
       </div>
       <div style="display:flex;align-items:center;gap:4px">
         <button class="tms-iconbtn" style="background:transparent;border:none;color:#F0E7E9;cursor:pointer;padding:9px;display:flex;border-radius:9px">
@@ -603,11 +603,11 @@
   <section style="max-width:1320px;margin:0 auto;padding:72px 40px 0">
     <div style="position: relative; border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; min-height: 420px; background-color: #D51B1B">
       <div style="display:flex;flex-direction:column;justify-content:center;padding:64px">
-        <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8FB3A3;font-weight:600;margin:0 0 20px">Touch me slowly Living</p>
-        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(30px,3.6vw,50px);line-height:1.06;letter-spacing:-.02em;margin:0 0 20px;color:#F7F4EE">Тавилгаас илүү —<br><em style="color:#F7A8C6">амьдралын хэв маяг</em></h2>
-        <p style="max-width:400px;font-size:15px;line-height:1.65;color:#C7D4CD;margin:0 0 32px">Studio Ulaan-ий уран дархан цуглуулга. Байгалийн мод, ноос, керамик — гар хийцээр нэг бүрчлэн.</p>
+        <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8FB3A3;font-weight:600;margin:0 0 20px">{{ livingEyebrow }}</p>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(30px,3.6vw,50px);line-height:1.06;letter-spacing:-.02em;margin:0 0 20px;color:#F7F4EE">{{ livingTitle1 }}<br><em style="color:#F7A8C6">{{ livingTitle2 }}</em></h2>
+        <p style="max-width:400px;font-size:15px;line-height:1.65;color:#C7D4CD;margin:0 0 32px">{{ livingSubtitle }}</p>
         <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-          <button onclick="{{ featured.onBuy }}" class="tms-amber" style="padding: 14px 30px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #FEFEFE; border: none; cursor: pointer; background-color: #0B0507">Цуглуулга үзэх →</button>
+          <button onclick="{{ featured.onBuy }}" class="tms-amber" style="padding: 14px 30px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #FEFEFE; border: none; cursor: pointer; background-color: #0B0507">{{ livingButton }}</button>
           <div style="display:flex;align-items:center;gap:14px">
             <div style="display:flex">
               <sc-for list="{{ brandAvatars }}" as="a" hint-placeholder-count="4">
@@ -801,11 +801,11 @@
   <!-- NEWSLETTER -->
   <section style="max-width:1320px;margin:0 auto;padding:72px 40px 0">
     <div style="border-radius:20px;background:rgba(20,16,15,.5);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);border:1px solid rgba(255,255,255,.16);padding:56px;text-align:center">
-      <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(24px,2.8vw,34px);letter-spacing:-.02em;margin:0 0 12px;color:#FFFFFF">Шинэ цуглуулга, онцгой урамшуулал</h2>
-      <p style="font-size:14px;color:#E7DEE0;margin:0 0 28px">Долоо хоног бүр интерьерийн зөвлөгөө, шинэ бараа таны имэйл рүү.</p>
+      <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(24px,2.8vw,34px);letter-spacing:-.02em;margin:0 0 12px;color:#FFFFFF">{{ newsTitle }}</h2>
+      <p style="font-size:14px;color:#E7DEE0;margin:0 0 28px">{{ newsSubtitle }}</p>
       <div style="display:flex;gap:10px;max-width:440px;margin:0 auto">
-        <input placeholder="таны имэйл хаяг" style="flex:1;padding:14px 18px;border-radius:10px;border:1px solid #ECBAD0;background:#FFFFFF;color:#1C1917;font-size:14px;outline:none">
-        <button class="tms-amber" style="padding:14px 26px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer;white-space:nowrap">Бүртгүүлэх</button>
+        <input placeholder="{{ newsPlaceholder }}" style="flex:1;padding:14px 18px;border-radius:10px;border:1px solid #ECBAD0;background:#FFFFFF;color:#1C1917;font-size:14px;outline:none">
+        <button class="tms-amber" style="padding:14px 26px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer;white-space:nowrap">{{ newsButton }}</button>
       </div>
     </div>
   </section>
@@ -816,7 +816,7 @@
       <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px">
         <div>
           <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;color:#1C1917">Touch me slowly<span style="color:#D63A66">.</span></span></div>
-          <p style="font-size:13px;line-height:1.65;color:#78716C;margin:0;max-width:280px">Тавилга, гэрэлтүүлэг, гоёл чимэглэлийн нэгдсэн дэлгүүр. Чанартай, дулаан, шууд танд.</p>
+          <p style="font-size:13px;line-height:1.65;color:#78716C;margin:0;max-width:280px">{{ footerTagline }}</p>
         </div>
         <div>
           <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 18px">Ангилал</p>
@@ -1196,6 +1196,24 @@
                   <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Тайлбар бичиг</label><textarea onchange="{{ onSaleSubtitle }}" rows="2" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit;resize:vertical">{{ contentSaleSubtitle }}</textarea></div>
                   <div style="max-width:220px"><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Промо код</label><input value="{{ contentSaleCode }}" onchange="{{ onSaleCode }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
                 </div>
+                <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:26px;margin:34px 0 18px">Бусад хэсгүүд</h1>
+                <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:20px">
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Хайлтын талбарын бичиг</label><input value="{{ searchPlaceholder }}" onchange="{{ onSearchPlaceholder }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Living баннер — дээд бичиг</label><input value="{{ livingEyebrow }}" onchange="{{ onLivingEyebrow }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                    <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Living баннер — гарчиг 1-р мөр</label><input value="{{ livingTitle1 }}" onchange="{{ onLivingTitle1 }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                    <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Living баннер — гарчиг 2-р мөр (ягаан)</label><input value="{{ livingTitle2 }}" onchange="{{ onLivingTitle2 }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  </div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Living баннер — тайлбар</label><input value="{{ livingSubtitle }}" onchange="{{ onLivingSubtitle }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Living баннер — товчны бичиг</label><input value="{{ livingButton }}" onchange="{{ onLivingButton }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Имэйл бүртгэл — гарчиг</label><input value="{{ newsTitle }}" onchange="{{ onNewsTitle }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Имэйл бүртгэл — тайлбар</label><input value="{{ newsSubtitle }}" onchange="{{ onNewsSubtitle }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                    <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Имэйл талбарын бичиг</label><input value="{{ newsPlaceholder }}" onchange="{{ onNewsPlaceholder }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                    <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Бүртгүүлэх товчны бичиг</label><input value="{{ newsButton }}" onchange="{{ onNewsButton }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  </div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Хөл хэсэг — танилцуулга</label><input value="{{ footerTagline }}" onchange="{{ onFooterTagline }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                </div>
                 <button onclick="{{ onSaveContent }}" style="margin-top:22px;padding:13px 28px;border-radius:10px;font-size:13px;font-weight:700;border:none;background:#1C1917;color:#FFFFFF;cursor:pointer;font-family:inherit">{{ contentSaveLabel }}</button>
               </div>
             </sc-if>
@@ -1376,6 +1394,15 @@ class Component extends DCLogic {
         saleTitle1: "Хямдрал дуустал", saleTitle2: "үлдсэн хугацаа",
         saleSubtitle: "Сонгосон бүтээгдэхүүнд 30% хүртэл хямдрал. Дуусахаас өмнө яараарай.",
         saleCode: "TMS-SALE",
+        searchPlaceholder: "Тавилга, гэрэл, гоёл хайх…",
+        livingEyebrow: "Touch me slowly Living",
+        livingTitle1: "Тавилгаас илүү —", livingTitle2: "амьдралын хэв маяг",
+        livingSubtitle: "Studio Ulaan-ий уран дархан цуглуулга. Байгалийн мод, ноос, керамик — гар хийцээр нэг бүрчлэн.",
+        livingButton: "Цуглуулга үзэх →",
+        newsTitle: "Шинэ цуглуулга, онцгой урамшуулал",
+        newsSubtitle: "Долоо хоног бүр интерьерийн зөвлөгөө, шинэ бараа таны имэйл рүү.",
+        newsPlaceholder: "таны имэйл хаяг", newsButton: "Бүртгүүлэх",
+        footerTagline: "Тавилга, гэрэлтүүлэг, гоёл чимэглэлийн нэгдсэн дэлгүүр. Чанартай, дулаан, шууд танд.",
       },
       adminOpen: false, adminTab: "dashboard", editItem: null, editKind: "product", editIsNew: false,
       adminUser: null, loginEmail: "", loginPassword: "", loginError: "", loginBusy: false,
@@ -1904,6 +1931,23 @@ class Component extends DCLogic {
       onSignOut: () => this.signOut(),
       hasLoginError: !!s.loginError, loginError: s.loginError,
       loginBtnLabel: s.loginBusy ? "Түр хүлээнэ үү…" : "Нэвтрэх",
+      searchPlaceholder: s.content.searchPlaceholder,
+      livingEyebrow: s.content.livingEyebrow, livingTitle1: s.content.livingTitle1, livingTitle2: s.content.livingTitle2,
+      livingSubtitle: s.content.livingSubtitle, livingButton: s.content.livingButton,
+      newsTitle: s.content.newsTitle, newsSubtitle: s.content.newsSubtitle,
+      newsPlaceholder: s.content.newsPlaceholder, newsButton: s.content.newsButton,
+      footerTagline: s.content.footerTagline,
+      onSearchPlaceholder: (e) => this.setContent("searchPlaceholder", e.target.value),
+      onLivingEyebrow: (e) => this.setContent("livingEyebrow", e.target.value),
+      onLivingTitle1: (e) => this.setContent("livingTitle1", e.target.value),
+      onLivingTitle2: (e) => this.setContent("livingTitle2", e.target.value),
+      onLivingSubtitle: (e) => this.setContent("livingSubtitle", e.target.value),
+      onLivingButton: (e) => this.setContent("livingButton", e.target.value),
+      onNewsTitle: (e) => this.setContent("newsTitle", e.target.value),
+      onNewsSubtitle: (e) => this.setContent("newsSubtitle", e.target.value),
+      onNewsPlaceholder: (e) => this.setContent("newsPlaceholder", e.target.value),
+      onNewsButton: (e) => this.setContent("newsButton", e.target.value),
+      onFooterTagline: (e) => this.setContent("footerTagline", e.target.value),
       onSaveContent: () => this.saveContentToDb(),
       contentSaveLabel: s.contentBusy ? "Хадгалж байна…" : (s.contentSaved ? "Хадгалагдлаа ✓" : "Өөрчлөлтийг хадгалах"),
       stopEdit: (e) => e.stopPropagation(),
