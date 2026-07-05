@@ -61,6 +61,10 @@
           brands: res[1] || [],
           articles: res[2] || [],
           categories: (res[3] || []).map(function (c) { return c.name; }),
+          categoryImages: (res[3] || []).reduce(function (acc, c) {
+            if (c.image) acc[c.name] = c.image;
+            return acc;
+          }, {}),
           content: res[4] && res[4][0] ? res[4][0].data : null,
         };
       });
@@ -107,6 +111,10 @@
 
     deleteRow: function (table, id) {
       return q(client.from(table).delete().eq("id", id).select());
+    },
+
+    setCategoryImage: function (name, url) {
+      return q(client.from("categories").update({ image: url }).eq("name", name).select());
     },
 
     addCategory: function (name) {
