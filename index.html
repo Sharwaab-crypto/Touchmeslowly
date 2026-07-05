@@ -829,9 +829,9 @@
         <div>
           <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 18px">Хаяг</p>
           <div style="display:flex;flex-direction:column;gap:12px;font-size:13px;color:#57534E">
-            <span>Сүхбаатар дүүрэг, 1-р хороо,<br>Бага тойруу 14, Улаанбаатар</span>
-            <span>+976 9911 0000</span>
-            <span>hello@touchmeslowly.mn</span>
+            <span>{{ footerAddress }}</span>
+            <span>{{ footerPhone }}</span>
+            <span>{{ footerEmail }}</span>
           </div>
         </div>
         <div>
@@ -845,7 +845,6 @@
       </div>
       <div style="padding-top:28px;border-top:1px solid #E0D9CD;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px">
         <p style="font-size:12px;color:#A8A29E;margin:0">© 2025 Touch me slowly. Бүх эрх хуулиар хамгаалагдсан.</p>
-        <span style="font-size:12px;color:#A8A29E">QPay · SocialPay · Visa · Mastercard</span>
       </div>
     </div>
   </footer>
@@ -960,7 +959,7 @@
         <div style="display:grid;grid-template-columns:3fr 2fr;gap:44px">
           <div style="display:flex;flex-direction:column;gap:22px">
             <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Бүтэн нэр</label><input value="{{ formName }}" onchange="{{ onName }}" placeholder="Дорж Бат" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"></div>
-            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Утасны дугаар</label><input value="{{ formPhone }}" onchange="{{ onPhone }}" placeholder="9911 0000" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"></div>
+            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Утасны дугаар</label><input value="{{ formPhone }}" onchange="{{ onPhone }}" placeholder="9911 0000" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"><sc-if value="{{ phoneInvalid }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#C61F2B;margin-top:7px">Утасны дугаар заавал 8 оронтой тоо байх ёстой</div></sc-if></div>
             <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Хүргэлтийн хаяг</label><input value="{{ formAddress }}" onchange="{{ onAddress }}" placeholder="Сүхбаатар дүүрэг, 1-р хороо" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"></div>
             <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Хот</label><select value="{{ formCity }}" onchange="{{ onCity }}" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px;cursor:pointer"><option>Улаанбаатар</option><option>Дархан</option><option>Эрдэнэт</option></select></div>
             <div style="padding-top:8px">
@@ -1213,6 +1212,12 @@
                     <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Бүртгүүлэх товчны бичиг</label><input value="{{ newsButton }}" onchange="{{ onNewsButton }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
                   </div>
                   <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Хөл хэсэг — танилцуулга</label><input value="{{ footerTagline }}" onchange="{{ onFooterTagline }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Хаяг (хөл хэсэгт)</label><input value="{{ footerAddress }}" onchange="{{ onFooterAddress }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                    <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Утасны дугаар</label><input value="{{ footerPhone }}" onchange="{{ onFooterPhone }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                    <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Имэйл хаяг</label><input value="{{ footerEmail }}" onchange="{{ onFooterEmail }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                  </div>
+                  <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Хүргэлтийн зөвлөмж (захиалга баталгаажсан хуудсанд)</label><input value="{{ deliveryNote }}" onchange="{{ onDeliveryNote }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
                 </div>
                 <button onclick="{{ onSaveContent }}" style="margin-top:22px;padding:13px 28px;border-radius:10px;font-size:13px;font-weight:700;border:none;background:#1C1917;color:#FFFFFF;cursor:pointer;font-family:inherit">{{ contentSaveLabel }}</button>
               </div>
@@ -1312,7 +1317,8 @@
         <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 14px">Баталгаажлаа</p>
         <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:28px;margin:0 0 22px">Захиалга амжилттай!</h1>
         <p style="font-size:13px;color:#78716C;margin:0 0 4px">Захиалгын дугаар</p>
-        <p style="font-family:ui-monospace,monospace;font-size:15px;font-weight:600;color:#D63A66;margin:0 0 36px">#{{ lastOrderId }}</p>
+        <p style="font-family:ui-monospace,monospace;font-size:15px;font-weight:600;color:#D63A66;margin:0 0 22px">#{{ lastOrderId }}</p>
+        <div style="background:#EAF3EC;border:1px solid #CBE3D2;border-radius:12px;padding:14px 18px;margin:0 0 30px;font-size:13px;line-height:1.55;color:#2E7D53;font-weight:600">🚚 {{ deliveryNote }}</div>
         <button onclick="{{ onContinue }}" class="tms-amber" style="padding:14px 40px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">Үргэлжлүүлэн дэлгүүр хэсэх</button>
       </div>
     </div>
@@ -1367,14 +1373,14 @@ class Component extends DCLogic {
       { icon: "💬", title: "24/7 туслах", sub: "Мэргэжлийн зөвлөгөө" },
     ];
     this.CITIES = ["Улаанбаатар", "Дархан", "Эрдэнэт"];
-    this.PAY = ["QPay", "SocialPay", "Картаар", "Бэлнээр (хүргэх үед)"];
+    this.PAY = ["Бэлнээр (хүргэх үед)"];
     const stocks = [12, 7, 3, 20, 5, 34, 15, 9, 22, 6, 4, 18];
     this.PRODUCTS.forEach((p, i) => { p.stock = stocks[i] ?? 10; });
     this.BRANDS.forEach((b, i) => { b.id = i + 1; if (b.image === undefined) b.image = ""; });
     this.state = {
       query: "", activeCategory: "Бүгд", maxPrice: 3000000, sortBy: "featured",
       cart: [], cartOpen: false, favorites: [],
-      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "QPay", lastOrderId: null,
+      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "Бэлнээр (хүргэх үед)", lastOrderId: null,
       showWelcome: (this.props.welcomeOnLoad ?? true), selectedProduct: null, detailQty: 1,
       products: this.PRODUCTS.map((p) => ({ ...p })),
       orders: DB.enabled ? [] : [
@@ -1403,6 +1409,10 @@ class Component extends DCLogic {
         newsSubtitle: "Долоо хоног бүр интерьерийн зөвлөгөө, шинэ бараа таны имэйл рүү.",
         newsPlaceholder: "таны имэйл хаяг", newsButton: "Бүртгүүлэх",
         footerTagline: "Тавилга, гэрэлтүүлэг, гоёл чимэглэлийн нэгдсэн дэлгүүр. Чанартай, дулаан, шууд танд.",
+        footerAddress: "Сүхбаатар дүүрэг, 1-р хороо, Бага тойруу 14, Улаанбаатар",
+        footerPhone: "+976 9911 0000",
+        footerEmail: "hello@touchmeslowly.mn",
+        deliveryNote: "Таны хүргэлт 24 цагийн дотор таны гарт очих болно",
       },
       adminOpen: false, adminTab: "dashboard", editItem: null, editKind: "product", editIsNew: false,
       adminUser: null, loginEmail: "", loginPassword: "", loginError: "", loginBusy: false,
@@ -1528,6 +1538,8 @@ class Component extends DCLogic {
   async placeOrder() {
     const s0 = this.state;
     if (!s0.cart.length) return;
+    const phoneDigits0 = (s0.form.phone || "").replace(/[^0-9]/g, "");
+    if (phoneDigits0.length !== 8) { alert("Утасны дугаар заавал 8 оронтой тоо байх ёстой."); return; }
     const id = "TMS" + Math.floor(Math.random() * 90000 + 10000);
     const order = {
       id, date: new Date().toISOString().slice(0, 10),
@@ -1751,7 +1763,9 @@ class Component extends DCLogic {
       };
     });
 
-    const canPlace = s.form.name && s.form.phone && s.form.address;
+    const phoneDigits = (s.form.phone || "").replace(/[^0-9]/g, "");
+    const phoneValid = phoneDigits.length === 8;
+    const canPlace = s.form.name && phoneValid && s.form.address;
     const placeBtnBase = "width:100%;margin-top:28px;padding:16px;border-radius:10px;font-size:13px;font-weight:600;border:none;background:#D63A66;color:#FFFFFF;";
     const placeBtnStyle = placeBtnBase + (canPlace ? "cursor:pointer;opacity:1;" : "cursor:not-allowed;opacity:.4;");
 
@@ -1931,6 +1945,13 @@ class Component extends DCLogic {
       onSignOut: () => this.signOut(),
       hasLoginError: !!s.loginError, loginError: s.loginError,
       loginBtnLabel: s.loginBusy ? "Түр хүлээнэ үү…" : "Нэвтрэх",
+      phoneInvalid: !!s.form.phone && !phoneValid,
+      footerAddress: s.content.footerAddress, footerPhone: s.content.footerPhone, footerEmail: s.content.footerEmail,
+      deliveryNote: s.content.deliveryNote,
+      onFooterAddress: (e) => this.setContent("footerAddress", e.target.value),
+      onFooterPhone: (e) => this.setContent("footerPhone", e.target.value),
+      onFooterEmail: (e) => this.setContent("footerEmail", e.target.value),
+      onDeliveryNote: (e) => this.setContent("deliveryNote", e.target.value),
       searchPlaceholder: s.content.searchPlaceholder,
       livingEyebrow: s.content.livingEyebrow, livingTitle1: s.content.livingTitle1, livingTitle2: s.content.livingTitle2,
       livingSubtitle: s.content.livingSubtitle, livingButton: s.content.livingButton,
