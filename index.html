@@ -864,23 +864,19 @@
 
   <!-- WELCOME POPUP -->
   <sc-if value="{{ showWelcome }}" hint-placeholder-val="{{ false }}">
-    <div class="tms-fade" style="position:fixed;inset:0;background:rgba(28,25,23,.55);backdrop-filter:blur(6px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px">
-      <div class="tms-pop" style="max-width:420px;width:100%;position:relative;overflow:hidden;background:#FFFFFF;border-radius:20px">
-        <button onclick="{{ onCloseWelcome }}" class="tms-iconbtn" style="position:absolute;top:14px;right:14px;z-index:10;padding:8px;border-radius:9px;background:transparent;border:none;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#78716C" stroke-width="1.8"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
-        <div style="height:150px;background:#FCEAF1;display:flex;align-items:center;justify-content:center;overflow:hidden">
-          <sc-if value="{{ hasWelcomeImage }}" hint-placeholder-val="{{ false }}"><img src="{{ welcomeImage }}" alt="" style="width:100%;height:100%;object-fit:cover"></sc-if>
-          <sc-if value="{{ noWelcomeImage }}" hint-placeholder-val="{{ true }}"><span style="font-size:56px">🛋️</span></sc-if>
+    <div class="tms-fade" style="{{ welcomeSlideStyle }}">
+      <img src="{{ welcomeBg }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,12,18,.8) 0%,rgba(24,12,18,.34) 42%,rgba(24,12,18,.05) 68%,rgba(24,12,18,.2) 100%)"></div>
+      <button onclick="{{ onCloseWelcome }}" style="position:absolute;top:20px;right:20px;z-index:3;width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+      <div style="position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:24px 24px 58px">
+        <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#FFD9E6;font-weight:700;margin:0 0 14px;text-shadow:0 1px 12px rgba(0,0,0,.35)">{{ welcomeEyebrow }}</p>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(32px,6vw,46px);letter-spacing:-.02em;line-height:1.08;color:#FFFFFF;margin:0 0 14px;text-shadow:0 2px 28px rgba(0,0,0,.45)">{{ welcomeTitle }}</h2>
+        <p style="font-size:14px;line-height:1.65;color:rgba(255,255,255,.92);max-width:430px;margin:0 0 24px;text-shadow:0 1px 14px rgba(0,0,0,.4)">{{ welcomeSubtitle }}</p>
+        <div style="display:inline-block;padding:11px 24px;margin-bottom:28px;border:1.5px dashed rgba(255,255,255,.6);border-radius:12px;background:rgba(255,255,255,.14);backdrop-filter:blur(8px)">
+          <p style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#FFD9E6;margin:0 0 4px">Код</p>
+          <p style="font-size:17px;letter-spacing:.26em;font-family:ui-monospace,monospace;font-weight:700;color:#FFFFFF;margin:0">{{ welcomeCode }}</p>
         </div>
-        <div style="padding:36px 40px 40px;text-align:center">
-          <p style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#D63A66;font-weight:600;margin:0 0 12px">{{ welcomeEyebrow }}</p>
-          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:30px;letter-spacing:-.02em;margin:0 0 14px;color:#1C1917">{{ welcomeTitle }}</h2>
-          <p style="font-size:14px;line-height:1.6;color:#78716C;margin:0 0 26px">{{ welcomeSubtitle }}</p>
-          <div style="display:inline-block;padding:12px 20px;margin-bottom:26px;border:1.5px dashed #ECBAD0;border-radius:10px;background:#FCEAF1">
-            <p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#A8A29E;margin:0 0 4px">Код</p>
-            <p style="font-size:18px;letter-spacing:.24em;font-family:ui-monospace,monospace;font-weight:600;color:#1C1917;margin:0">{{ welcomeCode }}</p>
-          </div>
-          <button onclick="{{ onCloseWelcome }}" class="tms-amber" style="width:100%;padding:14px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">{{ welcomeButton }}</button>
-        </div>
+        <button onclick="{{ onCloseWelcome }}" class="tms-amber" style="min-width:250px;padding:16px 36px;border-radius:999px;font-size:14px;font-weight:700;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer;box-shadow:0 12px 34px rgba(214,58,102,.5)">{{ welcomeButton }}</button>
       </div>
     </div>
   </sc-if>
@@ -1219,13 +1215,12 @@
                     <label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:8px">Дээд хэсгийн зураг</label>
                     <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
                       <div style="width:160px;height:96px;border-radius:12px;overflow:hidden;flex-shrink:0;background:#FCEAF1;border:1px solid #E7E2DA;display:flex;align-items:center;justify-content:center">
-                        <sc-if value="{{ hasWelcomeImage }}" hint-placeholder-val="{{ false }}"><img src="{{ welcomeImage }}" alt="" style="width:100%;height:100%;object-fit:cover"></sc-if>
-                        <sc-if value="{{ noWelcomeImage }}" hint-placeholder-val="{{ true }}"><span style="font-size:34px">🛋️</span></sc-if>
+                        <img src="{{ welcomeBg }}" alt="" style="width:100%;height:100%;object-fit:cover">
                       </div>
                       <label style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#1C1917;background:#F7F2EA;border:1px solid #E7E2DA;border-radius:10px;padding:11px 16px;cursor:pointer">⬆ Зураг оруулах<input type="file" accept="image/*" onchange="{{ onUploadWelcome }}" style="display:none"></label>
                       <sc-if value="{{ hasWelcomeImage }}" hint-placeholder-val="{{ false }}"><button onclick="{{ onClearWelcomeImage }}" style="font-size:13px;font-weight:600;color:#B82C54;background:#FCEAF1;border:1px solid #F5C9D8;border-radius:10px;padding:11px 16px;cursor:pointer;font-family:inherit">✕ Зураг арилгах</button></sc-if>
                     </div>
-                    <p style="font-size:12px;color:#A8A29E;margin:8px 0 0">Зураггүй үед 🛋️ эможи харагдана.</p>
+                    <p style="font-size:12px;color:#A8A29E;margin:8px 0 0">Зураг оруулаагүй үед үндсэн зураг (assets/welcome.jpg) харагдана.</p>
                   </div>
                   <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Дээд бичиг (eyebrow)</label><input value="{{ welcomeEyebrow }}" onchange="{{ onWelcomeEyebrow }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
                   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
@@ -1421,7 +1416,7 @@ class Component extends DCLogic {
       query: "", activeCategory: "Бүгд", maxPrice: 3000000, sortBy: "featured",
       cart: [], cartOpen: false, favorites: [],
       stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "Бэлнээр (хүргэх үед)", lastOrderId: null,
-      showWelcome: (this.props.welcomeOnLoad ?? true), selectedProduct: null, detailQty: 1,
+      showWelcome: (this.props.welcomeOnLoad ?? true), welcomeClosing: false, selectedProduct: null, detailQty: 1,
       products: this.PRODUCTS.map((p) => ({ ...p })),
       orders: DB.enabled ? [] : [
         { id: "TMS40318", date: "2026-07-03", items: [{ name: "Ноосон буйдан", qty: 1, price: 2450000 }], total: 2450000, customer: "Б. Отгонбаяр", phone: "9911 2233", address: "СБД 1-р хороо, Бага тойруу 12", city: "Улаанбаатар", pay: "QPay", status: "Хүргэгдсэн" },
@@ -1911,7 +1906,11 @@ class Component extends DCLogic {
 
       articles: s.articles,
 
-      showWelcome: s.showWelcome, onCloseWelcome: () => this.setState({ showWelcome: false }),
+      showWelcome: s.showWelcome, onCloseWelcome: () => {
+        if (this.state.welcomeClosing) return;
+        this.setState({ welcomeClosing: true });
+        setTimeout(() => this.setState({ showWelcome: false, welcomeClosing: false }), 750);
+      },
 
       hasSelected: !!s.selectedProduct, selected, onCloseSelected: () => this.closeProduct(),
       detailQty: s.detailQty, detailTotalFmt: s.selectedProduct ? this.formatPrice(s.selectedProduct.price * s.detailQty) : "",
@@ -2008,6 +2007,8 @@ class Component extends DCLogic {
       hasLoginError: !!s.loginError, loginError: s.loginError,
       loginBtnLabel: s.loginBusy ? "Түр хүлээнэ үү…" : "Нэвтрэх",
       welcomeImage: s.content.welcomeImage,
+      welcomeBg: s.content.welcomeImage || "assets/welcome.jpg",
+      welcomeSlideStyle: "position:fixed;inset:0;z-index:100;overflow:hidden;background:#1C1917;transition:transform .75s cubic-bezier(.7,0,.3,1);transform:translateY(" + (s.welcomeClosing ? "-100%" : "0") + ")",
       hasWelcomeImage: !!s.content.welcomeImage, noWelcomeImage: !s.content.welcomeImage,
       welcomeEyebrow: s.content.welcomeEyebrow, welcomeTitle: s.content.welcomeTitle,
       welcomeSubtitle: s.content.welcomeSubtitle, welcomeCode: s.content.welcomeCode, welcomeButton: s.content.welcomeButton,
