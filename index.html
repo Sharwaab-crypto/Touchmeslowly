@@ -495,7 +495,14 @@
   
 
   <!-- HEADER -->
-  <header style="position:sticky;top:0;z-index:30;background:rgba(16,12,11,.5);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.12)">
+  <sc-if value="{{ saleBarVisible }}" hint-placeholder-val="{{ false }}">
+    <div onclick="{{ onSaleBarClick }}" style="position:sticky;top:0;z-index:31;height:38px;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#8E0F18,#D63A66);color:#FFFFFF;font-size:12.5px;font-weight:600;cursor:pointer;padding:0 14px;white-space:nowrap;overflow:hidden">
+      <span>🔥 {{ saleBarTitle }}</span>
+      <span style="font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.08em;background:rgba(255,255,255,.18);padding:3px 10px;border-radius:999px">{{ saleBarTimer }}</span>
+      <span style="opacity:.85">Код: {{ saleBarCode }}</span>
+    </div>
+  </sc-if>
+  <header style="{{ headerStyle }}">
     <div style="max-width:1320px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;gap:28px">
       <a href="#top" style="display:flex;align-items:center;gap:9px;text-decoration:none;white-space:nowrap">
         <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;color:#FFFFFF;letter-spacing:-.02em">Touch me slowly<span style="color: #FA0046">.</span></span>
@@ -1696,7 +1703,16 @@ class Component extends DCLogic {
     });
   }
   setContent(k, v) { this.setState((s) => ({ content: { ...s.content, [k]: v }, contentSaved: false })); }
-  onUploadHero(e) { this._handleImage(e, (v) => this.setContent("heroImage", v)); }
+  onUploadHero(e) { this._handleImage(e, (v) => { this.setContent("heroImage", v); this._persistContentSoon(); }); }
+  applyWelcomeImage(url) {
+    this.setState((s) => ({ content: { ...s.content, welcomeImage: url }, contentSaved: false }));
+    this._persistContentSoon();
+  }
+  _persistContentSoon() {
+    if (!DB.enabled || !this.state.adminUser) return;
+    clearTimeout(this._pcTimer);
+    this._pcTimer = setTimeout(() => this.saveContentToDb(), 120);
+  }
   async toggleBest(id) {
     const p = this.state.products.find((x) => x.id === id);
     if (!p) return;
@@ -1747,7 +1763,7 @@ class Component extends DCLogic {
     const cartCount = s.cart.reduce((a, i) => a + i.qty, 0);
     const cartTotal = s.cart.reduce((a, i) => a + i.price * i.qty, 0);
     const shipping = cartTotal > 0 && cartTotal < 300000 ? 12000 : 0;
-    const featured = this.state.products[2] || this.state.products[0];
+    const featured = this.state.products[2] || this.state.products[0] || { id: 0, name: "", vendor: "", category: "", price: 0, discount: 0, rating: 0, stock: 0, image: "", bestSeller: false };
     const shopCats = ["Бүгд", ...s.categories];
 
     const remain = Math.max(0, s.saleEndsAt - s.now);
@@ -1887,6 +1903,12 @@ class Component extends DCLogic {
       brands, hasBrands: s.brands.length > 0, hasArticles: s.articles.length > 0,
       bestSellers, hasBestSellers: bestSellers.length > 0,
       saleItems, hasSale: saleItems.length > 0, saleCount: this.state.products.filter((p) => p.discount > 0).length,
+      saleBarVisible: saleItems.length > 0 && !countdown.ended,
+      saleBarTitle: s.content.saleTitle1,
+      saleBarTimer: countdown.d + " : " + countdown.h + " : " + countdown.m + " : " + countdown.s,
+      saleBarCode: s.content.saleCode,
+      onSaleBarClick: () => { const el = this._saleRef && this._saleRef.current; if (el && el.scrollIntoView) el.scrollIntoView({ behavior: "smooth", block: "start" }); },
+      headerStyle: "position:sticky;top:" + (saleItems.length > 0 && !countdown.ended ? "38px" : "0") + ";z-index:30;background:rgba(16,12,11,.5);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.12)",
       countdown, saleEnded: countdown.ended, saleActive: !countdown.ended,
       saleExpanded: s.saleExpanded, saleSlider: !s.saleExpanded,
       onToggleSale: () => this.setState((st) => ({ saleExpanded: !st.saleExpanded })),
@@ -2017,8 +2039,8 @@ class Component extends DCLogic {
       onWelcomeSubtitle: (e) => this.setContent("welcomeSubtitle", e.target.value),
       onWelcomeCode: (e) => this.setContent("welcomeCode", e.target.value),
       onWelcomeButton: (e) => this.setContent("welcomeButton", e.target.value),
-      onUploadWelcome: (e) => this._handleImage(e, (v) => this.setContent("welcomeImage", v)),
-      onClearWelcomeImage: () => this.setContent("welcomeImage", ""),
+      onUploadWelcome: (e) => this._handleImage(e, (v) => this.applyWelcomeImage(v)),
+      onClearWelcomeImage: () => this.applyWelcomeImage(""),
       phoneInvalid: !!s.form.phone && !phoneValid,
       footerAddress: s.content.footerAddress, footerPhone: s.content.footerPhone, footerEmail: s.content.footerEmail,
       deliveryNote: s.content.deliveryNote,
