@@ -77,6 +77,7 @@
             id: o.id, date: o.date || "", items: o.items || [],
             total: Number(o.total) || 0, customer: o.customer || "", phone: o.phone || "",
             address: o.address || "", city: o.city || "", pay: o.pay || "", status: o.status || "Хүлээгдэж буй",
+            payment_status: o.payment_status || "",
           };
         });
       });
@@ -134,6 +135,21 @@
 
     advanceOrder: function (id, status) {
       return q(client.from("orders").update({ status: status }).eq("id", id).select());
+    },
+
+    qpayInvoice: function (orderId) {
+      return client.functions.invoke("qpay-invoice", { body: { order_id: orderId } }).then(function (res) {
+        if (res.error) throw res.error;
+        var d = res.data || {};
+        if (d.error) throw new Error(d.error);
+        return d;
+      });
+    },
+
+    qpayCheck: function (orderId) {
+      return fetch(url + "/functions/v1/qpay-callback?order_id=" + encodeURIComponent(orderId))
+        .then(function (r) { return r.json(); })
+        .catch(function () { return { paid: false }; });
     },
 
     uploadImage: function (file) {
