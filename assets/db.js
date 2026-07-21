@@ -133,6 +133,10 @@
       return q(client.from("products").update({ best_seller: !!val }).eq("id", id).select());
     },
 
+    setPaymentStatus: function (id, status) {
+      return q(client.from("orders").update({ payment_status: status }).eq("id", id).select());
+    },
+
     advanceOrder: function (id, status) {
       return q(client.from("orders").update({ status: status }).eq("id", id).select());
     },
