@@ -24,6 +24,7 @@
   function fromDbProduct(r) {
     return {
       id: r.id, name: r.name || "", category: r.category || "", vendor: r.vendor || "",
+      description: r.description || "",
       price: Number(r.price) || 0, discount: Number(r.discount) || 0,
       rating: Number(r.rating) || 5, stock: Number(r.stock) || 0,
       bestSeller: !!r.best_seller, image: r.image || "",
@@ -32,6 +33,7 @@
   function toDbProduct(p) {
     return {
       name: p.name || "", category: p.category || "", vendor: p.vendor || "",
+      description: p.description || "",
       price: Math.round(Number(p.price) || 0), discount: Math.round(Number(p.discount) || 0),
       rating: Number(p.rating) || 5, stock: Math.round(Number(p.stock) || 0),
       best_seller: !!p.bestSeller, image: p.image || "",
