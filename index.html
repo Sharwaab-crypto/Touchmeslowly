@@ -1015,6 +1015,42 @@
     </div>
   </sc-if>
 
+  <!-- QPAY PAYMENT MODAL -->
+  <sc-if value="{{ qpayOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="tms-fade" style="position:fixed;inset:0;z-index:115;background:rgba(20,14,12,.62);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:18px;overflow-y:auto">
+      <div style="width:100%;max-width:430px;background:#FFFFFF;border-radius:20px;padding:30px 26px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.32);position:relative">
+        <button onclick="{{ onCloseQpay }}" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid #EDE8DF;background:#FAF8F4;cursor:pointer;font-size:13px;color:#57534E">✕</button>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin-bottom:4px">QPay-ээр төлөх</div>
+        <p style="font-size:12px;color:#78716C;margin:0 0 6px">Захиалга <span style="font-family:ui-monospace,monospace;color:#D63A66;font-weight:700">#{{ qpayOrderId }}</span></p>
+        <p style="font-size:23px;font-weight:800;margin:0 0 16px">{{ qpayAmount }}</p>
+        <sc-if value="{{ qpayLoading }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:13px;color:#78716C;padding:44px 0">Нэхэмжлэл үүсгэж байна…</p>
+        </sc-if>
+        <sc-if value="{{ qpayPending }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ hasQpayQr }}" hint-placeholder-val="{{ false }}">
+            <div style="display:inline-block;padding:10px;border:1px solid #EDE8DF;border-radius:14px;margin-bottom:10px"><img src="{{ qpayQr }}" alt="QPay QR" style="width:208px;height:208px;display:block"></div>
+            <p style="font-size:12px;color:#78716C;margin:0 0 14px">Банкны аппаараа QR кодыг уншуулна уу</p>
+          </sc-if>
+          <sc-if value="{{ hasQpayBanks }}" hint-placeholder-val="{{ false }}">
+            <p style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:700;margin:0 0 10px">Эсвэл банкны аппаа сонгоно уу</p>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">
+              <sc-for list="{{ qpayBanks }}" as="b" hint-placeholder-count="8">
+                <a href="{{ b.link }}" style="display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;padding:9px 4px;border:1px solid #EDE8DF;border-radius:10px;background:#FAF8F4"><img src="{{ b.logo }}" alt="" style="width:30px;height:30px;border-radius:7px;object-fit:cover"><span style="font-size:9.5px;color:#57534E;line-height:1.25;overflow:hidden;max-height:24px">{{ b.name }}</span></a>
+              </sc-for>
+            </div>
+          </sc-if>
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;color:#9A6B00;background:#FCF6E8;border:1px solid #F0E2C0;border-radius:10px;padding:10px;margin-bottom:14px">⏳ Төлбөр хүлээгдэж байна — төлмөгц автоматаар баталгаажна</div>
+          <button onclick="{{ onQpayCheck }}" style="width:100%;padding:13px;border-radius:10px;font-size:13px;font-weight:700;border:1px solid #E7E2DA;background:#FFFFFF;color:#1C1917;cursor:pointer;font-family:inherit">Төлбөр шалгах</button>
+        </sc-if>
+        <sc-if value="{{ qpayPaid }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:48px;margin:16px 0 8px">✅</div>
+          <p style="font-size:16px;font-weight:700;color:#2E7D53;margin:0 0 20px">Төлбөр амжилттай төлөгдлөө!</p>
+          <button onclick="{{ onCloseQpay }}" style="width:100%;padding:14px;border-radius:10px;font-size:13px;font-weight:700;border:none;background:#2E7D53;color:#FFFFFF;cursor:pointer;font-family:inherit">Үргэлжлүүлэх</button>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
   <!-- ADMIN PANEL -->
   <sc-if value="{{ adminOpen }}" hint-placeholder-val="{{ false }}">
     <div class="tms-fade" style="position:fixed;inset:0;z-index:100;background:#F4EFE7;color:#1C1917;overflow-y:auto">
@@ -1272,7 +1308,7 @@
                   <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="3">
                     <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:18px 22px;display:grid;grid-template-columns:130px 1.6fr 1fr 130px 150px;gap:16px;align-items:center">
                       <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#D63A66;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0">{{ o.date }}</p></div>
-                      <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p></div>
+                      <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;font-weight:600;color:#8A8580;margin:4px 0 0">{{ o.payLabel }}</p></div>
                       <span style="font-size:12px;color:#57534E">{{ o.itemsLabel }}</span>
                       <span style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                       <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
@@ -1415,14 +1451,14 @@ class Component extends DCLogic {
       { icon: "💬", title: "24/7 туслах", sub: "Мэргэжлийн зөвлөгөө" },
     ];
     this.CITIES = ["Улаанбаатар", "Дархан", "Эрдэнэт"];
-    this.PAY = ["Бэлнээр (хүргэх үед)"];
+    this.PAY = ["QPay", "Бэлнээр (хүргэх үед)"];
     const stocks = [12, 7, 3, 20, 5, 34, 15, 9, 22, 6, 4, 18];
     this.PRODUCTS.forEach((p, i) => { p.stock = stocks[i] ?? 10; });
     this.BRANDS.forEach((b, i) => { b.id = i + 1; if (b.image === undefined) b.image = ""; });
     this.state = {
       query: "", activeCategory: "Бүгд", maxPrice: 3000000, sortBy: "featured",
       cart: [], cartOpen: false, favorites: [],
-      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "Бэлнээр (хүргэх үед)", lastOrderId: null,
+      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "QPay", lastOrderId: null, qpay: null,
       showWelcome: (this.props.welcomeOnLoad ?? true), welcomeClosing: false, selectedProduct: null, detailQty: 1,
       products: this.PRODUCTS.map((p) => ({ ...p })),
       orders: DB.enabled ? [] : [
@@ -1469,7 +1505,7 @@ class Component extends DCLogic {
   }
 
   componentDidMount() { this._timer = setInterval(() => this.setState({ now: Date.now() }), 1000); this.initDb(); }
-  componentWillUnmount() { clearInterval(this._timer); }
+  componentWillUnmount() { clearInterval(this._timer); clearInterval(this._qpayTimer); }
 
   // ---------- Supabase холболт ----------
   async initDb() {
@@ -1547,6 +1583,43 @@ class Component extends DCLogic {
     reader.onload = () => apply(reader.result);
     reader.readAsDataURL(file);
   }
+  async startQpay(order) {
+    this.setState({ qpay: { orderId: order.id, amount: order.total, status: "loading", qr: "", qrText: "", banks: [] } });
+    try {
+      const r = await DB.qpayInvoice(order.id);
+      this.setState({
+        qpay: {
+          orderId: order.id,
+          amount: r.amount || order.total,
+          status: "pending",
+          qr: r.qr_image ? "data:image/png;base64," + r.qr_image : "",
+          qrText: r.qr_text || "",
+          banks: (r.urls || []).map((u) => ({ name: u.name || "", logo: u.logo || "", link: u.link || "" })),
+        },
+      });
+      clearInterval(this._qpayTimer);
+      this._qpayTimer = setInterval(() => this.checkQpay(), 3500);
+    } catch (err) {
+      console.error("[qpay]", err);
+      this.setState({ qpay: null });
+      alert("QPay нэхэмжлэл үүсгэхэд алдаа гарлаа. Захиалга тань бүртгэгдсэн тул бэлнээр төлж болно, эсвэл дахин оролдоно уу.");
+    }
+  }
+  async checkQpay() {
+    const q = this.state.qpay;
+    if (!q || q.status !== "pending") return;
+    try {
+      const r = await DB.qpayCheck(q.orderId);
+      if (r && r.paid) {
+        clearInterval(this._qpayTimer);
+        this.setState((s) => ({
+          qpay: s.qpay ? { ...s.qpay, status: "paid" } : null,
+          orders: s.orders.map((o) => (o.id === q.orderId ? { ...o, payment_status: "paid" } : o)),
+        }));
+      }
+    } catch (err) { console.error("[qpay]", err); }
+  }
+  closeQpay() { clearInterval(this._qpayTimer); this.setState({ qpay: null }); }
   async setCategoryImage(name, url) {
     if (DB.enabled) {
       if (!this.state.adminUser) { alert("Эхлээд нэвтэрнэ үү."); return; }
@@ -1620,6 +1693,7 @@ class Component extends DCLogic {
       });
       return { lastOrderId: id, stage: "success", cart: [], cartOpen: false, orders: [order, ...s.orders], products };
     });
+    if (DB.enabled && order.pay === "QPay") this.startQpay(order);
   }
 
   _tabStyle(active) {
@@ -1879,6 +1953,7 @@ class Component extends DCLogic {
       id: o.id, date: o.date, customer: o.customer, city: o.city, phone: o.phone,
       itemsLabel: o.items.reduce((a, i) => a + i.qty, 0) + " бараа",
       totalFmt: this.formatPrice(o.total), status: o.status,
+      payLabel: (o.pay || "—") + (o.payment_status === "paid" ? " · Төлөгдсөн ✓" : (o.pay === "QPay" ? " · Төлбөр хүлээгдэж байна" : "")),
       statusStyle: "font-size:11px;font-weight:700;padding:5px 12px;border-radius:9999px;color:#FFFFFF;white-space:nowrap;background:" + statusColor(o.status),
       onAdvance: () => this.advanceOrder(o.id),
     }));
@@ -2067,6 +2142,18 @@ class Component extends DCLogic {
       onFooterTagline: (e) => this.setContent("footerTagline", e.target.value),
       onSaveContent: () => this.saveContentToDb(),
       contentSaveLabel: s.contentBusy ? "Хадгалж байна…" : (s.contentSaved ? "Хадгалагдлаа ✓" : "Өөрчлөлтийг хадгалах"),
+      qpayOpen: !!s.qpay,
+      qpayLoading: !!s.qpay && s.qpay.status === "loading",
+      qpayPending: !!s.qpay && s.qpay.status === "pending",
+      qpayPaid: !!s.qpay && s.qpay.status === "paid",
+      qpayQr: s.qpay ? s.qpay.qr : "",
+      hasQpayQr: !!(s.qpay && s.qpay.qr),
+      qpayBanks: s.qpay ? s.qpay.banks : [],
+      hasQpayBanks: !!(s.qpay && s.qpay.banks && s.qpay.banks.length),
+      qpayOrderId: s.qpay ? s.qpay.orderId : "",
+      qpayAmount: s.qpay ? this.formatPrice(s.qpay.amount) : "",
+      onQpayCheck: () => this.checkQpay(),
+      onCloseQpay: () => this.closeQpay(),
       stopEdit: (e) => e.stopPropagation(),
     };
   }
