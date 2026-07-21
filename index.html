@@ -1108,10 +1108,11 @@
                   <p style="font-size:13px;font-weight:700;margin:0 0 16px">Сүүлийн захиалгууд</p>
                   <div style="display:flex;flex-direction:column;gap:1px;background:#F0EAE0;border:1px solid #F0EAE0;border-radius:8px;overflow:hidden">
                     <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="2">
-                      <div style="display:grid;grid-template-columns:110px 1fr 120px 130px;gap:12px;align-items:center;background:#FFFFFF;padding:13px 14px">
+                      <div style="display:grid;grid-template-columns:110px 1fr 120px 150px 130px;gap:12px;align-items:center;background:#FFFFFF;padding:13px 14px">
                         <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:#D63A66">#{{ o.id }}</span>
-                        <span style="font-size:13px;font-weight:500">{{ o.customer }}</span>
+                        <div style="min-width:0"><p style="font-size:13px;font-weight:500;margin:0">{{ o.customer }}</p><p style="font-size:11px;color:#A8A29E;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p></div>
                         <span style="font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
+                        <span style="justify-self:start"><button onclick="{{ o.onTogglePaid }}" title="Дарж төлөв солих" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></span>
                         <span style="justify-self:start"><span style="{{ o.statusStyle }}">{{ o.status }}</span></span>
                       </div>
                     </sc-for>
@@ -1308,8 +1309,8 @@
                   <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="3">
                     <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:18px 22px;display:grid;grid-template-columns:130px 1.6fr 1fr 130px 150px;gap:16px;align-items:center">
                       <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#D63A66;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0">{{ o.date }}</p></div>
-                      <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;font-weight:600;color:#8A8580;margin:4px 0 0">{{ o.payLabel }}</p></div>
-                      <span style="font-size:12px;color:#57534E">{{ o.itemsLabel }}</span>
+                      <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;color:#A8A29E;margin:4px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p></div>
+                      <div><p style="font-size:12px;color:#57534E;margin:0 0 7px">{{ o.itemsLabel }}</p><button onclick="{{ o.onTogglePaid }}" title="Дарж төлөв солих" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></div>
                       <span style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                       <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
                         <span style="{{ o.statusStyle }}">{{ o.status }}</span>
@@ -1798,6 +1799,17 @@ class Component extends DCLogic {
     }
     this.setState((s) => ({ products: s.products.map((x) => (x.id === id ? { ...x, bestSeller: val } : x)) }));
   }
+  async togglePaid(id) {
+    const o = this.state.orders.find((x) => x.id === id);
+    if (!o) return;
+    const next = o.payment_status === "paid" ? "" : "paid";
+    if (DB.enabled) {
+      if (!this.state.adminUser) { alert("Эхлээд нэвтэрнэ үү."); return; }
+      try { await DB.setPaymentStatus(id, next); }
+      catch (err) { console.error("[db] pay:", err); alert("Төлбөрийн төлөв солиход алдаа гарлаа."); return; }
+    }
+    this.setState((s) => ({ orders: s.orders.map((x) => (x.id === id ? { ...x, payment_status: next } : x)) }));
+  }
   async advanceOrder(id) {
     const flow = { "Хүлээгдэж буй": "Бэлтгэгдэж буй", "Бэлтгэгдэж буй": "Хүргэгдсэн", "Хүргэгдсэн": "Хүргэгдсэн" };
     const o = this.state.orders.find((x) => x.id === id);
@@ -1953,7 +1965,10 @@ class Component extends DCLogic {
       id: o.id, date: o.date, customer: o.customer, city: o.city, phone: o.phone,
       itemsLabel: o.items.reduce((a, i) => a + i.qty, 0) + " бараа",
       totalFmt: this.formatPrice(o.total), status: o.status,
-      payLabel: (o.pay || "—") + (o.payment_status === "paid" ? " · Төлөгдсөн ✓" : (o.pay === "QPay" ? " · Төлбөр хүлээгдэж байна" : "")),
+      address: o.address || "—",
+      payBadge: (o.pay === "QPay" ? "QPay" : "Бэлэн") + " · " + (o.payment_status === "paid" ? "Төлөгдсөн ✓" : "Төлөгдөөгүй"),
+      payBadgeStyle: "font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + (o.payment_status === "paid" ? "#CBE3D2;background:#EAF3EC;color:#2E7D53" : "#F0E2C0;background:#FCF6E8;color:#9A6B00"),
+      onTogglePaid: () => this.togglePaid(o.id),
       statusStyle: "font-size:11px;font-weight:700;padding:5px 12px;border-radius:9999px;color:#FFFFFF;white-space:nowrap;background:" + statusColor(o.status),
       onAdvance: () => this.advanceOrder(o.id),
     }));
