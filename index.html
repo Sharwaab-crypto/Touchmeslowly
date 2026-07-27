@@ -2031,7 +2031,7 @@ class Component extends DCLogic {
           .map((c) => {
             const items = filtered.filter((p) => p.category === c).map((p, i) => this.pvm(p, i));
             const banner = (s.categoryBanners || {})[c] || (s.categoryImages || {})[c] || "";
-            const big = items.length >= 10;
+            const big = items.length >= 10 && !!banner;
             return {
               name: c,
               count: items.length + " бараа",
