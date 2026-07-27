@@ -570,24 +570,7 @@
   </section>
 
   <!-- CATEGORIES -->
-  <section id="categories" style="max-width:1320px;margin:0 auto;padding:72px 40px 0">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px">
-      <div>
-        <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);font-weight:600;margin:0 0 10px">Сонголт</p>
-        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;margin:0;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);">Ангилалаар дэлгүүр хэсэх</h2>
-      </div>
-      <a href="#shop" class="tms-link tms-under" style="font-size:13px;font-weight:600;color:#FFFFFF;text-decoration:none;white-space:nowrap">Бүх бараа →</a>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:20px">
-      <sc-for list="{{ categoryCircles }}" as="c" hint-placeholder-count="6">
-        <button onclick="{{ c.onClick }}" class="tms-cat" style="display:flex;flex-direction:column;align-items:center;gap:14px;background:transparent;border:none;cursor:pointer;padding:0">
-          <span style="width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#EDE7DD;border:1px solid #E7E2DA;display:block"><img src="{{ c.image }}" alt="{{ c.label }}" loading="lazy" class="tms-catimg" style="width:100%;height:100%;object-fit:cover;display:block"></span>
-          <span style="font-size:13px;font-weight:600;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);">{{ c.label }}</span>
-          <span style="font-size:11px;color:#EDE7E9;margin-top:-8px">{{ c.count }} бараа</span>
-        </button>
-      </sc-for>
-    </div>
-  </section>
+  
 
   <!-- BEST SELLERS -->
   <sc-if value="{{ hasBestSellers }}" hint-placeholder-val="{{ true }}">
@@ -788,7 +771,7 @@
       <div style="display:flex;flex-direction:column;gap:46px">
         <sc-for list="{{ categoryRows }}" as="r" hint-placeholder-count="4">
           <div data-row="1">
-            <sc-if value="{{ r.hasBanner }}" hint-placeholder-val="{{ false }}"><div style="margin-bottom:16px;border-radius:14px;overflow:hidden;aspect-ratio:1320/230;background:#1D0710"><img src="{{ r.banner }}" alt="{{ r.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div></sc-if>
+            <sc-if value="{{ r.hasBanner }}" hint-placeholder-val="{{ false }}"><div style="margin-bottom:16px;border-radius:14px;overflow:hidden;aspect-ratio:1320/300;background:#1D0710"><img src="{{ r.banner }}" alt="{{ r.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div></sc-if>
             <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap">
               <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:21px;margin:0;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30)">{{ r.name }}</h3>
               <span style="font-size:12px;color:#C79AA0">{{ r.count }}</span>
@@ -1255,7 +1238,7 @@
                       <div style="width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#F1ECE3;border:1px solid #E7E2DA"><img src="{{ c.image }}" alt="" style="width:100%;height:100%;object-fit:cover"></div>
                       <div style="min-width:0;flex:1"><p style="margin:0;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</p><p style="margin:3px 0 0;font-size:12px;color:#A8A29E">{{ c.count }} бүтээгдэхүүн</p></div>
                       <label title="Зураг солих" style="flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #E7E2DA;background:#F7F2EA;border-radius:8px;cursor:pointer;font-size:14px">📷<input type="file" accept="image/*" onchange="{{ c.onImage }}" style="display:none"></label>
-                      <label title="Баннер оруулах (эхний 3 ангилалд харагдана)" style="flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #E7E2DA;background:#F7F2EA;border-radius:8px;cursor:pointer;font-size:14px">🖼<input type="file" accept="image/*" onchange="{{ c.onBanner }}" style="display:none"></label>
+                      <label title="Тусгай баннер оруулах (байхгүй бол 📷 зураг баннер болно)" style="flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #E7E2DA;background:#F7F2EA;border-radius:8px;cursor:pointer;font-size:14px">🖼<input type="file" accept="image/*" onchange="{{ c.onBanner }}" style="display:none"></label>
                       <sc-if value="{{ c.hasBanner }}" hint-placeholder-val="{{ false }}"><button onclick="{{ c.onBannerClear }}" title="Баннер арилгах" style="flex-shrink:0;width:32px;height:32px;border:1px solid #FFC9D1;background:#FFE9EC;border-radius:8px;cursor:pointer;font-size:12px;color:#C2273B">✕</button></sc-if>
                       <button onclick="{{ c.onDelete }}" title="Устгах" style="flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid #F0D5D0;background:#FFFFFF;border-radius:8px;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C61F2B" stroke-width="1.7"><polyline points="3 6 5 6 21 6"></polyline><path d="M8 6V4h8v2m1 0v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6"></path></svg></button>
                     </div>
@@ -2032,8 +2015,8 @@ class Component extends DCLogic {
           .map((c, ci) => ({
             name: c,
             count: filtered.filter((p) => p.category === c).length + " бараа",
-            banner: ci < 3 ? ((s.categoryBanners || {})[c] || "") : "",
-            hasBanner: ci < 3 && !!((s.categoryBanners || {})[c]),
+            banner: (s.categoryBanners || {})[c] || (s.categoryImages || {})[c] || "",
+            hasBanner: !!((s.categoryBanners || {})[c] || (s.categoryImages || {})[c]),
             items: filtered.filter((p) => p.category === c).map((p, i) => this.pvm(p, i)),
             onAll: () => this.setState({ activeCategory: c }),
             onLeft: (e) => { const w = e.currentTarget.closest("[data-row]"); const sc = w && w.querySelector(".tms-hscroll"); if (sc) { sc.dataset.pauseUntil = String(Date.now() + 2600); if (sc.scrollBy) sc.scrollBy({ left: -620, behavior: "smooth" }); } },
