@@ -518,11 +518,10 @@
       <a href="#top" style="display:flex;align-items:center;gap:9px;text-decoration:none;white-space:nowrap">
         <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;color:#FFFFFF;letter-spacing:-.02em">Touch me slowly<span style="color: #FA0046">.</span></span>
       </a>
-      <nav class="tms-nav" style="display:flex;gap:26px;align-items:center">
-        <a href="#shop" class="tms-link" style="font-size:13px;font-weight:500;color:#F0E7E9;text-decoration:none">Дэлгүүр</a>
-        <a href="#categories" class="tms-link" style="font-size:13px;font-weight:500;color:#F0E7E9;text-decoration:none">Ангилал</a>
-        <a href="#brands" class="tms-link" style="font-size:13px;font-weight:500;color:#F0E7E9;text-decoration:none">Брэнд</a>
-        <a href="#journal" class="tms-link" style="font-size:13px;font-weight:500;color:#F0E7E9;text-decoration:none">Сэтгүүл</a>
+      <nav class="tms-nav" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+        <sc-for list="{{ navCategories }}" as="n" hint-placeholder-count="5">
+          <button onclick="{{ n.onClick }}" class="tms-link" style="font-size:13px;font-weight:500;color:#F0E7E9;background:transparent;border:none;cursor:pointer;padding:0;font-family:inherit;white-space:nowrap">{{ n.name }}</button>
+        </sc-for>
       </nav>
       <div class="tms-search" style="flex:1;max-width:420px;margin-left:auto;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:0 14px">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A8A29E" stroke-width="1.8"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.6" y2="16.6"></line></svg>
@@ -1003,8 +1002,7 @@
           <div style="padding:44px;display:flex;flex-direction:column">
             <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#FF3D57;font-weight:600;margin:0 0 12px">{{ selected.category }} · {{ selected.vendor }}</p>
             <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(26px,3vw,36px);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px;color:#1C1917">{{ selected.name }}</h2>
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;font-size:13px;color:#78716C"><span style="color:#1C1917;font-weight:600">★ {{ selected.rating }}</span><span style="color:#D8D0C4">·</span><span>Хүргэлт 2–5 хоног</span></div>
-            <p style="font-size:14px;line-height:1.7;color:#78716C;margin:0 0 28px;white-space:pre-line">{{ selected.description }}</p>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;font-size:13px;color:#78716C"><span style="color:#1C1917;font-weight:600">★ {{ selected.rating }}</span><span style="color:#D8D0C4">·</span><span>Төлбөр төлөгдсөний маргааш таны гарт очих болно</span></div>
             <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #E7E2DA"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:34px;font-variant-numeric:tabular-nums">{{ selected.priceFmt }}</span><sc-if value="{{ selected.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="font-size:16px;color:#A8A29E;text-decoration:line-through;font-variant-numeric:tabular-nums">{{ selected.oldPriceFmt }}</span><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ selected.discountLabel }}</span></sc-if><span style="font-size:12px;color:#A8A29E">· НӨАТ ороогүй дүн</span></div>
             <div style="margin-bottom:28px">
               <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 12px">Тоо ширхэг</p>
@@ -1019,10 +1017,10 @@
               <button onclick="{{ selected.onBuy }}" style="width:100%;padding:16px;border-radius:10px;font-size:13px;font-weight:600;background:#1C1917;color:#FFFFFF;border:none;cursor:pointer">Шууд авах →</button>
               <button onclick="{{ selected.onAdd }}" class="tms-amber" style="width:100%;padding:16px;border-radius:10px;font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;padding-top:28px;border-top:1px solid #E7E2DA;font-size:13px;color:#57534E">
-              <div><p style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;margin:0 0 4px">Хүргэлт</p><p style="margin:0;font-weight:500">Үнэгүй</p></div>
-              <div><p style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;margin:0 0 4px">Буцаалт</p><p style="margin:0;font-weight:500">14 хоног</p></div>
-              <div><p style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;margin:0 0 4px">Баталгаа</p><p style="margin:0;font-weight:500">2 жил</p></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border-top:1px solid #E7E2DA;padding-top:20px">
+              <button onclick="{{ selected.onInfoDesc }}" style="padding:13px 8px;border-radius:10px;font-size:12.5px;font-weight:600;border:1px solid #E7E2DA;background:#FAF8F4;color:#1C1917;cursor:pointer;font-family:inherit">Тайлбар</button>
+              <button onclick="{{ selected.onInfoUsage }}" style="padding:13px 8px;border-radius:10px;font-size:12.5px;font-weight:600;border:1px solid #E7E2DA;background:#FAF8F4;color:#1C1917;cursor:pointer;font-family:inherit">Хэрэглэх заавар</button>
+              <button onclick="{{ selected.onInfoCaution }}" style="padding:13px 8px;border-radius:10px;font-size:12.5px;font-weight:600;border:1px solid #E7E2DA;background:#FAF8F4;color:#1C1917;cursor:pointer;font-family:inherit">Анхаарах зүйлс</button>
             </div>
           </div>
         </div>
@@ -1088,6 +1086,17 @@
           <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;line-height:1.2;margin:0 0 16px;color:#1C1917">{{ selArticle.title }}</h2>
           <p style="font-size:14.5px;line-height:1.75;color:#57534E;margin:0;white-space:pre-line">{{ selArticle.excerpt }}</p>
         </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- PRODUCT INFO POPUP -->
+  <sc-if value="{{ hasInfoPopup }}" hint-placeholder-val="{{ false }}">
+    <div class="tms-fade" onclick="{{ onCloseInfo }}" style="position:fixed;inset:0;z-index:118;background:rgba(20,14,12,.6);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px">
+      <div onclick="{{ stopEdit }}" style="width:100%;max-width:520px;background:#FFFFFF;border-radius:18px;padding:28px 26px;position:relative;max-height:82vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,.32)">
+        <button onclick="{{ onCloseInfo }}" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid #EDE8DF;background:#FAF8F4;cursor:pointer;font-size:13px;color:#57534E">✕</button>
+        <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:0 0 14px;color:#1C1917">{{ infoTitle }}</h3>
+        <p style="font-size:14px;line-height:1.75;color:#57534E;margin:0;white-space:pre-line">{{ infoText }}</p>
       </div>
     </div>
   </sc-if>
@@ -1430,6 +1439,8 @@
             <div style="display:flex;flex-direction:column;gap:16px">
               <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Нэр</label><input value="{{ editName }}" onchange="{{ onEditName }}" placeholder="Бүтээгдэхүүний нэр" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
               <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Тайлбар</label><textarea value="{{ editDescription }}" onchange="{{ onEditDescription }}" placeholder="Барааны дэлгэрэнгүй тайлбар (мөр шинэчилж болно)" rows="3" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit;resize:vertical;min-height:80px"></textarea></div>
+              <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Хэрэглэх заавар</label><textarea value="{{ editUsage }}" onchange="{{ onEditUsage }}" placeholder="Хэрэглэх дараалал, зөвлөмж (мөр шинэчилж болно)" rows="3" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit;resize:vertical;min-height:72px"></textarea></div>
+              <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Анхаарах зүйлс</label><textarea value="{{ editCaution }}" onchange="{{ onEditCaution }}" placeholder="Хадгалалт, цэвэрлэгээ, болгоомжлол" rows="3" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit;resize:vertical;min-height:72px"></textarea></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Брэнд</label><input value="{{ editVendor }}" onchange="{{ onEditVendor }}" placeholder="Брэнд" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
                 <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Ангилал</label><select value="{{ editCategory }}" onchange="{{ onEditCategory }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit;cursor:pointer"><sc-for list="{{ adminCatOptions }}" as="c" hint-placeholder-count="6"><option>{{ c }}</option></sc-for></select></div>
@@ -1541,7 +1552,7 @@ class Component extends DCLogic {
     this.state = {
       query: "", activeCategory: "Бүгд", maxPrice: 3000000, sortBy: "featured",
       cart: [], cartOpen: false, favorites: [],
-      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "QPay", lastOrderId: null, qpay: null, selectedArticle: null,
+      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "QPay", lastOrderId: null, qpay: null, selectedArticle: null, infoPopup: null,
       showWelcome: (this.props.welcomeOnLoad ?? true), welcomeClosing: false, selectedProduct: null, detailQty: 1,
       products: this.PRODUCTS.map((p) => ({ ...p })),
       orders: DB.enabled ? [] : [
@@ -2029,7 +2040,10 @@ class Component extends DCLogic {
       const p = s.selectedProduct;
       selected = {
         name: p.name, image: p.image, category: p.category, vendor: p.vendor, rating: p.rating,
-        description: p.description || "Байгалийн материал, нарийн боловсруулалт. Урт эдэлгээ, чанартай хийц.",
+        description: p.description || "",
+        onInfoDesc: () => this.setState({ infoPopup: { title: "Тайлбар", text: p.description || "Тайлбар оруулаагүй байна." } }),
+        onInfoUsage: () => this.setState({ infoPopup: { title: "Хэрэглэх заавар", text: p.usage || "Хэрэглэх заавар оруулаагүй байна." } }),
+        onInfoCaution: () => this.setState({ infoPopup: { title: "Анхаарах зүйлс", text: p.caution || "Анхаарах зүйлс оруулаагүй байна." } }),
         priceFmt: this.formatPrice(this.unitPrice(p)),
         hasDiscount: (Number(p.discount) || 0) > 0,
         oldPriceFmt: this.formatPrice(p.price),
@@ -2225,9 +2239,13 @@ class Component extends DCLogic {
       editTagline: ep ? (ep.tagline || "") : "", editEst: ep ? (ep.est || "") : "",
       editArticleTitle: ep ? (ep.title || "") : "", editExcerpt: ep ? (ep.excerpt || "") : "", editDate: ep ? (ep.date || "") : "",
       editDescription: ep ? (ep.description || "") : "",
+      editUsage: ep ? (ep.usage || "") : "",
+      editCaution: ep ? (ep.caution || "") : "",
       editImage: ep ? (ep.image || "") : "", hasEditImage: !!(ep && ep.image), noEditImage: !(ep && ep.image),
       onEditName: (e) => this.setEditField("name", e.target.value),
       onEditDescription: (e) => this.setEditField("description", e.target.value),
+      onEditUsage: (e) => this.setEditField("usage", e.target.value),
+      onEditCaution: (e) => this.setEditField("caution", e.target.value),
       onEditVendor: (e) => this.setEditField("vendor", e.target.value),
       onEditPrice: (e) => this.setEditField("price", e.target.value),
       onEditDiscount: (e) => this.setEditField("discount", e.target.value),
@@ -2312,6 +2330,18 @@ class Component extends DCLogic {
         ? { title: s.selectedArticle.title || "", excerpt: s.selectedArticle.excerpt || "", category: s.selectedArticle.category || "", date: s.selectedArticle.date || "", image: s.selectedArticle.image || "", hasImage: !!s.selectedArticle.image }
         : { title: "", excerpt: "", category: "", date: "", image: "", hasImage: false },
       onCloseArticle: () => this.setState({ selectedArticle: null }),
+      hasInfoPopup: !!s.infoPopup,
+      infoTitle: s.infoPopup ? s.infoPopup.title : "",
+      infoText: s.infoPopup ? s.infoPopup.text : "",
+      onCloseInfo: () => this.setState({ infoPopup: null }),
+      navCategories: s.categories.map((c) => ({
+        name: c,
+        onClick: () => {
+          this.setState({ activeCategory: c });
+          const el = document.getElementById("shop");
+          if (el && el.scrollIntoView) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        },
+      })),
       stopEdit: (e) => e.stopPropagation(),
     };
   }
