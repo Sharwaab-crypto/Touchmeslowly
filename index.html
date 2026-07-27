@@ -421,11 +421,11 @@
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{background:#FBF9F6}
+  body{background:#2E060B}
   input,button,select,textarea{font-family:inherit}
   ::placeholder{color:#A8A29E}
-  ::selection{background:#F7A8C6;color:#1C1917}
-  input[type=range]{accent-color:#D63A66}
+  ::selection{background:#FF8D9C;color:#1C1917}
+  input[type=range]{accent-color:#FF3D57}
   ::-webkit-scrollbar{width:10px;height:10px}
   ::-webkit-scrollbar-track{background:#F2EEE7}
   ::-webkit-scrollbar-thumb{background:#D8D0C4;border-radius:8px}
@@ -444,21 +444,21 @@
   .tms-article .tms-imgzoom{transition:transform 1s cubic-bezier(.16,1,.3,1)}
   .tms-article:hover .tms-imgzoom{transform:scale(1.05)}
   .tms-link{transition:color .25s ease}
-  .tms-link:hover{color:#D63A66}
+  .tms-link:hover{color:#FF3D57}
   .tms-fade{animation:tmsFade .5s ease both}
   .tms-slide{animation:tmsSlide .4s cubic-bezier(.22,1,.36,1) both}
   .tms-pop{animation:tmsPop .45s cubic-bezier(.22,1,.36,1) both}
   .tms-rise{animation:tmsRise .7s cubic-bezier(.22,1,.36,1) both}
   .tms-brand{transition:border-color .3s ease,transform .3s ease}
-  .tms-brand:hover{border-color:#D63A66 !important;transform:translateY(-2px)}
+  .tms-brand:hover{border-color:#FF3D57 !important;transform:translateY(-2px)}
   .tms-amber{transition:background .25s ease}
-  .tms-amber:hover{background:#B82C54 !important}
+  .tms-amber:hover{background:#C2273B !important}
   .tms-ghost{transition:background .25s ease,border-color .25s ease}
   .tms-ghost:hover{background:#F4EFE7 !important}
   .tms-iconbtn{transition:background .25s ease,color .25s ease}
   .tms-iconbtn:hover{background:#F4EFE7}
   .tms-under{position:relative}
-  .tms-under::after{content:"";position:absolute;left:0;bottom:-3px;height:1.5px;width:0;background:#D63A66;transition:width .3s ease}
+  .tms-under::after{content:"";position:absolute;left:0;bottom:-3px;height:1.5px;width:0;background:#FF3D57;transition:width .3s ease}
   .tms-under:hover::after{width:100%}
 
   @media (max-width: 860px){
@@ -496,7 +496,7 @@
 
   <!-- HEADER -->
   <sc-if value="{{ saleBarVisible }}" hint-placeholder-val="{{ false }}">
-    <div onclick="{{ onSaleBarClick }}" style="position:sticky;top:0;z-index:31;height:38px;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#8E0F18,#D63A66);color:#FFFFFF;font-size:12.5px;font-weight:600;cursor:pointer;padding:0 14px;white-space:nowrap;overflow:hidden">
+    <div onclick="{{ onSaleBarClick }}" style="position:sticky;top:0;z-index:31;height:38px;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#A3101F,#FF3D57);color:#FFFFFF;font-size:12.5px;font-weight:600;cursor:pointer;padding:0 14px;white-space:nowrap;overflow:hidden">
       <span>🔥 {{ saleBarTitle }}</span>
       <span style="font-family:ui-monospace,monospace;font-weight:700;letter-spacing:.08em;background:rgba(255,255,255,.18);padding:3px 10px;border-radius:999px">{{ saleBarTimer }}</span>
       <span style="opacity:.85">Код: {{ saleBarCode }}</span>
@@ -526,7 +526,7 @@
         </button>
         <button onclick="{{ onOpenCart }}" class="tms-iconbtn" style="position:relative;background:transparent;border:none;color:#FFFFFF;cursor:pointer;padding:9px;display:flex;border-radius:9px">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 8h12l1 12H5z"></path><path d="M9 8a3 3 0 0 1 6 0"></path></svg>
-          <sc-if value="{{ hasCartItems }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:2px;right:2px;min-width:17px;height:17px;border-radius:9999px;font-size:10px;display:flex;align-items:center;justify-content:center;background:#D63A66;color:#FFFFFF;padding:0 4px;font-weight:700">{{ cartCount }}</span></sc-if>
+          <sc-if value="{{ hasCartItems }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:2px;right:2px;min-width:17px;height:17px;border-radius:9999px;font-size:10px;display:flex;align-items:center;justify-content:center;background:#FF3D57;color:#FFFFFF;padding:0 4px;font-weight:700">{{ cartCount }}</span></sc-if>
         </button>
       </div>
     </div>
@@ -542,7 +542,7 @@
     <div style="position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 5vw">
       <svg viewBox="2 -686 8554 712" style="width:min(92%,1280px);height:auto;overflow:visible;filter:drop-shadow(0 3px 22px rgba(0,0,0,.4))" aria-label="Touch me slowly"><path transform="scale(1,-1)" d="M177 0V660H339V0ZM14 522V660H502V522Z M856 -14Q786 -14 730 8Q674 30 635 73Q596 116 576 180Q555 244 555 327Q555 445 594 522Q632 598 702 636Q771 674 862 674Q932 674 988 652Q1043 631 1082 588Q1121 545 1142 480Q1162 416 1162 331Q1162 245 1140 180Q1119 115 1078 72Q1038 29 982 8Q925 -14 856 -14ZM862 119Q907 119 936 142Q966 164 980 210Q995 255 995 324Q995 397 980 445Q964 493 934 518Q903 542 857 542Q813 542 783 518Q753 495 738 448Q723 401 723 331Q723 278 732 238Q740 198 758 172Q775 145 801 132Q827 119 862 119Z M1514 -14Q1457 -14 1412 -1Q1367 12 1334 36Q1302 60 1280 94Q1259 127 1248 169Q1238 211 1238 260V660H1400V268Q1400 217 1415 186Q1430 156 1456 143Q1481 130 1514 130Q1548 130 1574 143Q1599 156 1614 186Q1629 216 1629 268V660H1791V260Q1791 130 1721 58Q1651 -14 1514 -14Z M2181 -14Q2097 -14 2037 13Q1977 40 1939 88Q1901 136 1884 198Q1866 259 1866 328Q1866 399 1884 462Q1902 525 1940 572Q1977 620 2036 647Q2095 674 2178 674Q2250 674 2302 654Q2354 633 2386 598Q2417 562 2429 516Q2441 470 2435 420L2286 402Q2288 445 2276 476Q2263 507 2238 524Q2212 541 2173 541Q2140 541 2114 528Q2089 515 2072 489Q2054 463 2045 424Q2036 386 2036 335Q2036 269 2052 220Q2068 172 2101 146Q2134 119 2184 119Q2230 119 2256 140Q2283 161 2294 198Q2305 235 2301 281L2454 268Q2459 213 2446 162Q2434 112 2402 72Q2369 32 2314 9Q2260 -14 2181 -14Z M2918 0V660H3080V0ZM2523 0V660H2685V0ZM2644 264V400H3003V264Z M3318 0V660H3561L3696 191H3698L3830 660H4060V0H3910V497H3908L3759 0H3617L3470 497H3468V0Z M4152 0V660H4314V0ZM4273 0V135H4624V0ZM4273 272V393H4578V272ZM4273 525V660H4624V525Z M5109 -14Q5039 -14 4986 2Q4934 18 4899 48Q4864 78 4848 120Q4831 163 4833 215L4983 248Q4985 202 5002 174Q5020 145 5050 132Q5080 118 5117 118Q5147 118 5170 126Q5193 133 5206 146Q5220 160 5220 178Q5220 202 5202 218Q5184 233 5152 244Q5121 255 5081 266Q5038 278 4996 292Q4953 307 4918 329Q4883 351 4862 386Q4840 421 4840 473Q4840 537 4872 582Q4905 627 4962 650Q5020 674 5094 674Q5172 674 5233 648Q5294 621 5327 570Q5360 519 5353 445L5205 421Q5206 451 5199 474Q5192 497 5178 513Q5163 529 5141 538Q5119 546 5089 546Q5058 546 5038 538Q5017 530 5006 516Q4996 502 4996 484Q4996 463 5012 449Q5028 435 5058 424Q5088 414 5129 403Q5172 391 5216 376Q5259 362 5296 338Q5333 315 5356 278Q5378 241 5378 184Q5378 118 5344 74Q5309 30 5248 8Q5188 -14 5109 -14Z M5447 0V660H5609V0ZM5475 0V138H5860V0Z M6207 -14Q6137 -14 6081 8Q6025 30 5986 73Q5947 116 5926 180Q5906 244 5906 327Q5906 445 5944 522Q5983 598 6052 636Q6122 674 6213 674Q6283 674 6338 652Q6394 631 6433 588Q6472 545 6492 480Q6513 416 6513 331Q6513 245 6492 180Q6470 115 6430 72Q6389 29 6332 8Q6276 -14 6207 -14ZM6213 119Q6258 119 6288 142Q6317 164 6332 210Q6346 255 6346 324Q6346 397 6330 445Q6315 493 6284 518Q6254 542 6208 542Q6164 542 6134 518Q6104 495 6089 448Q6074 401 6074 331Q6074 278 6082 238Q6091 198 6108 172Q6126 145 6152 132Q6178 119 6213 119Z M6698 0 6564 660H6739L6820 154H6823L6918 660H7109L7207 154H7210L7289 660H7455L7321 0H7095L7011 496H7008L6922 0Z M7519 0V660H7681V0ZM7547 0V138H7932V0Z M8168 0V220L7953 660H8145L8249 366H8251L8354 660H8544L8330 220V0Z" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linejoin="round"></path></svg>
       <p style="max-width:560px;font-size:15px;line-height:1.65;color:rgba(255,255,255,.94);margin:26px 0 30px;text-shadow:0 1px 14px rgba(0,0,0,.5)">{{ heroSubtitle }}</p>
-      <a href="#shop" class="tms-amber" style="padding:16px 40px;border-radius:999px;font-size:13.5px;font-weight:700;background:#D63A66;color:#FFFFFF;text-decoration:none;box-shadow:0 12px 34px rgba(214,58,102,.45)">Дэлгүүр хэсэх →</a>
+      <a href="#shop" class="tms-amber" style="padding:16px 40px;border-radius:999px;font-size:13.5px;font-weight:700;background:#FF3D57;color:#FFFFFF;text-decoration:none;box-shadow:0 12px 34px rgba(214,58,102,.45)">Дэлгүүр хэсэх →</a>
     </div>
   </section>
 
@@ -551,7 +551,7 @@
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);border-radius:16px;overflow:hidden">
       <sc-for list="{{ features }}" as="f" hint-placeholder-count="2">
         <div style="display:flex;align-items:center;gap:14px;padding:22px 26px;background:rgba(20,16,15,.5);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)">
-          <span style="flex-shrink:0;width:40px;height:40px;border-radius:10px;background:#FCEAF1;display:flex;align-items:center;justify-content:center;font-size:18px">{{ f.icon }}</span>
+          <span style="flex-shrink:0;width:40px;height:40px;border-radius:10px;background:#FFE9EC;display:flex;align-items:center;justify-content:center;font-size:18px">{{ f.icon }}</span>
           <div><p style="font-size:12px;color:#E7DEE0;margin:0"><br></p><p style="font-size:13px;font-weight:600;color:#FFFFFF;margin:0 0 2px">{{ f.title }}</p><p></p></div>
         </div>
       </sc-for>
@@ -592,9 +592,9 @@
         <article class="tms-card" onclick="{{ p.onOpen }}">
           <div style="position:relative;aspect-ratio:1;margin-bottom:14px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA">
             <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-            <span style="position:absolute;top:12px;left:12px;z-index:10;padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;letter-spacing:.04em;background:#1C1917;color:#F7A8C6">{{ p.rankLabel }}</span>
+            <span style="position:absolute;top:12px;left:12px;z-index:10;padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;letter-spacing:.04em;background:#1C1917;color:#FF8D9C">{{ p.rankLabel }}</span>
             <button onclick="{{ p.onFav }}" class="tms-iconbtn" style="position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:9999px;display:flex;align-items:center;justify-content:center;z-index:10;background:rgba(255,255,255,.9);border:none;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="{{ p.favFill }}" stroke="{{ p.favStroke }}" stroke-width="1.6"><path d="M12 20.5S3.5 15 3.5 8.8C3.5 6 5.6 4.2 8 4.2c1.6 0 3 .9 4 2.4 1-1.5 2.4-2.4 4-2.4 2.4 0 4.5 1.8 4.5 4.6C20.5 15 12 20.5 12 20.5z"></path></svg></button>
-            <div class="tms-actions" style="position:absolute;bottom:12px;left:12px;right:12px;z-index:10"><button onclick="{{ p.onAdd }}" class="tms-amber" style="width:100%;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button></div>
+            <div class="tms-actions" style="position:absolute;bottom:12px;left:12px;right:12px;z-index:10"><button onclick="{{ p.onAdd }}" class="tms-amber" style="width:100%;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button></div>
           </div>
           <div>
             <p style="font-size:11px;color:#EDE7E9;margin:0 0 4px">{{ p.vendor }}</p>
@@ -615,7 +615,7 @@
     <div style="position: relative; border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; min-height: 420px; background-color: #D51B1B">
       <div style="display:flex;flex-direction:column;justify-content:center;padding:64px">
         <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8FB3A3;font-weight:600;margin:0 0 20px">{{ livingEyebrow }}</p>
-        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(30px,3.6vw,50px);line-height:1.06;letter-spacing:-.02em;margin:0 0 20px;color:#F7F4EE">{{ livingTitle1 }}<br><em style="color:#F7A8C6">{{ livingTitle2 }}</em></h2>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(30px,3.6vw,50px);line-height:1.06;letter-spacing:-.02em;margin:0 0 20px;color:#F7F4EE">{{ livingTitle1 }}<br><em style="color:#FF8D9C">{{ livingTitle2 }}</em></h2>
         <p style="max-width:400px;font-size:15px;line-height:1.65;color:#C7D4CD;margin:0 0 32px">{{ livingSubtitle }}</p>
         <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
           <button onclick="{{ featured.onBuy }}" class="tms-amber" style="padding: 14px 30px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #FEFEFE; border: none; cursor: pointer; background-color: #0B0507">{{ livingButton }}</button>
@@ -637,27 +637,27 @@
 
   <!-- SALE COUNTDOWN -->
   <section style="max-width:1320px;margin:0 auto;padding:72px 40px 0">
-    <div style="position:relative;border-radius:20px;overflow:hidden;background:linear-gradient(120deg,#2A0E14 0%,#14100D 62%);border:1px solid rgba(255,255,255,.14);padding:48px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center">
+    <div style="position:relative;border-radius:20px;overflow:hidden;background:linear-gradient(120deg,#4A0812 0%,#1E0409 62%);border:1px solid rgba(255,255,255,.14);padding:48px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center">
       <div style="position:absolute;top:-30%;right:-6%;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(214,58,102,.34),transparent 66%);pointer-events:none"></div>
       <div style="position:relative;z-index:2">
-        <p style="display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#F7A8C6;font-weight:600;margin:0 0 20px"><span style="width:7px;height:7px;border-radius:50%;background:#D63A66;box-shadow:0 0 0 4px rgba(214,58,102,.25)"></span>{{ saleEyebrow }}</p>
-        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,46px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#F7F4EE">{{ saleTitle1 }}<br><em style="color:#D63A66">{{ saleTitle2 }}</em></h2>
+        <p style="display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FF8D9C;font-weight:600;margin:0 0 20px"><span style="width:7px;height:7px;border-radius:50%;background:#FF3D57;box-shadow:0 0 0 4px rgba(214,58,102,.25)"></span>{{ saleEyebrow }}</p>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,46px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#F7F4EE">{{ saleTitle1 }}<br><em style="color:#FF3D57">{{ saleTitle2 }}</em></h2>
         <p style="max-width:400px;font-size:15px;line-height:1.6;color:#C9BFC2;margin:0 0 30px">{{ saleSubtitle }}</p>
         <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-          <a href="#sale" style="padding:14px 30px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;text-decoration:none">Хямдралтай бараа үзэх →</a>
+          <a href="#sale" style="padding:14px 30px;border-radius:10px;font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;text-decoration:none">Хямдралтай бараа үзэх →</a>
           <div style="display:flex;align-items:center;gap:9px;padding:11px 16px;border:1px dashed rgba(255,255,255,.28);border-radius:10px"><span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A89BA0">Код</span><span style="font-family:ui-monospace,monospace;font-size:14px;font-weight:600;letter-spacing:.12em;color:#F7F4EE">{{ saleCode }}</span></div>
         </div>
       </div>
       <div style="position:relative;z-index:2">
         <sc-if value="{{ saleEnded }}" hint-placeholder-val="{{ false }}">
-          <div style="text-align:center;padding:40px 0"><p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:28px;color:#F7A8C6;margin:0">Хямдрал дууслаа</p><p style="font-size:13px;color:#C9BFC2;margin:10px 0 0">Дараагийн урамшууллыг хүлээгээрэй</p></div>
+          <div style="text-align:center;padding:40px 0"><p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:28px;color:#FF8D9C;margin:0">Хямдрал дууслаа</p><p style="font-size:13px;color:#C9BFC2;margin:10px 0 0">Дараагийн урамшууллыг хүлээгээрэй</p></div>
         </sc-if>
         <sc-if value="{{ saleActive }}" hint-placeholder-val="{{ true }}">
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
             <div style="text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 8px"><p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);line-height:1;margin:0;color:#F7F4EE;font-variant-numeric:tabular-nums">{{ countdown.d }}</p><p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A89BA0;margin:10px 0 0">Өдөр</p></div>
             <div style="text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 8px"><p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);line-height:1;margin:0;color:#F7F4EE;font-variant-numeric:tabular-nums">{{ countdown.h }}</p><p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A89BA0;margin:10px 0 0">Цаг</p></div>
             <div style="text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 8px"><p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);line-height:1;margin:0;color:#F7F4EE;font-variant-numeric:tabular-nums">{{ countdown.m }}</p><p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A89BA0;margin:10px 0 0">Мин</p></div>
-            <div style="text-align:center;background:rgba(214,58,102,.14);border:1px solid rgba(214,58,102,.4);border-radius:14px;padding:20px 8px"><p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);line-height:1;margin:0;color:#F7A8C6;font-variant-numeric:tabular-nums">{{ countdown.s }}</p><p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A89BA0;margin:10px 0 0">Сек</p></div>
+            <div style="text-align:center;background:rgba(214,58,102,.14);border:1px solid rgba(214,58,102,.4);border-radius:14px;padding:20px 8px"><p style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);line-height:1;margin:0;color:#FF8D9C;font-variant-numeric:tabular-nums">{{ countdown.s }}</p><p style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#A89BA0;margin:10px 0 0">Сек</p></div>
           </div>
         </sc-if>
       </div>
@@ -686,8 +686,8 @@
         <div style="{{ saleItemStyle }}"><article class="tms-card" onclick="{{ p.onOpen }}">
           <div style="position:relative;aspect-ratio:1;margin-bottom:14px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA">
             <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-            <span style="position:absolute;top:12px;left:12px;z-index:10;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#C0492F;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ p.discountLabel }}</span>
-            <div class="tms-actions" style="position:absolute;bottom:12px;left:12px;right:12px;z-index:10"><button onclick="{{ p.onAdd }}" class="tms-amber" style="width:100%;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button></div>
+            <span style="position:absolute;top:12px;left:12px;z-index:10;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ p.discountLabel }}</span>
+            <div class="tms-actions" style="position:absolute;bottom:12px;left:12px;right:12px;z-index:10"><button onclick="{{ p.onAdd }}" class="tms-amber" style="width:100%;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button></div>
           </div>
           <div>
             <p style="font-size:11px;color:#EDE7E9;margin:0 0 4px">{{ p.vendor }}</p>
@@ -734,7 +734,7 @@
   <!-- PRODUCT GRID -->
   <section style="max-width:1320px;margin:0 auto;padding:28px 40px 40px">
     <sc-if value="{{ filteredEmpty }}" hint-placeholder-val="{{ false }}">
-      <div style="text-align:center;padding:100px 0;color:#A8A29E"><p style="font-size:14px">Хайлтад тохирох бүтээгдэхүүн олдсонгүй.</p></div>
+      <div style="text-align:center;padding:100px 0;color:#C79AA0"><p style="font-size:14px">Хайлтад тохирох бүтээгдэхүүн олдсонгүй.</p></div>
     </sc-if>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
       <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
@@ -742,12 +742,12 @@
           <div style="position:relative;aspect-ratio:1;margin-bottom:14px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA">
             <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
             <div style="position:absolute;top:12px;left:12px;z-index:10;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
-              <sc-if value="{{ p.bestSeller }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;background:#1C1917;color:#F7A8C6">Bestseller</span></sc-if>
-              <sc-if value="{{ p.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#C0492F;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ p.discountLabel }}</span></sc-if>
+              <sc-if value="{{ p.bestSeller }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;background:#1C1917;color:#FF8D9C">Bestseller</span></sc-if>
+              <sc-if value="{{ p.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ p.discountLabel }}</span></sc-if>
             </div>
             <button onclick="{{ p.onFav }}" class="tms-iconbtn" style="position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:9999px;display:flex;align-items:center;justify-content:center;z-index:10;background:rgba(255,255,255,.9);border:none;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="{{ p.favFill }}" stroke="{{ p.favStroke }}" stroke-width="1.6"><path d="M12 20.5S3.5 15 3.5 8.8C3.5 6 5.6 4.2 8 4.2c1.6 0 3 .9 4 2.4 1-1.5 2.4-2.4 4-2.4 2.4 0 4.5 1.8 4.5 4.6C20.5 15 12 20.5 12 20.5z"></path></svg></button>
             <div class="tms-actions" style="position:absolute;bottom:12px;left:12px;right:12px;z-index:10;display:flex;gap:8px">
-              <button onclick="{{ p.onAdd }}" class="tms-amber" style="flex:1;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">Сагсанд</button>
+              <button onclick="{{ p.onAdd }}" class="tms-amber" style="flex:1;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Сагсанд</button>
               <button onclick="{{ p.onBuy }}" style="flex:1;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#1C1917;color:#FFFFFF;border:none;cursor:pointer">Авах</button>
             </div>
           </div>
@@ -804,7 +804,7 @@
       <sc-for list="{{ articles }}" as="a" hint-placeholder-count="3">
         <article class="tms-article" onclick="{{ a.onOpen }}" style="cursor:pointer;min-width:0">
           <div style="aspect-ratio:4/3;margin-bottom:18px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA"><img src="{{ a.image }}" alt="{{ a.title }}" loading="lazy" class="tms-imgzoom" style="width:100%;height:100%;object-fit:cover;display:block"></div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:11px;font-weight:600"><span style="color:#D63A66;text-transform:uppercase;letter-spacing:.08em">{{ a.category }}</span><span style="color:#D8D0C4">·</span><span style="color:#A8A29E">{{ a.date }}</span></div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:11px;font-weight:600"><span style="color:#FF3D57;text-transform:uppercase;letter-spacing:.08em">{{ a.category }}</span><span style="color:#D8D0C4">·</span><span style="color:#A8A29E">{{ a.date }}</span></div>
           <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:20px;line-height:1.28;margin:0;color:#FFFFFF;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ a.title }}</h3>
         </article>
       </sc-for>
@@ -819,46 +819,46 @@
       <p style="font-size:14px;color:#E7DEE0;margin:0 0 28px">{{ newsSubtitle }}</p>
       <div style="display:flex;gap:10px;max-width:440px;margin:0 auto">
         <input placeholder="{{ newsPlaceholder }}" style="flex:1;padding:14px 18px;border-radius:10px;border:1px solid #ECBAD0;background:#FFFFFF;color:#1C1917;font-size:14px;outline:none">
-        <button class="tms-amber" style="padding:14px 26px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer;white-space:nowrap">{{ newsButton }}</button>
+        <button class="tms-amber" style="padding:14px 26px;border-radius:10px;font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer;white-space:nowrap">{{ newsButton }}</button>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer style="border-top:1px solid #E7E2DA;background:#F4EFE7;margin-top:72px">
+  <footer style="border-top:1px solid rgba(255,255,255,.10);background:#1E0409;margin-top:72px">
     <div style="max-width:1320px;margin:0 auto;padding:64px 40px">
       <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px">
         <div>
-          <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;color:#1C1917">Touch me slowly<span style="color:#D63A66">.</span></span></div>
-          <p style="font-size:13px;line-height:1.65;color:#78716C;margin:0;max-width:280px">{{ footerTagline }}</p>
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;color:#FBEDEC">Touch me slowly<span style="color:#FF3D57">.</span></span></div>
+          <p style="font-size:13px;line-height:1.65;color:#D8AEB2;margin:0;max-width:280px">{{ footerTagline }}</p>
         </div>
         <div>
-          <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 18px">Ангилал</p>
+          <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#B98A90;font-weight:600;margin:0 0 18px">Ангилал</p>
           <div style="display:flex;flex-direction:column;gap:10px">
             <sc-for list="{{ categoryCircles }}" as="c" hint-placeholder-count="6">
-              <button onclick="{{ c.onClick }}" class="tms-link" style="text-align:left;background:transparent;border:none;font-size:13px;color:#57534E;cursor:pointer;padding:0">{{ c.label }}</button>
+              <button onclick="{{ c.onClick }}" class="tms-link" style="text-align:left;background:transparent;border:none;font-size:13px;color:#E0B0AE;cursor:pointer;padding:0">{{ c.label }}</button>
             </sc-for>
           </div>
         </div>
         <div>
-          <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 18px">Хаяг</p>
-          <div style="display:flex;flex-direction:column;gap:12px;font-size:13px;color:#57534E">
+          <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#B98A90;font-weight:600;margin:0 0 18px">Хаяг</p>
+          <div style="display:flex;flex-direction:column;gap:12px;font-size:13px;color:#E0B0AE">
             <span>{{ footerAddress }}</span>
             <span>{{ footerPhone }}</span>
             <span>{{ footerEmail }}</span>
           </div>
         </div>
         <div>
-          <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 18px">Цагийн хуваарь</p>
-          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#57534E">
+          <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#B98A90;font-weight:600;margin:0 0 18px">Цагийн хуваарь</p>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#E0B0AE">
             <span>Да — Ба · 10:00 — 20:00</span>
             <span>Бя — Ня · 11:00 — 18:00</span>
-            <span style="color:#A8A29E;margin-top:6px">Онлайн 24/7</span>
+            <span style="color:#B98A90;margin-top:6px">Онлайн 24/7</span>
           </div>
         </div>
       </div>
       <div style="padding-top:28px;border-top:1px solid #E0D9CD;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px">
-        <p style="font-size:12px;color:#A8A29E;margin:0">© 2025 Touch me slowly. Бүх эрх хуулиар хамгаалагдсан.</p>
+        <p style="font-size:12px;color:#B98A90;margin:0">© 2025 Touch me slowly. Бүх эрх хуулиар хамгаалагдсан.</p>
       </div>
     </div>
   </footer>
@@ -877,7 +877,7 @@
           <p style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#FFD9E6;margin:0 0 4px">Код</p>
           <p style="font-size:17px;letter-spacing:.26em;font-family:ui-monospace,monospace;font-weight:700;color:#FFFFFF;margin:0">{{ welcomeCode }}</p>
         </div>
-        <button onclick="{{ onCloseWelcome }}" class="tms-amber" style="min-width:250px;padding:16px 36px;border-radius:999px;font-size:14px;font-weight:700;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer;box-shadow:0 12px 34px rgba(214,58,102,.5)">{{ welcomeButton }}</button>
+        <button onclick="{{ onCloseWelcome }}" class="tms-amber" style="min-width:250px;padding:16px 36px;border-radius:999px;font-size:14px;font-weight:700;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer;box-shadow:0 12px 34px rgba(214,58,102,.5)">{{ welcomeButton }}</button>
       </div>
     </div>
   </sc-if>
@@ -892,7 +892,7 @@
       </div>
       <div style="flex:1;overflow-y:auto;padding:20px">
         <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
-          <div style="text-align:center;padding:96px 0;color:#A8A29E"><div style="font-size:40px;margin-bottom:14px;opacity:.5">🛒</div><p style="font-size:14px">Сагс хоосон байна</p></div>
+          <div style="text-align:center;padding:96px 0;color:#C79AA0"><div style="font-size:40px;margin-bottom:14px;opacity:.5">🛒</div><p style="font-size:14px">Сагс хоосон байна</p></div>
         </sc-if>
         <div style="display:flex;flex-direction:column;gap:12px">
           <sc-for list="{{ cartItems }}" as="item" hint-placeholder-count="0">
@@ -916,7 +916,7 @@
           
           
           <div style="display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid #E7E2DA"><span style="font-weight:600">Нийт</span><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;font-variant-numeric:tabular-nums">{{ grandTotalFmt }}</span></div>
-          <button onclick="{{ onGoCheckout }}" class="tms-amber" style="width:100%;padding:15px;margin-top:6px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">Төлбөр хийх →</button>
+          <button onclick="{{ onGoCheckout }}" class="tms-amber" style="width:100%;padding:15px;margin-top:6px;border-radius:10px;font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Төлбөр хийх →</button>
         </div>
       </sc-if>
     </aside>
@@ -933,11 +933,11 @@
             <img src="{{ selected.image }}" alt="{{ selected.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:28px;box-sizing:border-box">
           </div>
           <div style="padding:44px;display:flex;flex-direction:column">
-            <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#D63A66;font-weight:600;margin:0 0 12px">{{ selected.category }} · {{ selected.vendor }}</p>
+            <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#FF3D57;font-weight:600;margin:0 0 12px">{{ selected.category }} · {{ selected.vendor }}</p>
             <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(26px,3vw,36px);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px;color:#1C1917">{{ selected.name }}</h2>
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;font-size:13px;color:#78716C"><span style="color:#1C1917;font-weight:600">★ {{ selected.rating }}</span><span style="color:#D8D0C4">·</span><span>Хүргэлт 2–5 хоног</span></div>
             <p style="font-size:14px;line-height:1.7;color:#78716C;margin:0 0 28px;white-space:pre-line">{{ selected.description }}</p>
-            <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #E7E2DA"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:34px;font-variant-numeric:tabular-nums">{{ selected.priceFmt }}</span><sc-if value="{{ selected.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="font-size:16px;color:#A8A29E;text-decoration:line-through;font-variant-numeric:tabular-nums">{{ selected.oldPriceFmt }}</span><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#C0492F;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ selected.discountLabel }}</span></sc-if><span style="font-size:12px;color:#A8A29E">· НӨАТ ороогүй дүн</span></div>
+            <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #E7E2DA"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:34px;font-variant-numeric:tabular-nums">{{ selected.priceFmt }}</span><sc-if value="{{ selected.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="font-size:16px;color:#A8A29E;text-decoration:line-through;font-variant-numeric:tabular-nums">{{ selected.oldPriceFmt }}</span><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ selected.discountLabel }}</span></sc-if><span style="font-size:12px;color:#A8A29E">· НӨАТ ороогүй дүн</span></div>
             <div style="margin-bottom:28px">
               <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 12px">Тоо ширхэг</p>
               <div style="display:flex;align-items:center;gap:16px">
@@ -949,7 +949,7 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;margin-top:auto">
               <button onclick="{{ selected.onBuy }}" style="width:100%;padding:16px;border-radius:10px;font-size:13px;font-weight:600;background:#1C1917;color:#FFFFFF;border:none;cursor:pointer">Шууд авах →</button>
-              <button onclick="{{ selected.onAdd }}" class="tms-amber" style="width:100%;padding:16px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button>
+              <button onclick="{{ selected.onAdd }}" class="tms-amber" style="width:100%;padding:16px;border-radius:10px;font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;padding-top:28px;border-top:1px solid #E7E2DA;font-size:13px;color:#57534E">
               <div><p style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;margin:0 0 4px">Хүргэлт</p><p style="margin:0;font-weight:500">Үнэгүй</p></div>
@@ -964,19 +964,19 @@
 
   <!-- CHECKOUT OVERLAY -->
   <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
-    <div class="tms-fade" style="position:fixed;inset:0;z-index:90;overflow-y:auto;background:#FBF9F6;color:#1C1917;padding:48px 24px">
+    <div class="tms-fade" style="position:fixed;inset:0;z-index:90;overflow-y:auto;background:#2E060B;color:#FBEDEC;padding:48px 24px">
       <div style="max-width:1040px;margin:0 auto">
-        <button onclick="{{ onBackToShop }}" class="tms-link" style="margin-bottom:28px;font-size:13px;font-weight:600;color:#78716C;background:transparent;border:none;cursor:pointer;padding:0">← Дэлгүүр рүү буцах</button>
+        <button onclick="{{ onBackToShop }}" class="tms-link" style="margin-bottom:28px;font-size:13px;font-weight:600;color:#E0B0AE;background:transparent;border:none;cursor:pointer;padding:0">← Дэлгүүр рүү буцах</button>
         <p style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);font-weight:600;margin:0 0 10px">Алхам 2 — Төлбөр</p>
         <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(36px,5vw,56px);letter-spacing:-.02em;margin:0 0 44px">Захиалга баталгаажуулах</h1>
         <div style="display:grid;grid-template-columns:3fr 2fr;gap:44px">
           <div style="display:flex;flex-direction:column;gap:22px">
-            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Бүтэн нэр</label><input value="{{ formName }}" onchange="{{ onName }}" placeholder="Дорж Бат" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"></div>
-            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Утасны дугаар</label><input value="{{ formPhone }}" onchange="{{ onPhone }}" placeholder="9911 0000" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"><sc-if value="{{ phoneInvalid }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#C61F2B;margin-top:7px">Утасны дугаар заавал 8 оронтой тоо байх ёстой</div></sc-if></div>
-            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Хүргэлтийн хаяг</label><input value="{{ formAddress }}" onchange="{{ onAddress }}" placeholder="Сүхбаатар дүүрэг, 1-р хороо" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"></div>
-            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin-bottom:8px">Хот</label><select value="{{ formCity }}" onchange="{{ onCity }}" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px;cursor:pointer"><option>Улаанбаатар</option><option>Дархан</option><option>Эрдэнэт</option></select></div>
+            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#E0B0AE;font-weight:600;margin-bottom:8px">Бүтэн нэр</label><input value="{{ formName }}" onchange="{{ onName }}" placeholder="Дорж Бат" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"></div>
+            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#E0B0AE;font-weight:600;margin-bottom:8px">Утасны дугаар</label><input value="{{ formPhone }}" onchange="{{ onPhone }}" placeholder="9911 0000" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"><sc-if value="{{ phoneInvalid }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#C61F2B;margin-top:7px">Утасны дугаар заавал 8 оронтой тоо байх ёстой</div></sc-if></div>
+            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#E0B0AE;font-weight:600;margin-bottom:8px">Хүргэлтийн хаяг</label><input value="{{ formAddress }}" onchange="{{ onAddress }}" placeholder="Сүхбаатар дүүрэг, 1-р хороо" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px"></div>
+            <div><label style="display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#E0B0AE;font-weight:600;margin-bottom:8px">Хот</label><select value="{{ formCity }}" onchange="{{ onCity }}" style="width:100%;padding:13px 16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;color:#1C1917;outline:none;font-size:15px;cursor:pointer"><option>Улаанбаатар</option><option>Дархан</option><option>Эрдэнэт</option></select></div>
             <div style="padding-top:8px">
-              <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 14px">Төлбөрийн хэлбэр</p>
+              <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#E0B0AE;font-weight:600;margin:0 0 14px">Төлбөрийн хэлбэр</p>
               <div style="display:flex;flex-direction:column;gap:10px">
                 <sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="4">
                   <button onclick="{{ m.onClick }}" style="{{ m.style }}"><span style="width:18px;height:18px;border-radius:9999px;border:2px solid {{ m.dotBorder }};display:flex;align-items:center;justify-content:center"><span style="width:8px;height:8px;border-radius:9999px;background:{{ m.dotFill }}"></span></span><span style="font-size:14px;font-weight:500">{{ m.label }}</span></button>
@@ -1016,7 +1016,7 @@
         <button onclick="{{ onCloseArticle }}" style="position:absolute;top:14px;right:14px;z-index:2;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.92);box-shadow:0 2px 10px rgba(0,0,0,.18);cursor:pointer;font-size:14px;color:#57534E">✕</button>
         <sc-if value="{{ selArticle.hasImage }}" hint-placeholder-val="{{ false }}"><div style="aspect-ratio:16/9;background:#EDE7DD;flex-shrink:0"><img src="{{ selArticle.image }}" alt="{{ selArticle.title }}" style="width:100%;height:100%;object-fit:cover;display:block"></div></sc-if>
         <div style="padding:28px 30px 32px;overflow-y:auto">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:11px;font-weight:700"><span style="color:#D63A66;text-transform:uppercase;letter-spacing:.08em">{{ selArticle.category }}</span><span style="color:#D8D0C4">·</span><span style="color:#A8A29E">{{ selArticle.date }}</span></div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:11px;font-weight:700"><span style="color:#FF3D57;text-transform:uppercase;letter-spacing:.08em">{{ selArticle.category }}</span><span style="color:#D8D0C4">·</span><span style="color:#A8A29E">{{ selArticle.date }}</span></div>
           <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;line-height:1.2;margin:0 0 16px;color:#1C1917">{{ selArticle.title }}</h2>
           <p style="font-size:14.5px;line-height:1.75;color:#57534E;margin:0;white-space:pre-line">{{ selArticle.excerpt }}</p>
         </div>
@@ -1030,7 +1030,7 @@
       <div style="width:100%;max-width:430px;background:#FFFFFF;border-radius:20px;padding:30px 26px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.32);position:relative">
         <button onclick="{{ onCloseQpay }}" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid #EDE8DF;background:#FAF8F4;cursor:pointer;font-size:13px;color:#57534E">✕</button>
         <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin-bottom:4px">QPay-ээр төлөх</div>
-        <p style="font-size:12px;color:#78716C;margin:0 0 6px">Захиалга <span style="font-family:ui-monospace,monospace;color:#D63A66;font-weight:700">#{{ qpayOrderId }}</span></p>
+        <p style="font-size:12px;color:#78716C;margin:0 0 6px">Захиалга <span style="font-family:ui-monospace,monospace;color:#FF3D57;font-weight:700">#{{ qpayOrderId }}</span></p>
         <p style="font-size:23px;font-weight:800;margin:0 0 16px">{{ qpayAmount }}</p>
         <sc-if value="{{ qpayLoading }}" hint-placeholder-val="{{ false }}">
           <p style="font-size:13px;color:#78716C;padding:44px 0">Нэхэмжлэл үүсгэж байна…</p>
@@ -1066,7 +1066,7 @@
       <sc-if value="{{ adminLocked }}" hint-placeholder-val="{{ false }}">
         <div style="position:fixed;inset:0;z-index:130;background:#F4EFE7;display:flex;align-items:center;justify-content:center;padding:20px">
           <div style="width:100%;max-width:400px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:18px;padding:36px 32px;box-shadow:0 18px 50px rgba(28,25,23,.10)">
-            <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;margin-bottom:6px">Touch me slowly<span style="color:#D63A66">.</span></div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;margin-bottom:6px">Touch me slowly<span style="color:#FF3D57">.</span></div>
             <div style="font-size:13px;color:#57534E;margin-bottom:26px">Админ самбарт нэвтрэх</div>
             <label style="display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#78716C;margin-bottom:6px">Имэйл</label>
             <input type="email" value="{{ loginEmail }}" onchange="{{ onLoginEmail }}" placeholder="admin@example.mn" style="width:100%;padding:12px 14px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit;background:#FAF9F5;margin-bottom:16px">
@@ -1075,7 +1075,7 @@
             <sc-if value="{{ hasLoginError }}" hint-placeholder-val="{{ false }}">
               <div style="font-size:12px;color:#C61F2B;margin:4px 0 4px">{{ loginError }}</div>
             </sc-if>
-            <button onclick="{{ onSignIn }}" style="width:100%;margin-top:14px;padding:14px;border-radius:10px;font-size:13px;font-weight:700;border:none;background:#D63A66;color:#FFFFFF;cursor:pointer;font-family:inherit">{{ loginBtnLabel }}</button>
+            <button onclick="{{ onSignIn }}" style="width:100%;margin-top:14px;padding:14px;border-radius:10px;font-size:13px;font-weight:700;border:none;background:#FF3D57;color:#FFFFFF;cursor:pointer;font-family:inherit">{{ loginBtnLabel }}</button>
             <button onclick="{{ onCloseAdmin }}" style="width:100%;margin-top:10px;padding:12px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid #E7E2DA;background:transparent;color:#57534E;cursor:pointer;font-family:inherit">← Дэлгүүр рүү буцах</button>
           </div>
         </div>
@@ -1083,10 +1083,10 @@
       <div style="max-width:1200px;margin:0 auto;padding:26px 40px 90px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:26px">
           <div style="display:flex;align-items:center;gap:14px">
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px">Touch me slowly<span style="color:#D63A66">.</span></span>
-            <span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#B82C54;background:#FCEAF1;padding:5px 11px;border-radius:9999px">Админ самбар</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px">Touch me slowly<span style="color:#FF3D57">.</span></span>
+            <span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#C2273B;background:#FFE9EC;padding:5px 11px;border-radius:9999px">Админ самбар</span>
           </div>
-          <div style="display:flex;align-items:center;gap:10px"><sc-if value="{{ showLogout }}" hint-placeholder-val="{{ false }}"><button onclick="{{ onSignOut }}" style="font-size:13px;font-weight:600;color:#B82C54;background:#FCEAF1;border:1px solid #F5C9D8;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:inherit">Гарах</button></sc-if><button onclick="{{ onCloseAdmin }}" style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#57534E;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:inherit">← Дэлгүүр рүү буцах</button></div>
+          <div style="display:flex;align-items:center;gap:10px"><sc-if value="{{ showLogout }}" hint-placeholder-val="{{ false }}"><button onclick="{{ onSignOut }}" style="font-size:13px;font-weight:600;color:#C2273B;background:#FFE9EC;border:1px solid #FFC9D1;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:inherit">Гарах</button></sc-if><button onclick="{{ onCloseAdmin }}" style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#57534E;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:inherit">← Дэлгүүр рүү буцах</button></div>
         </div>
         <div style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:26px;align-items:start">
           <div style="display:flex;flex-direction:column;gap:6px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:12px;position:sticky;top:26px">
@@ -1118,7 +1118,7 @@
                   <div style="display:flex;flex-direction:column;gap:1px;background:#F0EAE0;border:1px solid #F0EAE0;border-radius:8px;overflow:hidden">
                     <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="2">
                       <div style="display:grid;grid-template-columns:110px minmax(0,1fr) 120px 150px 130px;gap:12px;align-items:center;background:#FFFFFF;padding:13px 14px">
-                        <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:#D63A66">#{{ o.id }}</span>
+                        <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:#FF3D57">#{{ o.id }}</span>
                         <div style="min-width:0"><p style="font-size:13px;font-weight:500;margin:0">{{ o.customer }}</p><p style="font-size:11px;color:#A8A29E;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p></div>
                         <span style="font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                         <span style="justify-self:start"><button onclick="{{ o.onTogglePaid }}" title="Дарж төлөв солих" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></span>
@@ -1134,7 +1134,7 @@
               <div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
                   <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:26px;margin:0">Бүтээгдэхүүн <span style="color:#A8A29E;font-weight:500">{{ adminProductCount }}</span></h1>
-                  <button onclick="{{ onNewProduct }}" style="font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;font-family:inherit">+ Шинэ нэмэх</button>
+                  <button onclick="{{ onNewProduct }}" style="font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;font-family:inherit">+ Шинэ нэмэх</button>
                 </div>
                 <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;overflow:hidden">
                   <div style="display:grid;grid-template-columns:2.4fr 1.1fr 1fr .7fr .8fr 1.5fr;gap:12px;padding:13px 18px;background:#F7F2EA;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#A8A29E;font-weight:700">
@@ -1150,7 +1150,7 @@
                         <span style="font-size:12px;color:#57534E">{{ p.category }}</span>
                         <span style="font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums">{{ p.priceFmt }}</span>
                         <span style="text-align:center;{{ p.stockStyle }}">{{ p.stock }}</span>
-                        <span style="font-size:12px;text-align:center;color:#B82C54;font-weight:600">{{ p.discountLabel }}</span>
+                        <span style="font-size:12px;text-align:center;color:#C2273B;font-weight:600">{{ p.discountLabel }}</span>
                         <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px">
                           <button onclick="{{ p.onToggleBest }}" style="{{ p.bestStyle }}">{{ p.bestLabel }}</button>
                           <button onclick="{{ p.onEdit }}" title="Засах" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid #E7E2DA;background:#FFFFFF;border-radius:8px;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#57534E" stroke-width="1.7"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg></button>
@@ -1169,7 +1169,7 @@
                 <p style="font-size:13px;color:#78716C;margin:0 0 20px">Дэлгүүрийн ангиллыг нэмэх, устгах</p>
                 <div style="display:flex;gap:10px;margin-bottom:22px;max-width:460px">
                   <input value="{{ newCategory }}" onchange="{{ onNewCategory }}" placeholder="Шинэ ангиллын нэр" style="flex:1;padding:12px 14px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit">
-                  <button onclick="{{ onAddCategory }}" style="font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;border-radius:10px;padding:12px 22px;cursor:pointer;font-family:inherit;white-space:nowrap">+ Нэмэх</button>
+                  <button onclick="{{ onAddCategory }}" style="font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;border-radius:10px;padding:12px 22px;cursor:pointer;font-family:inherit;white-space:nowrap">+ Нэмэх</button>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
                   <sc-for list="{{ adminCategories }}" as="c" hint-placeholder-count="6">
@@ -1188,7 +1188,7 @@
               <div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
                   <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:26px;margin:0">Брэнд <span style="color:#A8A29E;font-weight:500">{{ adminBrandCount }}</span></h1>
-                  <button onclick="{{ onNewBrand }}" style="font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;font-family:inherit">+ Шинэ брэнд</button>
+                  <button onclick="{{ onNewBrand }}" style="font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;font-family:inherit">+ Шинэ брэнд</button>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
                   <sc-for list="{{ adminBrands }}" as="b" hint-placeholder-count="6">
@@ -1212,14 +1212,14 @@
               <div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
                   <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:26px;margin:0">Сэтгүүл <span style="color:#A8A29E;font-weight:500">{{ adminArticleCount }}</span></h1>
-                  <button onclick="{{ onNewArticle }}" style="font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;font-family:inherit">+ Шинэ нийтлэл</button>
+                  <button onclick="{{ onNewArticle }}" style="font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;border-radius:10px;padding:11px 18px;cursor:pointer;font-family:inherit">+ Шинэ нийтлэл</button>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:14px">
                   <sc-for list="{{ adminArticles }}" as="a" hint-placeholder-count="3">
                     <div style="display:flex;align-items:center;gap:16px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:14px">
                       <div style="width:74px;height:56px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#EDE7DD"><img src="{{ a.image }}" alt="{{ a.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
                       <div style="flex:1;min-width:0">
-                        <p style="margin:0 0 3px;font-size:11px;font-weight:700;color:#D63A66;text-transform:uppercase;letter-spacing:.06em">{{ a.category }} · {{ a.date }}</p>
+                        <p style="margin:0 0 3px;font-size:11px;font-weight:700;color:#FF3D57;text-transform:uppercase;letter-spacing:.06em">{{ a.category }} · {{ a.date }}</p>
                         <p style="margin:0;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ a.title }}</p>
                         <p style="margin:3px 0 0;font-size:12px;color:#78716C;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ a.excerpt }}</p>
                       </div>
@@ -1262,7 +1262,7 @@
                   <p style="font-size:12.5px;color:#78716C;margin:0 0 14px;line-height:1.6">Нүүрний том баннерын ард бүтэн дэлгэцээр тоглох бичлэг. Дуугүй, 10–30 секундын, 20MB-с бага mp4 байвал зохимжтой. Бичлэггүй үед «Нүүр хэсгийн зураг» харагдана.</p>
                   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
                     <label style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#1C1917;background:#F7F2EA;border:1px solid #E7E2DA;border-radius:10px;padding:11px 16px;cursor:pointer">⬆ Бичлэг оруулах<input type="file" accept="video/mp4,video/webm,video/quicktime" onchange="{{ onUploadBrandVideo }}" style="display:none"></label>
-                    <sc-if value="{{ hasBrandVideo }}" hint-placeholder-val="{{ false }}"><button onclick="{{ onClearBrandVideo }}" style="font-size:13px;font-weight:600;color:#B82C54;background:#FCEAF1;border:1px solid #F5C9D8;border-radius:10px;padding:11px 16px;cursor:pointer;font-family:inherit">✕ Бичлэг арилгах</button></sc-if>
+                    <sc-if value="{{ hasBrandVideo }}" hint-placeholder-val="{{ false }}"><button onclick="{{ onClearBrandVideo }}" style="font-size:13px;font-weight:600;color:#C2273B;background:#FFE9EC;border:1px solid #FFC9D1;border-radius:10px;padding:11px 16px;cursor:pointer;font-family:inherit">✕ Бичлэг арилгах</button></sc-if>
                     <sc-if value="{{ hasBrandVideo }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:700;color:#2E7D53">✓ Бичлэг орсон</span></sc-if>
                   </div>
                 </div>
@@ -1271,11 +1271,11 @@
                   <div>
                     <label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:8px">Дээд хэсгийн зураг</label>
                     <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-                      <div style="width:160px;height:96px;border-radius:12px;overflow:hidden;flex-shrink:0;background:#FCEAF1;border:1px solid #E7E2DA;display:flex;align-items:center;justify-content:center">
+                      <div style="width:160px;height:96px;border-radius:12px;overflow:hidden;flex-shrink:0;background:#FFE9EC;border:1px solid #E7E2DA;display:flex;align-items:center;justify-content:center">
                         <img src="{{ welcomeBg }}" alt="" style="width:100%;height:100%;object-fit:cover">
                       </div>
                       <label style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#1C1917;background:#F7F2EA;border:1px solid #E7E2DA;border-radius:10px;padding:11px 16px;cursor:pointer">⬆ Зураг оруулах<input type="file" accept="image/*" onchange="{{ onUploadWelcome }}" style="display:none"></label>
-                      <sc-if value="{{ hasWelcomeImage }}" hint-placeholder-val="{{ false }}"><button onclick="{{ onClearWelcomeImage }}" style="font-size:13px;font-weight:600;color:#B82C54;background:#FCEAF1;border:1px solid #F5C9D8;border-radius:10px;padding:11px 16px;cursor:pointer;font-family:inherit">✕ Зураг арилгах</button></sc-if>
+                      <sc-if value="{{ hasWelcomeImage }}" hint-placeholder-val="{{ false }}"><button onclick="{{ onClearWelcomeImage }}" style="font-size:13px;font-weight:600;color:#C2273B;background:#FFE9EC;border:1px solid #FFC9D1;border-radius:10px;padding:11px 16px;cursor:pointer;font-family:inherit">✕ Зураг арилгах</button></sc-if>
                     </div>
                     <p style="font-size:12px;color:#A8A29E;margin:8px 0 0">Зураг оруулаагүй үед үндсэн зураг (assets/welcome.jpg) харагдана.</p>
                   </div>
@@ -1321,7 +1321,7 @@
                 <div style="display:flex;flex-direction:column;gap:12px">
                   <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="3">
                     <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:18px 22px;display:grid;grid-template-columns:130px minmax(0,1.6fr) minmax(0,1fr) 130px 150px;gap:16px;align-items:center">
-                      <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#D63A66;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0">{{ o.date }}</p></div>
+                      <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#FF3D57;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0">{{ o.date }}</p></div>
                       <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;color:#A8A29E;margin:4px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p></div>
                       <div><p style="font-size:12px;color:#57534E;margin:0 0 7px">{{ o.itemsLabel }}</p><button onclick="{{ o.onTogglePaid }}" title="Дарж төлөв солих" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></div>
                       <span style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
@@ -1342,7 +1342,7 @@
     <sc-if value="{{ isEditing }}" hint-placeholder-val="{{ false }}">
       <div class="tms-fade" style="position:fixed;inset:0;z-index:110;background:rgba(28,25,23,.55);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto" onclick="{{ onCancelEdit }}">
       <div class="tms-pop" onclick="{{ stopEdit }}" style="width:100%;max-width:520px;margin:auto;background:#FFFFFF;border-radius:18px;padding:32px">
-        <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#B82C54;font-weight:700;margin:0 0 6px">{{ editTitle }}</p>
+        <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#C2273B;font-weight:700;margin:0 0 6px">{{ editTitle }}</p>
         <div style="display:flex;flex-direction:column;gap:16px;margin-top:16px">
           <div>
             <label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:8px">Зураг</label>
@@ -1395,7 +1395,7 @@
         </div>
         <div style="display:flex;gap:12px;margin-top:26px">
           <button onclick="{{ onCancelEdit }}" style="flex:1;padding:13px;border-radius:10px;font-size:13px;font-weight:600;background:#FFFFFF;border:1px solid #E7E2DA;color:#57534E;cursor:pointer;font-family:inherit">Болих</button>
-          <button onclick="{{ onSaveEdit }}" style="flex:1;padding:13px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;border:none;color:#FFFFFF;cursor:pointer;font-family:inherit">Хадгалах</button>
+          <button onclick="{{ onSaveEdit }}" style="flex:1;padding:13px;border-radius:10px;font-size:13px;font-weight:600;background:#FF3D57;border:none;color:#FFFFFF;cursor:pointer;font-family:inherit">Хадгалах</button>
         </div>
       </div>
       </div>
@@ -1410,9 +1410,9 @@
         <p style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 14px">Баталгаажлаа</p>
         <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:28px;margin:0 0 22px">Захиалга амжилттай!</h1>
         <p style="font-size:13px;color:#78716C;margin:0 0 4px">Захиалгын дугаар</p>
-        <p style="font-family:ui-monospace,monospace;font-size:15px;font-weight:600;color:#D63A66;margin:0 0 22px">#{{ lastOrderId }}</p>
+        <p style="font-family:ui-monospace,monospace;font-size:15px;font-weight:600;color:#FF3D57;margin:0 0 22px">#{{ lastOrderId }}</p>
         <div style="background:#EAF3EC;border:1px solid #CBE3D2;border-radius:12px;padding:14px 18px;margin:0 0 30px;font-size:13px;line-height:1.55;color:#2E7D53;font-weight:600">🚚 {{ deliveryNote }}</div>
-        <button onclick="{{ onContinue }}" class="tms-amber" style="padding:14px 40px;border-radius:10px;font-size:13px;font-weight:600;background:#D63A66;color:#FFFFFF;border:none;cursor:pointer">Үргэлжлүүлэн дэлгүүр хэсэх</button>
+        <button onclick="{{ onContinue }}" class="tms-amber" style="padding:14px 40px;border-radius:10px;font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Үргэлжлүүлэн дэлгүүр хэсэх</button>
       </div>
     </div>
   </sc-if>
@@ -1440,7 +1440,7 @@ class Component extends DCLogic {
       { id: 12, name: "Ноосон гар нэхмэл хивс", category: "Гоёл чимэглэл", price: 380000, vendor: "Terra Ceramics", rating: 4.8, image: img("1600166898405-da9535204843"), discount: 25, bestSeller: false },
     ];
     this.BRANDS = [
-      { name: "Gobi Home", tagline: "Ноос · зөөлөн эдлэл", est: "1981", bg: "#F7A8C6" },
+      { name: "Gobi Home", tagline: "Ноос · зөөлөн эдлэл", est: "1981", bg: "#FF8D9C" },
       { name: "Nomad Woodwork", tagline: "Гар хийцийн мод", est: "2012", bg: "#E0C9A6" },
       { name: "Steppe & Oak", tagline: "Скандинав тавилга", est: "2016", bg: "#CDBFA6" },
       { name: "Terra Ceramics", tagline: "Керамик · гоёл", est: "2019", bg: "#E9B8A0" },
@@ -1721,7 +1721,7 @@ class Component extends DCLogic {
   newItem(kind) {
     const blanks = {
       product: { id: null, name: "", category: (this.state.categories[0] || ""), vendor: "", price: 0, discount: 0, rating: 5, stock: 0, bestSeller: false, image: "" },
-      brand: { id: null, name: "", tagline: "", est: "2025", bg: "#F7A8C6", image: "" },
+      brand: { id: null, name: "", tagline: "", est: "2025", bg: "#FF8D9C", image: "" },
       article: { id: null, title: "", excerpt: "", category: "", date: new Date().toISOString().slice(0, 10), image: "" },
     };
     this.setState({ editItem: { ...blanks[kind] }, editKind: kind, editIsNew: true });
@@ -1850,8 +1850,8 @@ class Component extends DCLogic {
       hasDiscount, noDiscount: !hasDiscount,
       salePriceFmt: this.formatPrice(sale),
       discountLabel: "−" + p.discount + "%",
-      favFill: fav ? "#C0492F" : "none",
-      favStroke: fav ? "#C0492F" : "#1C1917",
+      favFill: fav ? "#FF3D57" : "none",
+      favStroke: fav ? "#FF3D57" : "#1C1917",
       onOpen: () => this.openProduct(p),
       onBuy: (e) => { e.stopPropagation(); this.buyNow(p); },
       onAdd: (e) => { e.stopPropagation(); this.addToCart(p); },
@@ -1884,7 +1884,7 @@ class Component extends DCLogic {
       return {
         label: c,
         onClick: () => this.setState({ activeCategory: c }),
-        style: pillBase + (active ? "background:#D63A66;color:#FFFFFF;" : "background:rgba(255,255,255,.1);color:#F0E7E9;border-color:rgba(255,255,255,.22);"),
+        style: pillBase + (active ? "background:#FF3D57;color:#FFFFFF;" : "background:rgba(255,255,255,.1);color:#F0E7E9;border-color:rgba(255,255,255,.22);"),
       };
     });
 
@@ -1938,16 +1938,16 @@ class Component extends DCLogic {
       return {
         label: m,
         onClick: () => this.setState({ payMethod: m }),
-        style: "display:flex;align-items:center;gap:14px;padding:15px 18px;cursor:pointer;border-radius:10px;text-align:left;background:#FFFFFF;border:1px solid " + (active ? "#D63A66;" : "#E7E2DA;") + "color:#1C1917;",
-        dotBorder: active ? "#D63A66" : "#D8D0C4",
-        dotFill: active ? "#D63A66" : "transparent",
+        style: "display:flex;align-items:center;gap:14px;padding:15px 18px;cursor:pointer;border-radius:10px;text-align:left;background:#FFFFFF;border:1px solid " + (active ? "#FF3D57;" : "#E7E2DA;") + "color:#1C1917;",
+        dotBorder: active ? "#FF3D57" : "#D8D0C4",
+        dotFill: active ? "#FF3D57" : "transparent",
       };
     });
 
     const phoneDigits = (s.form.phone || "").replace(/[^0-9]/g, "");
     const phoneValid = phoneDigits.length === 8;
     const canPlace = s.form.name && phoneValid && s.form.address;
-    const placeBtnBase = "width:100%;margin-top:28px;padding:16px;border-radius:10px;font-size:13px;font-weight:600;border:none;background:#D63A66;color:#FFFFFF;";
+    const placeBtnBase = "width:100%;margin-top:28px;padding:16px;border-radius:10px;font-size:13px;font-weight:600;border:none;background:#FF3D57;color:#FFFFFF;";
     const placeBtnStyle = placeBtnBase + (canPlace ? "cursor:pointer;opacity:1;" : "cursor:not-allowed;opacity:.4;");
 
     const revenue = s.orders.reduce((a, o) => a + o.total, 0);
@@ -1964,7 +1964,7 @@ class Component extends DCLogic {
       priceFmt: this.formatPrice(p.price), stock: String(p.stock ?? 0),
       stockStyle: "font-weight:700;font-variant-numeric:tabular-nums;color:" + ((p.stock || 0) === 0 ? "#C61F2B" : (p.stock || 0) <= 5 ? "#C77E00" : "#2E7D53"),
       discountLabel: p.discount > 0 ? "−" + p.discount + "%" : "—",
-      bestStyle: "cursor:pointer;font-size:11px;font-weight:600;padding:5px 11px;border-radius:9999px;font-family:inherit;border:1px solid " + (p.bestSeller ? "#D63A66;background:#FCEAF1;color:#B82C54;" : "#E7E2DA;background:transparent;color:#A8A29E;"),
+      bestStyle: "cursor:pointer;font-size:11px;font-weight:600;padding:5px 11px;border-radius:9999px;font-family:inherit;border:1px solid " + (p.bestSeller ? "#FF3D57;background:#FFE9EC;color:#C2273B;" : "#E7E2DA;background:transparent;color:#A8A29E;"),
       bestLabel: p.bestSeller ? "★ Онцлох" : "Онцлох",
       onEdit: () => this.editItemRow("product", p),
       onDelete: () => this.deleteItem("product", p.id),
