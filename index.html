@@ -595,7 +595,7 @@
   <section style="max-width:1320px;margin:0 auto;padding:72px 40px 0">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px">
       <div>
-        <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);font-weight:600;margin:0 0 10px">★ Онцлох</p>
+        <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);font-weight:600;margin:0 0 10px">★ Bestseller</p>
         <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(26px,3vw,38px);letter-spacing:-.02em;margin:0;color:#FFFFFF;text-shadow:0 1px 10px rgba(0,0,0,.30);">Хамгийн эрэлттэй</h2>
       </div>
     </div>
@@ -1996,7 +1996,7 @@ class Component extends DCLogic {
     const brands = s.brands.map((b) => ({ name: b.name, tagline: b.tagline, est: b.est, bg: b.bg, initial: (b.name || "•")[0], image: b.image || "", hasImage: !!b.image, noImage: !b.image }));
     const brandAvatars = s.brands.slice(0, 4).map((b) => ({ bg: b.bg, initial: (b.name || "•")[0], image: b.image || "", hasImage: !!b.image, noImage: !b.image }));
 
-    const bestSellers = this.state.products.filter((p) => p.bestSeller).slice(0, 4).map((p, i) => {
+    const bestSellers = this.state.products.filter((p) => p.bestSeller).slice(0, 8).map((p, i) => {
       const vm = this.pvm(p, i); vm.rankLabel = "#" + (i + 1) + " Эрэлттэй"; return vm;
     });
     const saleItems = this.state.products.filter((p) => p.discount > 0).map((p, i) => this.pvm(p, i));
@@ -2071,7 +2071,7 @@ class Component extends DCLogic {
       stockStyle: "font-weight:700;font-variant-numeric:tabular-nums;color:" + ((p.stock || 0) === 0 ? "#C61F2B" : (p.stock || 0) <= 5 ? "#C77E00" : "#2E7D53"),
       discountLabel: p.discount > 0 ? "−" + p.discount + "%" : "—",
       bestStyle: "cursor:pointer;font-size:11px;font-weight:600;padding:5px 11px;border-radius:9999px;font-family:inherit;border:1px solid " + (p.bestSeller ? "#FF3D57;background:#FFE9EC;color:#C2273B;" : "#E7E2DA;background:transparent;color:#A8A29E;"),
-      bestLabel: p.bestSeller ? "★ Онцлох" : "Онцлох",
+      bestLabel: p.bestSeller ? "★ Bestseller" : "☆ Bestseller",
       onEdit: () => this.editItemRow("product", p),
       onDelete: () => this.deleteItem("product", p.id),
       onToggleBest: () => this.toggleBest(p.id),
