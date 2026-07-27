@@ -1248,6 +1248,12 @@
                   <input value="{{ newCategory }}" onchange="{{ onNewCategory }}" placeholder="Шинэ ангиллын нэр" style="flex:1;padding:12px 14px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit">
                   <button onclick="{{ onAddCategory }}" style="font-size:13px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;border-radius:10px;padding:12px 22px;cursor:pointer;font-family:inherit;white-space:nowrap">+ Нэмэх</button>
                 </div>
+                <div style="background:#FFF9EF;border:1px solid #F0E2C0;border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:12.5px;line-height:1.75;color:#7A5B10">
+                  💡 <b>Зургийн хэмжээний зөвлөмж:</b> 📷 товчоор оруулсан зураг тухайн ангилалын каталог дахь баннер болно.<br>
+                  • <b>Хэвтээ баннер</b> (10-аас цөөн бараатай ангилал, мөн бүх ангилал утсан дээр) — <b>1320 × 300 px</b> (маш өргөн, 4.4:1 харьцаа).<br>
+                  • <b>Босоо баннер</b> (зурагтай + 10 ба түүнээс олон бараатай ангилалын хажууд, компьютер дээр) — <b>600 × 1500 px</b> орчим (2:5 харьцаа).<br>
+                  Нэг зураг хоёр хэлбэрт голоосоо таслагдан харагддаг тул гол дүрсээ зургийн яг голд байрлуулбал хамгийн тохиромжтой. 🖼 товчоор тусгай баннер оруулбал 📷 зургийг дарж гарна, ✕-ээр буцаана.
+                </div>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
                   <sc-for list="{{ adminCategories }}" as="c" hint-placeholder-count="6">
                     <div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border:1px solid #E7E2DA;border-radius:12px;padding:12px 14px">
