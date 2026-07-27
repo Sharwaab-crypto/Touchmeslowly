@@ -71,6 +71,10 @@
             if (c.image) acc[c.name] = c.image;
             return acc;
           }, {}),
+          categoryBanners: (res[3] || []).reduce(function (acc, c) {
+            if (c && c.name && c.banner) acc[c.name] = c.banner;
+            return acc;
+          }, {}),
           content: res[4] && res[4][0] ? res[4][0].data : null,
         };
       });
@@ -122,6 +126,10 @@
 
     setCategoryImage: function (name, url) {
       return q(client.from("categories").update({ image: url }).eq("name", name).select());
+    },
+
+    setCategoryBanner: function (name, url) {
+      return q(client.from("categories").update({ banner: url }).eq("name", name).select());
     },
 
     addCategory: function (name) {
