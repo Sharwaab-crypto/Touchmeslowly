@@ -1195,10 +1195,10 @@
                   <div style="display:flex;flex-direction:column;gap:1px;background:#F0EAE0;border:1px solid #F0EAE0;border-radius:8px;overflow:hidden">
                     <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="2">
                       <div style="display:grid;grid-template-columns:110px minmax(0,1fr) 120px 150px 130px;gap:12px;align-items:center;background:#FFFFFF;padding:13px 14px">
-                        <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:#FF3D57">#{{ o.id }}</span>
+                        <div><span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:#FF3D57">#{{ o.id }}</span><p style="font-size:10.5px;color:#A8A29E;margin:3px 0 0;font-variant-numeric:tabular-nums">{{ o.dateLabel }}</p></div>
                         <div style="min-width:0"><p style="font-size:13px;font-weight:500;margin:0">{{ o.customer }}</p><p style="font-size:11px;color:#A8A29E;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ o.itemsVm }}" as="it" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:6px;background:#FAF8F4;border:1px solid #EFEAE1;border-radius:8px;padding:3px 8px 3px 3px"><sc-if value="{{ it.hasImage }}" hint-placeholder-val="{{ true }}"><img src="{{ it.image }}" alt="" style="width:26px;height:26px;border-radius:6px;object-fit:cover;display:block"></sc-if><sc-if value="{{ it.noImage }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:6px;background:#EDE7DD;display:flex;align-items:center;justify-content:center;font-size:12px">📦</span></sc-if><span style="font-size:11px;font-weight:600;color:#57534E;white-space:nowrap">{{ it.label }}</span></span></sc-for></div></div>
                         <span style="font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
-                        <span style="justify-self:start"><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></span>
+                        <span style="justify-self:start;display:flex;flex-direction:column;gap:5px;align-items:flex-start"><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button><button onclick="{{ o.onToggleEntered }}" title="{{ o.enteredTitle }}" style="{{ o.enteredStyle }}">{{ o.enteredBadge }}</button></span>
                         <span style="justify-self:start"><span style="{{ o.statusStyle }}">{{ o.status }}</span></span>
                       </div>
                     </sc-for>
@@ -1406,9 +1406,9 @@
                 <div style="display:flex;flex-direction:column;gap:12px">
                   <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="3">
                     <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:18px 22px;display:grid;grid-template-columns:130px minmax(0,1.6fr) minmax(0,1fr) 130px 150px;gap:16px;align-items:center">
-                      <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#FF3D57;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0">{{ o.date }}</p></div>
+                      <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#FF3D57;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0;font-variant-numeric:tabular-nums">{{ o.dateLabel }}</p></div>
                       <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;color:#A8A29E;margin:4px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ o.itemsVm }}" as="it" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:6px;background:#FAF8F4;border:1px solid #EFEAE1;border-radius:8px;padding:3px 8px 3px 3px"><sc-if value="{{ it.hasImage }}" hint-placeholder-val="{{ true }}"><img src="{{ it.image }}" alt="" style="width:26px;height:26px;border-radius:6px;object-fit:cover;display:block"></sc-if><sc-if value="{{ it.noImage }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:6px;background:#EDE7DD;display:flex;align-items:center;justify-content:center;font-size:12px">📦</span></sc-if><span style="font-size:11px;font-weight:600;color:#57534E;white-space:nowrap">{{ it.label }}</span></span></sc-for></div></div>
-                      <div><p style="font-size:12px;color:#57534E;margin:0 0 7px">{{ o.itemsLabel }}</p><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></div>
+                      <div><p style="font-size:12px;color:#57534E;margin:0 0 7px">{{ o.itemsLabel }}</p><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button><button onclick="{{ o.onToggleEntered }}" title="{{ o.enteredTitle }}" style="{{ o.enteredStyle2 }}">{{ o.enteredBadge }}</button></div>
                       <span style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                       <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
                         <span style="{{ o.statusStyle }}">{{ o.status }}</span>
@@ -1811,7 +1811,7 @@ class Component extends DCLogic {
     if (phoneDigits0.length !== 8) { alert("Утасны дугаар заавал 8 оронтой тоо байх ёстой."); return; }
     const id = "TMS" + Math.floor(Math.random() * 90000 + 10000);
     const order = {
-      id, date: new Date().toISOString().slice(0, 10),
+      id, date: new Date().toISOString().slice(0, 10), created_at: new Date().toISOString(), entered: false,
       items: s0.cart.map((i) => ({ product_id: i.id, name: i.name, qty: i.qty, price: i.price })),
       total: s0.cart.reduce((a, i) => a + i.price * i.qty, 0),
       customer: s0.form.name, phone: s0.form.phone, address: s0.form.address, city: s0.form.city,
@@ -1936,6 +1936,17 @@ class Component extends DCLogic {
       catch (err) { console.error("[db] best:", err); alert("Алдаа гарлаа."); return; }
     }
     this.setState((s) => ({ products: s.products.map((x) => (x.id === id ? { ...x, bestSeller: val } : x)) }));
+  }
+  async toggleEntered(id) {
+    const o = this.state.orders.find((x) => x.id === id);
+    if (!o) return;
+    const next = !o.entered;
+    if (DB.enabled) {
+      if (!this.state.adminUser) { alert("Эхлээд нэвтэрнэ үү."); return; }
+      try { await DB.setEntered(id, next); }
+      catch (err) { console.error("[db] entered:", err); alert("Тэмдэглэгээ хадгалахад алдаа гарлаа. Supabase дээр migration ажиллуулсан эсэхээ шалгана уу."); return; }
+    }
+    this.setState((s) => ({ orders: s.orders.map((x) => (x.id === id ? { ...x, entered: next } : x)) }));
   }
   async togglePaid(id) {
     const o = this.state.orders.find((x) => x.id === id);
@@ -2164,6 +2175,19 @@ class Component extends DCLogic {
         : "Дарж төлөв солих",
       payBadgeStyle: "font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;font-family:inherit;white-space:nowrap;cursor:" + (o.pay === "QPay" && o.payment_status === "paid" ? "default" : "pointer") + ";border:1px solid " + (o.payment_status === "paid" ? "#CBE3D2;background:#EAF3EC;color:#2E7D53" : "#F0E2C0;background:#FCF6E8;color:#9A6B00"),
       onTogglePaid: () => this.togglePaid(o.id),
+      dateLabel: (() => {
+        const d2 = o.created_at ? new Date(o.created_at) : null;
+        if (d2 && !isNaN(d2.getTime())) {
+          const p2 = (n) => String(n).padStart(2, "0");
+          return p2(d2.getMonth() + 1) + "." + p2(d2.getDate()) + " · " + p2(d2.getHours()) + ":" + p2(d2.getMinutes());
+        }
+        return o.date || "";
+      })(),
+      enteredBadge: o.entered ? "Оруулсан ✓" : "Оруулаагүй",
+      enteredTitle: "Дарж «оруулсан» тэмдэглэгээг солих",
+      enteredStyle: "font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + (o.entered ? "#BFD9EE;background:#E8F2FB;color:#1D5C93" : "#E2DCD2;background:#F5F1EA;color:#8A8074"),
+      enteredStyle2: "margin-top:6px;display:inline-block;font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + (o.entered ? "#BFD9EE;background:#E8F2FB;color:#1D5C93" : "#E2DCD2;background:#F5F1EA;color:#8A8074"),
+      onToggleEntered: () => this.toggleEntered(o.id),
       itemsVm: (o.items || []).map((it) => {
         const pr = this.state.products.find((x) => x.id === it.product_id);
         const img = (pr && pr.image) || "";
