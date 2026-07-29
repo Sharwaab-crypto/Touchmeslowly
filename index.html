@@ -1196,7 +1196,7 @@
                     <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="2">
                       <div style="display:grid;grid-template-columns:110px minmax(0,1fr) 120px 150px 130px;gap:12px;align-items:center;background:#FFFFFF;padding:13px 14px">
                         <span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:#FF3D57">#{{ o.id }}</span>
-                        <div style="min-width:0"><p style="font-size:13px;font-weight:500;margin:0">{{ o.customer }}</p><p style="font-size:11px;color:#A8A29E;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p></div>
+                        <div style="min-width:0"><p style="font-size:13px;font-weight:500;margin:0">{{ o.customer }}</p><p style="font-size:11px;color:#A8A29E;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ o.itemsVm }}" as="it" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:6px;background:#FAF8F4;border:1px solid #EFEAE1;border-radius:8px;padding:3px 8px 3px 3px"><sc-if value="{{ it.hasImage }}" hint-placeholder-val="{{ true }}"><img src="{{ it.image }}" alt="" style="width:26px;height:26px;border-radius:6px;object-fit:cover;display:block"></sc-if><sc-if value="{{ it.noImage }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:6px;background:#EDE7DD;display:flex;align-items:center;justify-content:center;font-size:12px">📦</span></sc-if><span style="font-size:11px;font-weight:600;color:#57534E;white-space:nowrap">{{ it.label }}</span></span></sc-for></div></div>
                         <span style="font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                         <span style="justify-self:start"><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></span>
                         <span style="justify-self:start"><span style="{{ o.statusStyle }}">{{ o.status }}</span></span>
@@ -1407,7 +1407,7 @@
                   <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="3">
                     <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:18px 22px;display:grid;grid-template-columns:130px minmax(0,1.6fr) minmax(0,1fr) 130px 150px;gap:16px;align-items:center">
                       <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#FF3D57;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0">{{ o.date }}</p></div>
-                      <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;color:#A8A29E;margin:4px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p></div>
+                      <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;color:#A8A29E;margin:4px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📍 {{ o.address }}</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ o.itemsVm }}" as="it" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:6px;background:#FAF8F4;border:1px solid #EFEAE1;border-radius:8px;padding:3px 8px 3px 3px"><sc-if value="{{ it.hasImage }}" hint-placeholder-val="{{ true }}"><img src="{{ it.image }}" alt="" style="width:26px;height:26px;border-radius:6px;object-fit:cover;display:block"></sc-if><sc-if value="{{ it.noImage }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:6px;background:#EDE7DD;display:flex;align-items:center;justify-content:center;font-size:12px">📦</span></sc-if><span style="font-size:11px;font-weight:600;color:#57534E;white-space:nowrap">{{ it.label }}</span></span></sc-for></div></div>
                       <div><p style="font-size:12px;color:#57534E;margin:0 0 7px">{{ o.itemsLabel }}</p><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button></div>
                       <span style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                       <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
@@ -2164,6 +2164,16 @@ class Component extends DCLogic {
         : "Дарж төлөв солих",
       payBadgeStyle: "font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;font-family:inherit;white-space:nowrap;cursor:" + (o.pay === "QPay" && o.payment_status === "paid" ? "default" : "pointer") + ";border:1px solid " + (o.payment_status === "paid" ? "#CBE3D2;background:#EAF3EC;color:#2E7D53" : "#F0E2C0;background:#FCF6E8;color:#9A6B00"),
       onTogglePaid: () => this.togglePaid(o.id),
+      itemsVm: (o.items || []).map((it) => {
+        const pr = this.state.products.find((x) => x.id === it.product_id);
+        const img = (pr && pr.image) || "";
+        return {
+          label: (it.name || (pr && pr.name) || "Бараа") + " ×" + (Number(it.qty) || 1),
+          image: img,
+          hasImage: !!img,
+          noImage: !img,
+        };
+      }),
       statusStyle: "font-size:11px;font-weight:700;padding:5px 12px;border-radius:9999px;color:#FFFFFF;white-space:nowrap;background:" + statusColor(o.status),
       onAdvance: () => this.advanceOrder(o.id),
     }));
