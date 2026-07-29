@@ -88,6 +88,7 @@
             total: Number(o.total) || 0, customer: o.customer || "", phone: o.phone || "",
             address: o.address || "", city: o.city || "", pay: o.pay || "", status: o.status || "Хүлээгдэж буй",
             payment_status: o.payment_status || "",
+            created_at: o.created_at || "", entered: !!o.entered,
           };
         });
       });
@@ -145,6 +146,10 @@
 
     setBestSeller: function (id, val) {
       return q(client.from("products").update({ best_seller: !!val }).eq("id", id).select());
+    },
+
+    setEntered: function (id, val) {
+      return q(client.from("orders").update({ entered: val }).eq("id", id).select());
     },
 
     setPaymentStatus: function (id, status) {
