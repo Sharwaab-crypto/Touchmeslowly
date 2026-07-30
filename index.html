@@ -1196,7 +1196,7 @@
                     <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="2">
                       <div style="display:grid;grid-template-columns:110px minmax(0,1fr) 120px 150px 130px;gap:12px;align-items:center;background:#FFFFFF;padding:13px 14px">
                         <div><span style="font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:#FF3D57">#{{ o.id }}</span><p style="font-size:10.5px;color:#A8A29E;margin:3px 0 0;font-variant-numeric:tabular-nums">{{ o.dateLabel }}</p></div>
-                        <div style="min-width:0"><p style="font-size:13px;font-weight:500;margin:0">{{ o.customer }}</p><p style="font-size:11px;color:#A8A29E;margin:2px 0 0;line-height:1.5;overflow-wrap:anywhere">📍 {{ o.address }}</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ o.itemsVm }}" as="it" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:6px;background:#FAF8F4;border:1px solid #EFEAE1;border-radius:8px;padding:3px 8px 3px 3px"><sc-if value="{{ it.hasImage }}" hint-placeholder-val="{{ true }}"><img src="{{ it.image }}" alt="" style="width:26px;height:26px;border-radius:6px;object-fit:cover;display:block"></sc-if><sc-if value="{{ it.noImage }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:6px;background:#EDE7DD;display:flex;align-items:center;justify-content:center;font-size:12px">📦</span></sc-if><span style="font-size:11px;font-weight:600;color:#57534E;white-space:nowrap">{{ it.label }}</span></span></sc-for></div></div>
+                        <div style="min-width:0"><p style="font-size:13px;font-weight:500;margin:0">{{ o.customer }}</p><p style="font-size:12px;font-weight:700;color:#57534E;margin:3px 0 0;font-variant-numeric:tabular-nums">📞 {{ o.phone }}</p><p style="font-size:11px;color:#A8A29E;margin:2px 0 0;line-height:1.5;overflow-wrap:anywhere">📍 {{ o.address }}</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ o.itemsVm }}" as="it" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:6px;background:#FAF8F4;border:1px solid #EFEAE1;border-radius:8px;padding:3px 8px 3px 3px"><sc-if value="{{ it.hasImage }}" hint-placeholder-val="{{ true }}"><img src="{{ it.image }}" alt="" style="width:26px;height:26px;border-radius:6px;object-fit:cover;display:block"></sc-if><sc-if value="{{ it.noImage }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:6px;background:#EDE7DD;display:flex;align-items:center;justify-content:center;font-size:12px">📦</span></sc-if><span style="font-size:11px;font-weight:600;color:#57534E;white-space:nowrap">{{ it.label }}</span></span></sc-for></div></div>
                         <span style="font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                         <span style="justify-self:start;display:flex;flex-direction:column;gap:5px;align-items:flex-start"><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button><button onclick="{{ o.onToggleEntered }}" title="{{ o.enteredTitle }}" style="{{ o.enteredStyle }}">{{ o.enteredBadge }}</button></span>
                         <span style="justify-self:start"><span style="{{ o.statusStyle }}">{{ o.status }}</span></span>
@@ -1814,7 +1814,7 @@ class Component extends DCLogic {
       id, date: new Date().toISOString().slice(0, 10), created_at: new Date().toISOString(), entered: false,
       items: s0.cart.map((i) => ({ product_id: i.id, name: i.name, qty: i.qty, price: i.price })),
       total: s0.cart.reduce((a, i) => a + i.price * i.qty, 0),
-      customer: s0.form.name, phone: s0.form.phone, address: s0.form.address, city: s0.form.city,
+      customer: s0.form.name, phone: phoneDigits0, address: s0.form.address, city: s0.form.city,
       pay: s0.payMethod, status: "Хүлээгдэж буй",
     };
     if (DB.enabled) {
@@ -2263,7 +2263,7 @@ class Component extends DCLogic {
       onBackToShop: () => this.setState({ stage: "shop" }),
       formName: s.form.name, formPhone: s.form.phone, formAddress: s.form.address, formCity: s.form.city,
       onName: (e) => this.setState((st) => ({ form: { ...st.form, name: e.target.value } })),
-      onPhone: (e) => this.setState((st) => ({ form: { ...st.form, phone: e.target.value } })),
+      onPhone: (e) => { const v = (e.target.value || "").replace(/[^0-9]/g, "").slice(0, 8); this.setState((st) => ({ form: { ...st.form, phone: v } })); },
       onAddress: (e) => this.setState((st) => ({ form: { ...st.form, address: e.target.value } })),
       onCity: (e) => this.setState((st) => ({ form: { ...st.form, city: e.target.value } })),
       payMethods, placeDisabled: !canPlace, placeBtnStyle,
