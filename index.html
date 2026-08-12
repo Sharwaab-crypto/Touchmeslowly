@@ -2361,7 +2361,7 @@ class Component extends DCLogic {
       noBrandVideo: !s.content.brandVideo,
       onUploadBrandVideo: (e) => this._handleImage(e, (v) => { this.setContent("brandVideo", v); this._persistContentSoon(); }),
       onClearBrandVideo: () => { this.setContent("brandVideo", ""); this._persistContentSoon(); },
-      welcomeBg: s.content.welcomeImage || "assets/welcome.jpg",
+      welcomeBg: s.content.welcomeImage || "assets/welcome.jpg?v=2",
       welcomeSlideStyle: "position:fixed;inset:0;z-index:100;overflow:hidden;background:#1C1917;transition:transform .75s cubic-bezier(.7,0,.3,1);transform:translateY(" + (s.welcomeClosing ? "-100%" : "0") + ")",
       hasWelcomeImage: !!s.content.welcomeImage, noWelcomeImage: !s.content.welcomeImage,
       welcomeEyebrow: s.content.welcomeEyebrow, welcomeTitle: s.content.welcomeTitle,
