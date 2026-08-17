@@ -85,7 +85,7 @@
     },
 
     fetchVisits: function () {
-      const since = new Date(Date.now() - 13 * 86400000).toISOString().slice(0, 10);
+      const since = new Date(Date.now() - 370 * 86400000).toISOString().slice(0, 10);
       return q(client.from("visits").select("day").gte("day", since)).then(function (rows) { return rows || []; });
     },
 
