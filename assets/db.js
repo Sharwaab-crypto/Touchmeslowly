@@ -80,6 +80,15 @@
       });
     },
 
+    logVisit: function () {
+      return q(client.from("visits").insert({}).select());
+    },
+
+    fetchVisits: function () {
+      const since = new Date(Date.now() - 13 * 86400000).toISOString().slice(0, 10);
+      return q(client.from("visits").select("day").gte("day", since)).then(function (rows) { return rows || []; });
+    },
+
     fetchOrders: function () {
       return q(client.from("orders").select("*").order("created_at", { ascending: false })).then(function (rows) {
         return (rows || []).map(function (o) {
