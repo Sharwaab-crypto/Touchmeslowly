@@ -1192,23 +1192,38 @@
                   </sc-for>
                 </div>
                 <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:20px 22px;margin-bottom:22px">
-                  <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap">
-                    <p style="font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:700;color:#1C1917;margin:0">Сүүлийн 14 хоног</p>
+                  <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap">
+                    <p style="font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:700;color:#1C1917;margin:0">Зочид ба захиалга</p>
                     <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#57534E"><span style="width:10px;height:10px;border-radius:3px;background:#FF3D57;display:inline-block"></span>Зочид</span>
                     <span style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:#57534E"><span style="width:10px;height:10px;border-radius:3px;background:#1D5C93;display:inline-block"></span>Захиалга</span>
                     <span style="margin-left:auto;font-size:12px;font-weight:600;color:#57534E">{{ statTotals }}</span>
                   </div>
-                  <div style="display:grid;grid-template-columns:repeat(14,1fr);gap:6px">
-                    <sc-for list="{{ statDays }}" as="d" hint-placeholder-count="14">
-                      <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
-                        <div style="display:flex;align-items:flex-end;justify-content:center;gap:2px;height:122px;width:100%">
-                          <div title="{{ d.vT }}" style="{{ d.vStyle }}"></div>
-                          <div title="{{ d.oT }}" style="{{ d.oStyle }}"></div>
-                        </div>
-                        <span style="font-size:9.5px;color:#A8A29E">{{ d.label }}</span>
-                      </div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
+                    <sc-for list="{{ statPresets }}" as="sp" hint-placeholder-count="5">
+                      <button onclick="{{ sp.onClick }}" style="{{ sp.style }}">{{ sp.label }}</button>
                     </sc-for>
+                    <input type="date" value="{{ statDateVal }}" onchange="{{ onStatDate }}" title="Тодорхой өдөр сонгох" style="font-size:12px;font-weight:600;padding:7px 11px;border:1px solid #E7E2DA;border-radius:9999px;color:#1C1917;font-family:inherit;outline:none;background:#FFFFFF">
+                    <input type="month" value="{{ statMonthVal }}" onchange="{{ onStatMonth }}" title="Он, сараар шүүх" style="font-size:12px;font-weight:600;padding:7px 11px;border:1px solid #E7E2DA;border-radius:9999px;color:#1C1917;font-family:inherit;outline:none;background:#FFFFFF">
                   </div>
+                  <sc-if value="{{ hasStatSingle }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:stretch">
+                      <div style="flex:1;min-width:150px;background:#FFF3F4;border:1px solid #FFC9D1;border-radius:12px;padding:16px 18px"><p style="font-size:10.5px;letter-spacing:.1em;font-weight:700;color:#C2273B;margin:0 0 6px">{{ statSingleLabel }} ЗОЧИД</p><p style="font-family:'Bricolage Grotesque',sans-serif;font-size:34px;font-weight:800;color:#C2273B;margin:0;font-variant-numeric:tabular-nums">{{ statSingleV }}</p></div>
+                      <div style="flex:1;min-width:150px;background:#EFF5FB;border:1px solid #BFD9EE;border-radius:12px;padding:16px 18px"><p style="font-size:10.5px;letter-spacing:.1em;font-weight:700;color:#1D5C93;margin:0 0 6px">{{ statSingleLabel }} ЗАХИАЛГА</p><p style="font-family:'Bricolage Grotesque',sans-serif;font-size:34px;font-weight:800;color:#1D5C93;margin:0;font-variant-numeric:tabular-nums">{{ statSingleO }}</p></div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ hasStatRange }}" hint-placeholder-val="{{ true }}">
+                    <div style="{{ statGridStyle }}">
+                      <sc-for list="{{ statDays }}" as="d" hint-placeholder-count="14">
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0">
+                          <div style="display:flex;align-items:flex-end;justify-content:center;gap:2px;height:140px;width:100%">
+                            <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;flex:1;min-width:0"><span style="font-size:8.5px;font-weight:800;color:#C2273B;font-variant-numeric:tabular-nums">{{ d.vNum }}</span><div title="{{ d.vT }}" style="{{ d.vStyle }}"></div></div>
+                            <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;flex:1;min-width:0"><span style="font-size:8.5px;font-weight:800;color:#1D5C93;font-variant-numeric:tabular-nums">{{ d.oNum }}</span><div title="{{ d.oT }}" style="{{ d.oStyle }}"></div></div>
+                          </div>
+                          <span style="font-size:9px;color:#A8A29E">{{ d.label }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
                   <p style="font-size:11px;color:#A8A29E;margin:12px 0 0">{{ statNote }}</p>
                 </div>
                 <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:22px">
@@ -1583,6 +1598,9 @@ class Component extends DCLogic {
       query: "", activeCategory: "Бүгд", maxPrice: 3000000, sortBy: "featured",
       cart: [], cartOpen: false, favorites: [],
       stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "QPay", lastOrderId: null, qpay: null, selectedArticle: null, infoPopup: null, visits: [],
+      statMode: "14",
+      statDate: (() => { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()); })(),
+      statMonth: (() => { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return d.getFullYear() + "-" + p(d.getMonth() + 1); })(),
       showWelcome: (this.props.welcomeOnLoad ?? true), welcomeClosing: false, selectedProduct: null, detailQty: 1,
       products: this.PRODUCTS.map((p) => ({ ...p })),
       orders: DB.enabled ? [] : [
@@ -2326,7 +2344,7 @@ class Component extends DCLogic {
       contentTabStyle: this._tabStyle(s.adminTab === "content"),
       categoriesTabStyle: this._tabStyle(s.adminTab === "categories"),
       adminBrands, adminArticles, adminCategories,
-      statDays: (() => {
+      ...(() => {
         const p3 = (n) => String(n).padStart(2, "0");
         const dayKey = (d3) => d3.getFullYear() + "-" + p3(d3.getMonth() + 1) + "-" + p3(d3.getDate());
         const vCount = {};
@@ -2336,25 +2354,74 @@ class Component extends DCLogic {
           const d3 = o.created_at ? new Date(o.created_at) : (o.date ? new Date(o.date + "T00:00:00") : null);
           if (d3 && !isNaN(d3.getTime())) { const k = dayKey(d3); oCount[k] = (oCount[k] || 0) + 1; }
         });
-        let statMax = 1;
-        const arr = [];
-        for (let i2 = 13; i2 >= 0; i2--) {
-          const d3 = new Date(Date.now() - i2 * 86400000);
-          const k = dayKey(d3);
-          const vN = vCount[k] || 0, oN = oCount[k] || 0;
-          statMax = Math.max(statMax, vN, oN);
-          arr.push({ k, dd: p3(d3.getDate()), vN, oN });
+        const mkDate = (str) => { const q2 = (str || "").split("-"); return new Date(Number(q2[0]), Number(q2[1]) - 1, Number(q2[2] || 1)); };
+        const mode = s.statMode || "14";
+        let single = null;
+        const list = [];
+        if (mode === "today") single = new Date();
+        else if (mode === "yesterday") single = new Date(Date.now() - 86400000);
+        else if (mode === "day") single = mkDate(s.statDate);
+        else if (mode === "month") {
+          const base = mkDate((s.statMonth || "") + "-01");
+          const y = base.getFullYear(), mo = base.getMonth();
+          const nD = new Date(y, mo + 1, 0).getDate();
+          for (let i2 = 1; i2 <= nD; i2++) list.push(new Date(y, mo, i2));
+        } else {
+          const n2 = Number(mode) || 14;
+          for (let i2 = n2 - 1; i2 >= 0; i2--) list.push(new Date(Date.now() - i2 * 86400000));
         }
-        const bar = (n, color) => "width:46%;max-width:13px;border-radius:3px 3px 0 0;background:" + color + ";height:" + (n > 0 ? Math.max(4, Math.round((n / statMax) * 118)) : 3) + "px;opacity:" + (n > 0 ? "1" : ".22");
-        this._statTotals = "Нийт: " + arr.reduce((a2, d4) => a2 + d4.vN, 0) + " зочид · " + arr.reduce((a2, d4) => a2 + d4.oN, 0) + " захиалга";
-        return arr.map((d4) => ({
-          label: d4.dd,
-          vStyle: bar(d4.vN, "#FF3D57"),
-          oStyle: bar(d4.oN, "#1D5C93"),
-          vT: d4.k + " — Зочид: " + d4.vN,
-          oT: d4.k + " — Захиалга: " + d4.oN,
-        }));
+        const out = {};
+        if (single && !isNaN(single.getTime())) {
+          const k = dayKey(single);
+          out.hasStatSingle = true;
+          out.hasStatRange = false;
+          out.statSingleV = String(vCount[k] || 0);
+          out.statSingleO = String(oCount[k] || 0);
+          out.statSingleLabel = k + " —";
+          out.statDays = [];
+          out.statGridStyle = "";
+          this._statTotals = "";
+        } else {
+          let statMax = 1, vTot = 0, oTot = 0;
+          const arr = list.map((d3) => {
+            const k = dayKey(d3);
+            const vN = vCount[k] || 0, oN = oCount[k] || 0;
+            vTot += vN; oTot += oN;
+            statMax = Math.max(statMax, vN, oN);
+            return { k, dd: p3(d3.getDate()), vN, oN };
+          });
+          const bar = (n, color) => "width:100%;max-width:13px;border-radius:3px 3px 0 0;background:" + color + ";height:" + (n > 0 ? Math.max(4, Math.round((n / statMax) * 106)) : 3) + "px;opacity:" + (n > 0 ? "1" : ".22");
+          out.hasStatSingle = false;
+          out.hasStatRange = true;
+          out.statDays = arr.map((d4) => ({
+            label: d4.dd,
+            vStyle: bar(d4.vN, "#FF3D57"),
+            oStyle: bar(d4.oN, "#1D5C93"),
+            vNum: d4.vN > 0 ? String(d4.vN) : "",
+            oNum: d4.oN > 0 ? String(d4.oN) : "",
+            vT: d4.k + " — Зочид: " + d4.vN,
+            oT: d4.k + " — Захиалга: " + d4.oN,
+          }));
+          out.statGridStyle = "display:grid;grid-template-columns:repeat(" + arr.length + ",1fr);gap:" + (arr.length > 16 ? 3 : 6) + "px";
+          out.statSingleV = ""; out.statSingleO = ""; out.statSingleLabel = "";
+          this._statTotals = "Нийт: " + vTot + " зочид · " + oTot + " захиалга";
+        }
+        return out;
       })(),
+      statPresets: ["today:Өнөөдөр", "yesterday:Өчигдөр", "7:7 хоног", "14:14 хоног", "30:30 хоног"].map((sp) => {
+        const ci2 = sp.indexOf(":");
+        const mv = sp.slice(0, ci2), lb = sp.slice(ci2 + 1);
+        const act = (s.statMode || "14") === mv;
+        return {
+          label: lb,
+          onClick: () => this.setState({ statMode: mv }),
+          style: "font-size:11.5px;font-weight:700;padding:7px 12px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + (act ? "#1C1917;background:#1C1917;color:#FFFFFF" : "#E7E2DA;background:#FFFFFF;color:#57534E"),
+        };
+      }),
+      statDateVal: s.statMode === "day" ? (s.statDate || "") : "",
+      statMonthVal: s.statMode === "month" ? (s.statMonth || "") : "",
+      onStatDate: (e) => { if (e.target.value) this.setState({ statMode: "day", statDate: e.target.value }); },
+      onStatMonth: (e) => { if (e.target.value) this.setState({ statMode: "month", statMonth: e.target.value }); },
       statTotals: this._statTotals || "",
       statNote: (s.visits || []).length ? "" : "Зочдын тоолуур шинээр нэмэгдлээ — өгөгдөл өнөөдрөөс хойш цуглана.",
       adminBrandCount: String(s.brands.length), adminArticleCount: String(s.articles.length), adminCategoryCount: String(s.categories.length),
