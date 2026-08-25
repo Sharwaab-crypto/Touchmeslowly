@@ -599,7 +599,7 @@
       <sc-for list="{{ bestSellers }}" as="p" hint-placeholder-count="4">
         <article class="tms-card" onclick="{{ p.onOpen }}">
           <div style="position:relative;aspect-ratio:1;margin-bottom:14px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA">
-            <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+            <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div><sc-if value="{{ p.soldOut }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;z-index:9;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center"><span style="background:#1C1917;color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:.1em;padding:8px 16px;border-radius:9999px;box-shadow:0 6px 18px rgba(0,0,0,.25)">ДУУССАН</span></div></sc-if>
             <span style="position:absolute;top:12px;left:12px;z-index:10;padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;letter-spacing:.04em;background:#1C1917;color:#FF8D9C">{{ p.rankLabel }}</span>
             <button onclick="{{ p.onFav }}" class="tms-iconbtn" style="position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:9999px;display:flex;align-items:center;justify-content:center;z-index:10;background:rgba(255,255,255,.9);border:none;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="{{ p.favFill }}" stroke="{{ p.favStroke }}" stroke-width="1.6"><path d="M12 20.5S3.5 15 3.5 8.8C3.5 6 5.6 4.2 8 4.2c1.6 0 3 .9 4 2.4 1-1.5 2.4-2.4 4-2.4 2.4 0 4.5 1.8 4.5 4.6C20.5 15 12 20.5 12 20.5z"></path></svg></button>
             <div class="tms-actions" style="position:absolute;bottom:12px;left:12px;right:12px;z-index:10"><button onclick="{{ p.onAdd }}" class="tms-amber" style="width:100%;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button></div>
@@ -693,7 +693,7 @@
       <sc-for list="{{ saleItems }}" as="p" hint-placeholder-count="4">
         <div style="{{ saleItemStyle }}"><article class="tms-card" onclick="{{ p.onOpen }}">
           <div style="position:relative;aspect-ratio:1;margin-bottom:14px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA">
-            <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+            <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div><sc-if value="{{ p.soldOut }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;z-index:9;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center"><span style="background:#1C1917;color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:.1em;padding:8px 16px;border-radius:9999px;box-shadow:0 6px 18px rgba(0,0,0,.25)">ДУУССАН</span></div></sc-if>
             <span style="position:absolute;top:12px;left:12px;z-index:10;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ p.discountLabel }}</span>
             <div class="tms-actions" style="position:absolute;bottom:12px;left:12px;right:12px;z-index:10"><button onclick="{{ p.onAdd }}" class="tms-amber" style="width:100%;padding:12px;border-radius:10px;font-size:12px;font-weight:600;background:#FF3D57;color:#FFFFFF;border:none;cursor:pointer">Сагсанд нэмэх</button></div>
           </div>
@@ -749,7 +749,7 @@
       <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
         <article class="tms-card" onclick="{{ p.onOpen }}">
           <div style="position:relative;aspect-ratio:1;margin-bottom:14px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA">
-            <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+            <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div><sc-if value="{{ p.soldOut }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;z-index:9;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center"><span style="background:#1C1917;color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:.1em;padding:8px 16px;border-radius:9999px;box-shadow:0 6px 18px rgba(0,0,0,.25)">ДУУССАН</span></div></sc-if>
             <div style="position:absolute;top:12px;left:12px;z-index:10;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
               <sc-if value="{{ p.bestSeller }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;background:#1C1917;color:#FF8D9C">Bestseller</span></sc-if>
               <sc-if value="{{ p.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ p.discountLabel }}</span></sc-if>
@@ -801,7 +801,7 @@
                     <div class="tms-rowcard">
     <article class="tms-card" onclick="{{ p.onOpen }}">
               <div style="position:relative;aspect-ratio:1;margin-bottom:14px;overflow:hidden;border-radius:14px;background:#EDE7DD;border:1px solid #E7E2DA">
-                <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+                <div class="tms-media" style="position:absolute;inset:0"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"></div><sc-if value="{{ p.soldOut }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;z-index:9;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center"><span style="background:#1C1917;color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:.1em;padding:8px 16px;border-radius:9999px;box-shadow:0 6px 18px rgba(0,0,0,.25)">ДУУССАН</span></div></sc-if>
                 <div style="position:absolute;top:12px;left:12px;z-index:10;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
                   <sc-if value="{{ p.bestSeller }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;background:#1C1917;color:#FF8D9C">Bestseller</span></sc-if>
                   <sc-if value="{{ p.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ p.discountLabel }}</span></sc-if>
@@ -1006,6 +1006,7 @@
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;font-size:13px;color:#78716C"><span style="color:#1C1917;font-weight:600">★ {{ selected.rating }}</span><span style="color:#D8D0C4">·</span><span>Төлбөр төлөгдсөний маргааш таны гарт очих болно</span></div>
             <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #E7E2DA"><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:34px;font-variant-numeric:tabular-nums">{{ selected.priceFmt }}</span><sc-if value="{{ selected.hasDiscount }}" hint-placeholder-val="{{ false }}"><span style="font-size:16px;color:#A8A29E;text-decoration:line-through;font-variant-numeric:tabular-nums">{{ selected.oldPriceFmt }}</span><span style="padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;background:#FF3D57;color:#FFFFFF;font-variant-numeric:tabular-nums">{{ selected.discountLabel }}</span></sc-if><span style="font-size:12px;color:#A8A29E">· НӨАТ ороогүй дүн</span></div>
             <div style="margin-bottom:28px">
+              <sc-if value="{{ selected.soldOut }}" hint-placeholder-val="{{ false }}"><div style="margin:0 0 16px;background:#FDECEC;border:1px solid #F5C6C6;color:#B3261E;font-size:13px;font-weight:700;padding:11px 14px;border-radius:10px">⛔ Энэ бараа одоогоор дууссан байна</div></sc-if>
               <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A29E;font-weight:600;margin:0 0 12px">Тоо ширхэг</p>
               <div style="display:flex;align-items:center;gap:16px">
                 <button onclick="{{ onDecQty }}" class="tms-iconbtn" style="width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;border:1px solid #E7E2DA;background:#FBF9F6;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" stroke="#1C1917" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
@@ -1258,7 +1259,7 @@
                       <div style="display:grid;grid-template-columns:2.4fr 1.1fr 1fr .7fr .8fr 1.5fr;gap:12px;align-items:center;padding:12px 18px;border-top:1px solid #F0EAE0">
                         <div style="display:flex;align-items:center;gap:12px;min-width:0">
                           <div style="width:44px;height:44px;border-radius:8px;overflow:hidden;flex-shrink:0;background:#EDE7DD"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
-                          <div style="min-width:0"><p style="margin:0;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.name }}</p><p style="margin:2px 0 0;font-size:11px;color:#A8A29E">{{ p.vendor }}</p></div>
+                          <div style="min-width:0"><p style="margin:0;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.name }}</p><sc-if value="{{ p.soldOutA }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;margin-top:3px;font-size:10px;font-weight:800;color:#B3261E;background:#FDECEC;border:1px solid #F5C6C6;padding:2px 8px;border-radius:9999px">Дууссан</span></sc-if><p style="margin:2px 0 0;font-size:11px;color:#A8A29E">{{ p.vendor }}</p></div>
                         </div>
                         <span style="font-size:12px;color:#57534E">{{ p.category }}</span>
                         <span style="font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums">{{ p.priceFmt }}</span>
@@ -1839,6 +1840,7 @@ class Component extends DCLogic {
   toggleFavorite(id) { this.setState((s) => ({ favorites: s.favorites.includes(id) ? s.favorites.filter((x) => x !== id) : [...s.favorites, id] })); }
   unitPrice(p) { return Math.round((Number(p.price) || 0) * (1 - (Number(p.discount) || 0) / 100)); }
   addToCart(p, qty = 1) {
+    if ((Number(p.stock) || 0) <= 0) { alert("Уучлаарай, энэ бараа дууссан байна."); return; }
     this.setState((s) => {
       const ex = s.cart.find((x) => x.id === p.id);
       const cart = ex ? s.cart.map((x) => x.id === p.id ? { ...x, qty: x.qty + qty } : x) : [...s.cart, { ...p, price: this.unitPrice(p), qty }];
@@ -1846,6 +1848,7 @@ class Component extends DCLogic {
     });
   }
   buyNow(p, qty = 1) {
+    if ((Number(p.stock) || 0) <= 0) { alert("Уучлаарай, энэ бараа дууссан байна."); return; }
     this.setState((s) => {
       const ex = s.cart.find((x) => x.id === p.id);
       const cart = ex ? s.cart.map((x) => x.id === p.id ? { ...x, qty: x.qty + qty } : x) : [...s.cart, { ...p, price: this.unitPrice(p), qty }];
@@ -2044,6 +2047,7 @@ class Component extends DCLogic {
     const sale = hasDiscount ? Math.round(p.price * (1 - p.discount / 100)) : p.price;
     return {
       id: p.id, name: p.name, image: p.image, vendor: p.vendor, bestSeller: p.bestSeller, rating: p.rating,
+      soldOut: (Number(p.stock) || 0) <= 0,
       priceFmt: this.formatPrice(p.price),
       hasDiscount, noDiscount: !hasDiscount,
       salePriceFmt: this.formatPrice(sale),
@@ -2149,6 +2153,7 @@ class Component extends DCLogic {
         onInfoDesc: () => this.setState({ infoPopup: { title: "Тайлбар", text: p.description || "Тайлбар оруулаагүй байна." } }),
         onInfoUsage: () => this.setState({ infoPopup: { title: "Хэрэглэх заавар", text: p.usage || "Хэрэглэх заавар оруулаагүй байна." } }),
         onInfoCaution: () => this.setState({ infoPopup: { title: "Анхаарах зүйлс", text: p.caution || "Анхаарах зүйлс оруулаагүй байна." } }),
+        soldOut: (Number(p.stock) || 0) <= 0,
         priceFmt: this.formatPrice(this.unitPrice(p)),
         hasDiscount: (Number(p.discount) || 0) > 0,
         oldPriceFmt: this.formatPrice(p.price),
@@ -2185,6 +2190,7 @@ class Component extends DCLogic {
     ];
     const statusColor = (st) => st === "Хүргэгдсэн" ? "#2E7D53" : st === "Бэлтгэгдэж буй" ? "#C77E00" : "#C61F2B";
     const adminProducts = s.products.map((p) => ({
+      soldOutA: (Number(p.stock) || 0) <= 0,
       id: p.id, name: p.name, category: p.category, vendor: p.vendor, image: p.image,
       priceFmt: this.formatPrice(p.price), stock: String(p.stock ?? 0),
       stockStyle: "font-weight:700;font-variant-numeric:tabular-nums;color:" + ((p.stock || 0) === 0 ? "#C61F2B" : (p.stock || 0) <= 5 ? "#C77E00" : "#2E7D53"),
