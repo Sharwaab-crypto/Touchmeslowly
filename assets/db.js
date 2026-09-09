@@ -25,6 +25,8 @@
     return {
       id: r.id, name: r.name || "", category: r.category || "", vendor: r.vendor || "",
       description: r.description || "",
+      sku: r.sku || "",
+      internalCode: r.internal_code || "",
       usage: r.usage || "",
       caution: r.caution || "",
       price: Number(r.price) || 0, discount: Number(r.discount) || 0,
@@ -36,6 +38,8 @@
     return {
       name: p.name || "", category: p.category || "", vendor: p.vendor || "",
       description: p.description || "",
+      sku: p.sku || "",
+      internal_code: p.internalCode || "",
       usage: p.usage || "",
       caution: p.caution || "",
       price: Math.round(Number(p.price) || 0), discount: Math.round(Number(p.discount) || 0),
