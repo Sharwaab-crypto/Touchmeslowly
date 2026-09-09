@@ -1259,7 +1259,7 @@
                       <div style="display:grid;grid-template-columns:2.4fr 1.1fr 1fr .7fr .8fr 1.5fr;gap:12px;align-items:center;padding:12px 18px;border-top:1px solid #F0EAE0">
                         <div style="display:flex;align-items:center;gap:12px;min-width:0">
                           <div style="width:44px;height:44px;border-radius:8px;overflow:hidden;flex-shrink:0;background:#EDE7DD"><img src="{{ p.image }}" alt="{{ p.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
-                          <div style="min-width:0"><p style="margin:0;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.name }}</p><sc-if value="{{ p.soldOutA }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;margin-top:3px;font-size:10px;font-weight:800;color:#B3261E;background:#FDECEC;border:1px solid #F5C6C6;padding:2px 8px;border-radius:9999px">Дууссан</span></sc-if><p style="margin:2px 0 0;font-size:11px;color:#A8A29E">{{ p.vendor }}</p></div>
+                          <div style="min-width:0"><p style="margin:0;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.name }}</p><sc-if value="{{ p.soldOutA }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;margin-top:3px;font-size:10px;font-weight:800;color:#B3261E;background:#FDECEC;border:1px solid #F5C6C6;padding:2px 8px;border-radius:9999px">Дууссан</span></sc-if><p style="margin:2px 0 0;font-size:11px;color:#A8A29E">{{ p.vendor }}</p><sc-if value="{{ p.hasCodeLine }}" hint-placeholder-val="{{ false }}"><p style="margin:2px 0 0;font-size:10px;color:#B8AE9F;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.codeLine }}</p></sc-if></div>
                         </div>
                         <span style="font-size:12px;color:#57534E">{{ p.category }}</span>
                         <span style="font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums">{{ p.priceFmt }}</span>
@@ -1489,6 +1489,10 @@
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Брэнд</label><input value="{{ editVendor }}" onchange="{{ onEditVendor }}" placeholder="Брэнд" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
                 <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Ангилал</label><select value="{{ editCategory }}" onchange="{{ onEditCategory }}" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit;cursor:pointer"><sc-for list="{{ adminCatOptions }}" as="c" hint-placeholder-count="6"><option>{{ c }}</option></sc-for></select></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">SKU</label><input value="{{ editSku }}" onchange="{{ onEditSku }}" placeholder="Ж: TMS-VIB-001" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
+                <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Дотоод код</label><input value="{{ editInternalCode }}" onchange="{{ onEditInternalCode }}" placeholder="Дотоод бүртгэлийн код" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
                 <div><label style="display:block;font-size:12px;font-weight:600;color:#57534E;margin-bottom:6px">Үнэ ₮</label><input value="{{ editPrice }}" onchange="{{ onEditPrice }}" type="number" style="width:100%;padding:11px 13px;border:1px solid #E7E2DA;border-radius:10px;font-size:14px;outline:none;color:#1C1917;font-family:inherit"></div>
@@ -2191,6 +2195,8 @@ class Component extends DCLogic {
     const statusColor = (st) => st === "Хүргэгдсэн" ? "#2E7D53" : st === "Бэлтгэгдэж буй" ? "#C77E00" : "#C61F2B";
     const adminProducts = s.products.map((p) => ({
       soldOutA: (Number(p.stock) || 0) <= 0,
+      codeLine: [p.sku ? "SKU: " + p.sku : "", p.internalCode ? "Код: " + p.internalCode : ""].filter(Boolean).join(" · "),
+      hasCodeLine: !!(p.sku || p.internalCode),
       id: p.id, name: p.name, category: p.category, vendor: p.vendor, image: p.image,
       priceFmt: this.formatPrice(p.price), stock: String(p.stock ?? 0),
       stockStyle: "font-weight:700;font-variant-numeric:tabular-nums;color:" + ((p.stock || 0) === 0 ? "#C61F2B" : (p.stock || 0) <= 5 ? "#C77E00" : "#2E7D53"),
@@ -2456,6 +2462,7 @@ class Component extends DCLogic {
       adminCatOptions: s.categories,
       editName: ep ? (ep.name || "") : "", editVendor: ep ? (ep.vendor || "") : "", editCategory: ep ? (ep.category || "") : "",
       editPrice: ep ? String(ep.price ?? "") : "", editDiscount: ep ? String(ep.discount ?? "") : "", editStock: ep ? String(ep.stock ?? "") : "",
+      editSku: ep ? (ep.sku || "") : "", editInternalCode: ep ? (ep.internalCode || "") : "",
       editTagline: ep ? (ep.tagline || "") : "", editEst: ep ? (ep.est || "") : "",
       editArticleTitle: ep ? (ep.title || "") : "", editExcerpt: ep ? (ep.excerpt || "") : "", editDate: ep ? (ep.date || "") : "",
       editDescription: ep ? (ep.description || "") : "",
@@ -2464,6 +2471,8 @@ class Component extends DCLogic {
       editImage: ep ? (ep.image || "") : "", hasEditImage: !!(ep && ep.image), noEditImage: !(ep && ep.image),
       onEditName: (e) => this.setEditField("name", e.target.value),
       onEditDescription: (e) => this.setEditField("description", e.target.value),
+      onEditSku: (e) => this.setEditField("sku", e.target.value),
+      onEditInternalCode: (e) => this.setEditField("internalCode", e.target.value),
       onEditUsage: (e) => this.setEditField("usage", e.target.value),
       onEditCaution: (e) => this.setEditField("caution", e.target.value),
       onEditVendor: (e) => this.setEditField("vendor", e.target.value),
