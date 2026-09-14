@@ -1454,7 +1454,7 @@
                     <div style="background:#FFFFFF;border:1px solid #E7E2DA;border-radius:14px;padding:18px 22px;display:grid;grid-template-columns:130px minmax(0,1.6fr) minmax(0,1fr) 130px 150px;gap:16px;align-items:center">
                       <div><p style="font-family:ui-monospace,monospace;font-size:13px;font-weight:600;color:#FF3D57;margin:0">#{{ o.id }}</p><p style="font-size:11px;color:#A8A29E;margin:3px 0 0;font-variant-numeric:tabular-nums">{{ o.dateLabel }}</p></div>
                       <div style="min-width:0"><p style="font-size:14px;font-weight:600;margin:0">{{ o.customer }}</p><p style="font-size:12px;color:#78716C;margin:3px 0 0">{{ o.phone }} · {{ o.city }}</p><p style="font-size:11px;color:#A8A29E;margin:4px 0 0;line-height:1.5;overflow-wrap:anywhere">📍 {{ o.address }}</p><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ o.itemsVm }}" as="it" hint-placeholder-count="2"><span style="display:inline-flex;align-items:center;gap:6px;background:#FAF8F4;border:1px solid #EFEAE1;border-radius:8px;padding:3px 8px 3px 3px"><sc-if value="{{ it.hasImage }}" hint-placeholder-val="{{ true }}"><img loading="lazy" src="{{ it.image }}" alt="" style="width:26px;height:26px;border-radius:6px;object-fit:cover;display:block"></sc-if><sc-if value="{{ it.noImage }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:6px;background:#EDE7DD;display:flex;align-items:center;justify-content:center;font-size:12px">📦</span></sc-if><span style="font-size:11px;font-weight:600;color:#57534E;white-space:nowrap">{{ it.label }}</span></span></sc-for></div></div>
-                      <div><p style="font-size:12px;color:#57534E;margin:0 0 7px">{{ o.itemsLabel }}</p><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button><button onclick="{{ o.onToggleEntered }}" title="{{ o.enteredTitle }}" style="{{ o.enteredStyle2 }}">{{ o.enteredBadge }}</button></div>
+                      <div><p style="font-size:12px;color:#57534E;margin:0 0 7px">{{ o.itemsLabel }}</p><button onclick="{{ o.onTogglePaid }}" title="{{ o.payTitle }}" style="{{ o.payBadgeStyle }}">{{ o.payBadge }}</button><button onclick="{{ o.onToggleEntered }}" title="{{ o.enteredTitle }}" style="{{ o.enteredStyle2 }}">{{ o.enteredBadge }}</button><br><button onclick="{{ o.onSendCoreLink }}" title="{{ o.clTitle }}" style="{{ o.clStyle }}">{{ o.clBadge }}</button></div>
                       <span style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ o.totalFmt }}</span>
                       <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px">
                         <span style="{{ o.statusStyle }}">{{ o.status }}</span>
@@ -1611,7 +1611,7 @@ class Component extends DCLogic {
     this.state = {
       query: "", activeCategory: "Бүгд", maxPrice: 3000000, sortBy: "featured",
       cart: [], cartOpen: false, favorites: [],
-      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "QPay", lastOrderId: null, qpay: null, selectedArticle: null, infoPopup: null, visits: [], adminQuery: "", adminSortStock: false,
+      stage: "shop", form: { name: "", phone: "", address: "", city: "Улаанбаатар" }, payMethod: "QPay", lastOrderId: null, qpay: null, selectedArticle: null, infoPopup: null, visits: [], adminQuery: "", adminSortStock: false, coreLink: {},
       statMode: "14",
       statDate: (() => { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()); })(),
       statMonth: (() => { const d = new Date(), p = (n) => String(n).padStart(2, "0"); return d.getFullYear() + "-" + p(d.getMonth() + 1); })(),
@@ -1745,25 +1745,61 @@ class Component extends DCLogic {
       console.info("[CoreLink] Үлдэгдэл шинэчлэгдсэн бараа:", n);
     } catch (err) { console.warn("[CoreLink] sync:", err); }
   }
-  sendToCoreLink(order) {
-    if (!DB.enabled || !window.CoreLink) return;
+  sendToCoreLink(order, manual) {
+    if (!window.CoreLink) {
+      const m = "CoreLink модуль ачаалагдаагүй байна (assets/corelink-web.js байршуулсан эсэхээ шалгана уу).";
+      console.error("[CoreLink]", m);
+      this._clSet(order.id, "err", m);
+      if (manual) alert("CoreLink: " + m);
+      return Promise.resolve(false);
+    }
+    const missing = [];
     const items = (order.items || [])
       .map((it) => {
-        const pr = this.state.products.find((x) => x.id === it.product_id);
-        const sku = (pr && pr.sku) || "";
-        return sku ? { sku: sku, quantity: Number(it.qty) || 1 } : null;
+        let sku = (it.sku || "").trim();
+        if (!sku) {
+          const pr = this.state.products.find((x) => x.id === it.product_id);
+          sku = ((pr && pr.sku) || "").trim();
+        }
+        if (!sku) { missing.push(it.name || ("#" + it.product_id)); return null; }
+        return { sku: sku, quantity: Number(it.qty) || 1 };
       })
       .filter(Boolean);
-    if (!items.length) return;
-    window.CoreLink.submitOrder({
-      phone: order.phone,
+    if (!items.length) {
+      const m = "Захиалгын бараануудад SKU бөглөгдөөгүй байна: " + (missing.join(", ") || "-") + ". Админ → Бүтээгдэхүүн дээр SKU-г CoreLink-ийн кодтой ижил бөглөнө үү.";
+      console.error("[CoreLink]", m);
+      this._clSet(order.id, "err", m);
+      if (manual) alert("CoreLink: " + m);
+      return Promise.resolve(false);
+    }
+    if (missing.length) console.warn("[CoreLink] SKU-гүй тул алгассан бараа:", missing.join(", "));
+    const payload = {
+      phone: String(order.phone || "").replace(/[^0-9]/g, ""),
       name: order.customer,
       address: [order.address, order.city].filter(Boolean).join(", "),
       items: items,
-      note: "Сайт #" + order.id + " · Төлбөр: " + order.pay + (order.pay === "QPay" ? " (төлөгдмөгц сайтын админд ✓ болно)" : ""),
+      note: "Сайт #" + order.id + " · Төлбөр: " + order.pay,
       externalId: order.id,
-    }).then((res) => console.info("[CoreLink] Захиалга илгээгдлээ:", res))
-      .catch((err) => console.warn("[CoreLink] order:", err));
+    };
+    console.info("[CoreLink] Илгээж байна:", payload);
+    this._clSet(order.id, "send", "Илгээж байна…");
+    return window.CoreLink.submitOrder(payload)
+      .then((res) => {
+        console.info("[CoreLink] ✅ Амжилттай:", res);
+        this._clSet(order.id, "ok", "CoreLink-д бүртгэгдсэн" + (res && res.call_id ? " (дуудлага #" + res.call_id + ")" : ""));
+        if (manual) alert("CoreLink рүү амжилттай илгээлээ.");
+        return true;
+      })
+      .catch((err) => {
+        const m = (err && err.message) || String(err);
+        console.error("[CoreLink] ❌ Алдаа:", m, payload);
+        this._clSet(order.id, "err", m);
+        if (manual) alert("CoreLink алдаа: " + m);
+        return false;
+      });
+  }
+  _clSet(id, state, msg) {
+    this.setState((s) => ({ coreLink: { ...(s.coreLink || {}), [id]: { state: state, msg: msg } } }));
   }
   async loadOrders() {
     try { this.setState({ orders: await DB.fetchOrders() }); }
@@ -1918,7 +1954,10 @@ class Component extends DCLogic {
     const id = "TMS" + Math.floor(Math.random() * 90000 + 10000);
     const order = {
       id, date: new Date().toISOString().slice(0, 10), created_at: new Date().toISOString(), entered: false,
-      items: s0.cart.map((i) => ({ product_id: i.id, name: i.name, qty: i.qty, price: i.price })),
+      items: s0.cart.map((i) => {
+        const pr0 = s0.products.find((x) => x.id === i.id);
+        return { product_id: i.id, name: i.name, qty: i.qty, price: i.price, sku: (pr0 && pr0.sku) || "" };
+      }),
       total: s0.cart.reduce((a, i) => a + i.price * i.qty, 0),
       customer: s0.form.name, phone: phoneDigits0, address: s0.form.address, city: s0.form.city,
       pay: s0.payMethod, status: "Хүлээгдэж буй",
@@ -1939,7 +1978,7 @@ class Component extends DCLogic {
       return { lastOrderId: id, stage: "success", cart: [], cartOpen: false, orders: [order, ...s.orders], products };
     });
     if (DB.enabled && order.pay === "QPay") this.startQpay(order);
-    this.sendToCoreLink(order);
+    this.sendToCoreLink(order, false);
   }
 
   _tabStyle(active) {
@@ -2306,6 +2345,20 @@ class Component extends DCLogic {
       enteredStyle: "font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + (o.entered ? "#BFD9EE;background:#E8F2FB;color:#1D5C93" : "#E2DCD2;background:#F5F1EA;color:#8A8074"),
       enteredStyle2: "margin-top:6px;display:inline-block;font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + (o.entered ? "#BFD9EE;background:#E8F2FB;color:#1D5C93" : "#E2DCD2;background:#F5F1EA;color:#8A8074"),
       onToggleEntered: () => this.toggleEntered(o.id),
+      clBadge: (() => {
+        const st = (s.coreLink || {})[o.id];
+        if (!st) return "CoreLink → илгээх";
+        if (st.state === "ok") return "CoreLink ✓";
+        if (st.state === "send") return "CoreLink …";
+        return "CoreLink ⚠ дахин илгээх";
+      })(),
+      clTitle: ((s.coreLink || {})[o.id] || {}).msg || "Энэ захиалгыг CoreLink рүү илгээх",
+      clStyle: (() => {
+        const st = ((s.coreLink || {})[o.id] || {}).state;
+        const c = st === "ok" ? "#CBE3D2;background:#EAF3EC;color:#2E7D53" : st === "err" ? "#F5C6C6;background:#FDECEC;color:#B3261E" : "#E2DCD2;background:#F5F1EA;color:#8A8074";
+        return "margin-top:6px;display:inline-block;font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + c;
+      })(),
+      onSendCoreLink: () => this.sendToCoreLink(o, true),
       itemsVm: (o.items || []).map((it) => {
         const pr = this.state.products.find((x) => x.id === it.product_id);
         const img = (pr && pr.image) || "";
