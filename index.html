@@ -1773,6 +1773,9 @@ class Component extends DCLogic {
       return Promise.resolve(false);
     }
     if (missing.length) console.warn("[CoreLink] SKU-гүй тул алгассан бараа:", missing.join(", "));
+    this._clTry = this._clTry || {};
+    if (manual) this._clTry[order.id] = (this._clTry[order.id] || 1) + 1;
+    const attempt = this._clTry[order.id] || 1;
     const phoneClean = String(order.phone || "").replace(/[^0-9]/g, "");
     if (!/^[5-9]\d{7}$/.test(phoneClean)) {
       const m = "Утасны дугаар CoreLink-д тохирохгүй байна (" + (phoneClean || "хоосон") + "). Монголын 8 оронтой, 5–9-өөр эхэлсэн дугаар байх ёстой. Ийм захиалгад дуудлага үүсэхгүй.";
@@ -1786,8 +1789,8 @@ class Component extends DCLogic {
       name: order.customer,
       address: [order.address, order.city].filter(Boolean).join(", "),
       items: items,
-      note: "Сайт #" + order.id + " · Төлбөр: " + order.pay,
-      externalId: order.id,
+      note: "Сайт #" + order.id + " · Төлбөр: " + order.pay + (attempt > 1 ? " · давтан илгээлт " + attempt : ""),
+      externalId: attempt > 1 ? order.id + "-" + attempt : order.id,
       mode: "direct",
     };
     console.info("[CoreLink] Илгээж байна:", payload);
@@ -1802,7 +1805,7 @@ class Component extends DCLogic {
           if (manual) alert("CoreLink: захиалга амжилттай үүслээ (#" + String(num).slice(0, 12) + ").");
         } else {
           const m = dup
-            ? "Энэ захиалга CoreLink-д аль хэдийн бүртгэгдсэн (давхардал). Шинэ захиалга үүсэхгүй — CoreLink дээрээсээ хайна уу."
+            ? "CoreLink энэ илгээлтийг давхардал гэж үзлээ. Дахин дарвал шинэ дугаартайгаар илгээх болно."
             : "CoreLink хүлээж авсан ч захиалга үүсээгүй. Утасны дугаар, SKU зөв эсэхийг шалгана уу.";
           console.warn("[CoreLink] ⚠", m, res);
           this._clSet(order.id, "warn", m);
@@ -2370,10 +2373,10 @@ class Component extends DCLogic {
         if (!st) return "CoreLink → илгээх";
         if (st.state === "ok") return "CoreLink ✓";
         if (st.state === "send") return "CoreLink …";
-        if (st.state === "warn") return "CoreLink ⚠ давхардал";
+        if (st.state === "warn") return "CoreLink ⚠ дахин илгээх";
         return "CoreLink ⚠ дахин илгээх";
       })(),
-      clTitle: ((s.coreLink || {})[o.id] || {}).msg || "Энэ захиалгыг CoreLink рүү илгээх",
+      clTitle: (((s.coreLink || {})[o.id] || {}).msg || "Энэ захиалгыг CoreLink рүү илгээх") + " · Дарах бүрд CoreLink дээр шинэ захиалга үүснэ",
       clStyle: (() => {
         const st = ((s.coreLink || {})[o.id] || {}).state;
         const c = st === "ok" ? "#CBE3D2;background:#EAF3EC;color:#2E7D53" : st === "err" ? "#F5C6C6;background:#FDECEC;color:#B3261E" : st === "warn" ? "#F0E2C0;background:#FCF6E8;color:#9A6B00" : "#E2DCD2;background:#F5F1EA;color:#8A8074";
