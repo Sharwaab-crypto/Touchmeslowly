@@ -1755,6 +1755,7 @@ class Component extends DCLogic {
       return Promise.resolve(false);
     }
     const missing = [];
+    const lines = [];
     const items = (order.items || [])
       .map((it) => {
         let sku = (it.sku || "").trim();
@@ -1763,7 +1764,10 @@ class Component extends DCLogic {
           sku = ((pr && pr.sku) || "").trim();
         }
         if (!sku) { missing.push(it.name || ("#" + it.product_id)); return null; }
-        return { sku: sku, quantity: Number(it.qty) || 1 };
+        const qty = Number(it.qty) || 1;
+        const unit = Number(it.price) || 0;
+        lines.push(sku + "×" + qty + "=" + (unit * qty).toLocaleString("mn-MN") + "₮");
+        return { sku: sku, quantity: qty, price: unit, total: unit * qty };
       })
       .filter(Boolean);
     if (!items.length) {
@@ -1790,7 +1794,11 @@ class Component extends DCLogic {
       name: order.customer,
       address: [order.address, order.city].filter(Boolean).join(", "),
       items: items,
-      note: "Сайт #" + order.id + " · Төлбөр: " + order.pay + (attempt > 1 ? " · давтан илгээлт " + attempt : ""),
+      note: "Сайт #" + order.id +
+        " · Төлбөр: " + order.pay + (order.payment_status === "paid" ? " (ТӨЛӨГДСӨН)" : order.pay === "QPay" ? " (төлөгдөөгүй)" : "") +
+        " · Сайтын нийт дүн: " + (Number(order.total) || 0).toLocaleString("mn-MN") + "₮" +
+        (lines.length ? " · " + lines.join(", ") : "") +
+        (attempt > 1 ? " · давтан илгээлт " + attempt : ""),
       externalId: attempt > 1 ? order.id + "-" + attempt : order.id,
       mode: "direct",
     };
