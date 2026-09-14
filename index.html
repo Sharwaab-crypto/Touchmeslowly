@@ -1801,6 +1801,8 @@ class Component extends DCLogic {
         (attempt > 1 ? " · давтан илгээлт " + attempt : ""),
       externalId: attempt > 1 ? order.id + "-" + attempt : order.id,
       mode: "direct",
+      total: Number(order.total) || 0,
+      paid: order.payment_status === "paid",
     };
     console.info("[CoreLink] Илгээж байна:", payload);
     this._clSet(order.id, "send", "Илгээж байна…");
@@ -1808,20 +1810,22 @@ class Component extends DCLogic {
       .then((res) => {
         const dup = !!(res && res.duplicate);
         const num = res && (res.order_number || res.call_id);
+        const paidTag = res && res.paid ? " · Төлбөр баталгаажсан ✓" : "";
         if (res && res.merged) {
           console.info("[CoreLink] ✅ Хүлээгдэж буй захиалгад нэгтгэгдлээ:", res);
           if (!manual) {
             const tot = Number(res.total);
-            this.setState({ mergeNotice: "Таны өмнөх захиалга дээр нэмэгдлээ" + (Number.isFinite(tot) ? " (нийт " + tot.toLocaleString("mn-MN") + "₮)" : "") + "." });
+            this.setState({ mergeNotice: "Таны өмнөх захиалга дээр нэмэгдлээ" + (Number.isFinite(tot) ? " (нийт " + tot.toLocaleString("mn-MN") + "₮)" : "") + "." + (res.paid ? " Төлбөр баталгаажлаа." : "") });
           }
-          this._clSet(order.id, "ok", "CoreLink дээрх #" + String(num || "").slice(0, 16) + " захиалгад нэгтгэгдсэн" + (res.total ? " (нийт " + res.total + "₮)" : ""));
+          this._clSet(order.id, "ok", "CoreLink дээрх #" + String(num || "").slice(0, 16) + " захиалгад нэгтгэгдсэн" + (res.total ? " (нийт " + Number(res.total).toLocaleString("mn-MN") + "₮)" : "") + paidTag);
           if (manual) alert("CoreLink: хүлээгдэж буй захиалгад нэгтгэлээ" + (res.total ? " (нийт " + res.total + "₮)" : "") + ".");
           return true;
         }
         if (num && !dup) {
           console.info("[CoreLink] ✅ Захиалга үүслээ:", res);
-          this._clSet(order.id, "ok", "CoreLink захиалга #" + String(num).slice(0, 12));
-          if (manual) alert("CoreLink: захиалга амжилттай үүслээ (#" + String(num).slice(0, 12) + ").");
+          this._clSet(order.id, "ok", "CoreLink захиалга #" + String(num).slice(0, 12) + (res.total ? " · " + Number(res.total).toLocaleString("mn-MN") + "₮" : "") + paidTag);
+          if (!manual && res.paid) this.setState({ mergeNotice: "Төлбөр баталгаажлаа." });
+          if (manual) alert("CoreLink: захиалга амжилттай үүслээ (#" + String(num).slice(0, 12) + ")" + (res.paid ? " · Төлбөр баталгаажсан ✓" : "") + ".");
         } else {
           const m = dup
             ? "CoreLink энэ илгээлтийг давхардал гэж үзлээ. Дахин дарвал шинэ дугаартайгаар илгээх болно."
