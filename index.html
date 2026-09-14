@@ -1788,21 +1788,22 @@ class Component extends DCLogic {
       items: items,
       note: "Сайт #" + order.id + " · Төлбөр: " + order.pay,
       externalId: order.id,
+      mode: "direct",
     };
     console.info("[CoreLink] Илгээж байна:", payload);
     this._clSet(order.id, "send", "Илгээж байна…");
     return window.CoreLink.submitOrder(payload)
       .then((res) => {
         const dup = !!(res && res.duplicate);
-        const call = res && res.call_id;
-        if (call && !dup) {
-          console.info("[CoreLink] ✅ Дуудлага үүслээ:", res);
-          this._clSet(order.id, "ok", "Callcenter-т дуудлага үүссэн (" + String(call).slice(0, 8) + "…)");
-          if (manual) alert("CoreLink: дуудлага амжилттай үүслээ. Оператор холбогдоно.");
+        const num = res && (res.order_number || res.call_id);
+        if (num && !dup) {
+          console.info("[CoreLink] ✅ Захиалга үүслээ:", res);
+          this._clSet(order.id, "ok", "CoreLink захиалга #" + String(num).slice(0, 12));
+          if (manual) alert("CoreLink: захиалга амжилттай үүслээ (#" + String(num).slice(0, 12) + ").");
         } else {
           const m = dup
-            ? "Энэ захиалга CoreLink-д аль хэдийн бүртгэгдсэн (давхардал). Шинэ дуудлага үүсэхгүй — CoreLink дээрээс web order-оор хайна уу."
-            : "CoreLink хүлээж авсан ч дуудлага үүсээгүй. Утасны дугаар зөв эсэхийг шалгана уу.";
+            ? "Энэ захиалга CoreLink-д аль хэдийн бүртгэгдсэн (давхардал). Шинэ захиалга үүсэхгүй — CoreLink дээрээсээ хайна уу."
+            : "CoreLink хүлээж авсан ч захиалга үүсээгүй. Утасны дугаар, SKU зөв эсэхийг шалгана уу.";
           console.warn("[CoreLink] ⚠", m, res);
           this._clSet(order.id, "warn", m);
           if (manual) alert("CoreLink: " + m);
