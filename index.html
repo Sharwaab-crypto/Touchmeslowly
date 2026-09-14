@@ -1853,6 +1853,38 @@ class Component extends DCLogic {
         return false;
       });
   }
+  markPaidInCoreLink(orderId, amount) {
+    // Төлбөрийн баталгааг СЕРВЕР талаас (qpay-callback Edge Function) илгээдэг —
+    // нууц түлхүүр хөтөч дээр ил гарахаас сэргийлнэ. Хөтчөөс зөвхөн нөөц болгон
+    // (CoreLink шалгалтгүй үед) дуудна.
+    if (window.CORELINK_CLIENT_MARK_PAID !== true) {
+      console.info("[CoreLink] Төлбөрийн баталгааг сервер (qpay-callback) илгээнэ.");
+      return Promise.resolve(false);
+    }
+    if (!window.CoreLink || typeof window.CoreLink.markPaid !== "function") {
+      console.info("[CoreLink] markPaid дэмжигдээгүй — админаас гараар дахин илгээж болно.");
+      return Promise.resolve(false);
+    }
+    const o = this.state.orders.find((x) => x.id === orderId);
+    const tries = (this._clTry || {})[orderId] || 1;
+    return window.CoreLink.markPaid({
+      externalId: tries > 1 ? orderId + "-" + tries : orderId,
+      phone: String((o && o.phone) || "").replace(/[^0-9]/g, ""),
+      paid: true,
+      paidAmount: Number(amount) || (o ? Number(o.total) : 0) || 0,
+    })
+      .then((res) => {
+        console.info("[CoreLink] ✅ Төлбөр баталгаажлаа:", res);
+        this._clSet(orderId, "ok", "CoreLink дээр төлбөр баталгаажсан ✓");
+        return true;
+      })
+      .catch((err) => {
+        const m = (err && err.message) || String(err);
+        console.warn("[CoreLink] Төлбөр баталгаажуулахад алдаа:", m);
+        this._clSet(orderId, "warn", "Төлбөр баталгаажсан ч CoreLink-д мэдэгдэж чадсангүй: " + m + " — «CoreLink» товчийг дарж дахин илгээж болно.");
+        return false;
+      });
+  }
   _clSet(id, state, msg) {
     this.setState((s) => ({ coreLink: { ...(s.coreLink || {}), [id]: { state: state, msg: msg } } }));
   }
@@ -1941,6 +1973,7 @@ class Component extends DCLogic {
           qpay: s.qpay ? { ...s.qpay, status: "paid" } : null,
           orders: s.orders.map((o) => (o.id === q.orderId ? { ...o, payment_status: "paid" } : o)),
         }));
+        this.markPaidInCoreLink(q.orderId, q.amount);
       }
     } catch (err) { console.error("[qpay]", err); }
   }
