@@ -1799,6 +1799,12 @@ class Component extends DCLogic {
       .then((res) => {
         const dup = !!(res && res.duplicate);
         const num = res && (res.order_number || res.call_id);
+        if (res && res.merged) {
+          console.info("[CoreLink] ✅ Хүлээгдэж буй захиалгад нэгтгэгдлээ:", res);
+          this._clSet(order.id, "ok", "CoreLink дээрх #" + String(num || "").slice(0, 16) + " захиалгад нэгтгэгдсэн" + (res.total ? " (нийт " + res.total + "₮)" : ""));
+          if (manual) alert("CoreLink: хүлээгдэж буй захиалгад нэгтгэлээ" + (res.total ? " (нийт " + res.total + "₮)" : "") + ".");
+          return true;
+        }
         if (num && !dup) {
           console.info("[CoreLink] ✅ Захиалга үүслээ:", res);
           this._clSet(order.id, "ok", "CoreLink захиалга #" + String(num).slice(0, 12));
@@ -1814,10 +1820,19 @@ class Component extends DCLogic {
         return true;
       })
       .catch((err) => {
-        const m = (err && err.message) || String(err);
-        console.error("[CoreLink] ❌ Алдаа:", m, payload);
-        this._clSet(order.id, "err", m);
-        if (manual) alert("CoreLink алдаа: " + m);
+        const raw = (err && err.message) || String(err);
+        if (/DUPLICATE_PENDING_ORDER/i.test(raw)) {
+          const det = raw.replace(/^.*DUPLICATE_PENDING_ORDER:\s*/i, "");
+          const m = "Энэ утсаар CoreLink дээр хүлээгдэж буй захиалга бий: " + det +
+            " — CoreLink өөрөө давхар захиалгаас хамгаалж байна. Шинээр үүсгэхийн тулд CoreLink дээрх тэр захиалгыг эхлээд дуусгах/цуцлах хэрэгтэй.";
+          console.warn("[CoreLink] ⚠", m);
+          this._clSet(order.id, "warn", m);
+          if (manual) alert("CoreLink: " + m);
+          return false;
+        }
+        console.error("[CoreLink] ❌ Алдаа:", raw, payload);
+        this._clSet(order.id, "err", raw);
+        if (manual) alert("CoreLink алдаа: " + raw);
         return false;
       });
   }
