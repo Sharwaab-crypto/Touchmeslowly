@@ -48,7 +48,7 @@ async function getStock(sku) {
  *    Амжилт: { ok: true, mode, total, call_id | order_number }
  *    Алдаа: throw Error("Бараа олдсонгүй: XYZ" / "Утасны дугаар буруу" / ...)
  */
-async function submitOrder({ phone, name, address, items, note, externalId, pageKey = "TOUCHMESLOWLYWEB", mode = "callcenter", mergePending }) {
+async function submitOrder({ phone, name, address, items, note, externalId, pageKey = "TOUCHMESLOWLYWEB", mode = "callcenter", mergePending, total, paid }) {
   const r = await fetch(`${CORELINK_URL}/rest/v1/rpc/create_web_order`, {
     method: "POST",
     headers: HEADERS,
@@ -62,6 +62,8 @@ async function submitOrder({ phone, name, address, items, note, externalId, page
       p_external_id: externalId || null,
       p_mode: mode,
       ...(typeof mergePending === "boolean" ? { p_merge_pending: mergePending } : {}),
+      ...(typeof total === "number" ? { p_total: total } : {}),
+      ...(typeof paid === "boolean" ? { p_paid: paid } : {}),
     }),
   });
   const data = await r.json();
