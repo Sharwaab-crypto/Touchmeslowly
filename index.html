@@ -19,6 +19,7 @@
 <script src="assets/supabase.js"></script>
 <script src="supabase-config.js"></script>
 <script src="assets/db.js"></script>
+<script src="assets/corelink-web.js"></script>
 <script src="assets/dc-runtime.js"></script>
 </head>
 <body>
@@ -1717,11 +1718,52 @@ class Component extends DCLogic {
       }
       if (user) patch.adminUser = user.email;
       this.setState(patch);
+      this.syncCoreLink();
       if (user) this.loadOrders();
     } catch (err) {
       console.error("[db] load failed:", err);
       this.setState({ dbLoading: false });
     }
+  }
+  async syncCoreLink() {
+    if (!DB.enabled || !window.CoreLink) return;
+    try {
+      const list = await window.CoreLink.loadProducts();
+      const bySku = {};
+      (list || []).forEach((c) => { if (c && c.sku) bySku[String(c.sku).trim().toUpperCase()] = c; });
+      let n = 0;
+      this.setState((s) => ({
+        products: s.products.map((p) => {
+          const key = (p.sku || "").trim().toUpperCase();
+          const c = key ? bySku[key] : null;
+          if (!c) return p;
+          n++;
+          const st = c.in_stock === false ? 0 : Number(c.stock);
+          return { ...p, stock: Number.isFinite(st) ? st : p.stock };
+        }),
+      }));
+      console.info("[CoreLink] Үлдэгдэл шинэчлэгдсэн бараа:", n);
+    } catch (err) { console.warn("[CoreLink] sync:", err); }
+  }
+  sendToCoreLink(order) {
+    if (!DB.enabled || !window.CoreLink) return;
+    const items = (order.items || [])
+      .map((it) => {
+        const pr = this.state.products.find((x) => x.id === it.product_id);
+        const sku = (pr && pr.sku) || "";
+        return sku ? { sku: sku, quantity: Number(it.qty) || 1 } : null;
+      })
+      .filter(Boolean);
+    if (!items.length) return;
+    window.CoreLink.submitOrder({
+      phone: order.phone,
+      name: order.customer,
+      address: [order.address, order.city].filter(Boolean).join(", "),
+      items: items,
+      note: "Сайт #" + order.id + " · Төлбөр: " + order.pay + (order.pay === "QPay" ? " (төлөгдмөгц сайтын админд ✓ болно)" : ""),
+      externalId: order.id,
+    }).then((res) => console.info("[CoreLink] Захиалга илгээгдлээ:", res))
+      .catch((err) => console.warn("[CoreLink] order:", err));
   }
   async loadOrders() {
     try { this.setState({ orders: await DB.fetchOrders() }); }
@@ -1897,6 +1939,7 @@ class Component extends DCLogic {
       return { lastOrderId: id, stage: "success", cart: [], cartOpen: false, orders: [order, ...s.orders], products };
     });
     if (DB.enabled && order.pay === "QPay") this.startQpay(order);
+    this.sendToCoreLink(order);
   }
 
   _tabStyle(active) {
