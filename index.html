@@ -1773,8 +1773,16 @@ class Component extends DCLogic {
       return Promise.resolve(false);
     }
     if (missing.length) console.warn("[CoreLink] SKU-гүй тул алгассан бараа:", missing.join(", "));
+    const phoneClean = String(order.phone || "").replace(/[^0-9]/g, "");
+    if (!/^[5-9]\d{7}$/.test(phoneClean)) {
+      const m = "Утасны дугаар CoreLink-д тохирохгүй байна (" + (phoneClean || "хоосон") + "). Монголын 8 оронтой, 5–9-өөр эхэлсэн дугаар байх ёстой. Ийм захиалгад дуудлага үүсэхгүй.";
+      console.error("[CoreLink]", m);
+      this._clSet(order.id, "err", m);
+      if (manual) alert("CoreLink: " + m);
+      return Promise.resolve(false);
+    }
     const payload = {
-      phone: String(order.phone || "").replace(/[^0-9]/g, ""),
+      phone: phoneClean,
       name: order.customer,
       address: [order.address, order.city].filter(Boolean).join(", "),
       items: items,
@@ -1785,9 +1793,20 @@ class Component extends DCLogic {
     this._clSet(order.id, "send", "Илгээж байна…");
     return window.CoreLink.submitOrder(payload)
       .then((res) => {
-        console.info("[CoreLink] ✅ Амжилттай:", res);
-        this._clSet(order.id, "ok", "CoreLink-д бүртгэгдсэн" + (res && res.call_id ? " (дуудлага #" + res.call_id + ")" : ""));
-        if (manual) alert("CoreLink рүү амжилттай илгээлээ.");
+        const dup = !!(res && res.duplicate);
+        const call = res && res.call_id;
+        if (call && !dup) {
+          console.info("[CoreLink] ✅ Дуудлага үүслээ:", res);
+          this._clSet(order.id, "ok", "Callcenter-т дуудлага үүссэн (" + String(call).slice(0, 8) + "…)");
+          if (manual) alert("CoreLink: дуудлага амжилттай үүслээ. Оператор холбогдоно.");
+        } else {
+          const m = dup
+            ? "Энэ захиалга CoreLink-д аль хэдийн бүртгэгдсэн (давхардал). Шинэ дуудлага үүсэхгүй — CoreLink дээрээс web order-оор хайна уу."
+            : "CoreLink хүлээж авсан ч дуудлага үүсээгүй. Утасны дугаар зөв эсэхийг шалгана уу.";
+          console.warn("[CoreLink] ⚠", m, res);
+          this._clSet(order.id, "warn", m);
+          if (manual) alert("CoreLink: " + m);
+        }
         return true;
       })
       .catch((err) => {
@@ -2350,12 +2369,13 @@ class Component extends DCLogic {
         if (!st) return "CoreLink → илгээх";
         if (st.state === "ok") return "CoreLink ✓";
         if (st.state === "send") return "CoreLink …";
+        if (st.state === "warn") return "CoreLink ⚠ давхардал";
         return "CoreLink ⚠ дахин илгээх";
       })(),
       clTitle: ((s.coreLink || {})[o.id] || {}).msg || "Энэ захиалгыг CoreLink рүү илгээх",
       clStyle: (() => {
         const st = ((s.coreLink || {})[o.id] || {}).state;
-        const c = st === "ok" ? "#CBE3D2;background:#EAF3EC;color:#2E7D53" : st === "err" ? "#F5C6C6;background:#FDECEC;color:#B3261E" : "#E2DCD2;background:#F5F1EA;color:#8A8074";
+        const c = st === "ok" ? "#CBE3D2;background:#EAF3EC;color:#2E7D53" : st === "err" ? "#F5C6C6;background:#FDECEC;color:#B3261E" : st === "warn" ? "#F0E2C0;background:#FCF6E8;color:#9A6B00" : "#E2DCD2;background:#F5F1EA;color:#8A8074";
         return "margin-top:6px;display:inline-block;font-size:11px;font-weight:700;padding:5px 10px;border-radius:9999px;cursor:pointer;font-family:inherit;white-space:nowrap;border:1px solid " + c;
       })(),
       onSendCoreLink: () => this.sendToCoreLink(o, true),
